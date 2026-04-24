@@ -165,8 +165,8 @@ function App() {
                 <span className="font-bold">Nexto</span>
                 <span className="font-normal italic">Casa</span> :<br/>
 
-                Valorisez vos biens,<br />
-                Réalisez vos rêves.
+                Immobilier d'exception,<br />
+                Expertise locale.
               </h1>
 
               <p className="text-lg md:text-xl text-[#ffb800] font-medium leading-relaxed tracking-wide mb-6">
@@ -222,3 +222,17 @@ function App() {
 export default App;
 
 
+/*
+
+              <div className="flex flex-wrap justify-center gap-3 mt-2">
+  <span className="bg-white/10 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-full border border-[#ffb800]/30">
+    🏅 Expert local
+  </span>
+  <span className="bg-white/10 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-full border border-[#ffb800]/30">
+    📊 Estimation gratuite
+  </span>
+  <span className="bg-white/10 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-full border border-[#ffb800]/30">
+    🤝 Accompagnement sur mesure
+  </span>
+</div>
+*/

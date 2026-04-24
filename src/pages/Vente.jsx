@@ -49,12 +49,12 @@ function Vente() {
     {
       icon: Icons.Chart,
       title: "Mise en marché",
-      description: "Votre bien est diffusé sur toutes les grandes plateformes immobilières et notre réseau d'acheteurs."
+      description: "Votre bien est diffusé sur toutes les grandes plateformes immobilières de notre réseau d'acheteurs."
     },
     {
       icon: Icons.Document,
       title: "Accompagnement juridique",
-      description: "Nous vous guidons à travers toutes les étapes administratives et juridiques jusqu'à la signature."
+      description: "Nous vous accompagnons à travers toutes les étapes administratives et juridiques jusqu'à la signature."
     }
   ];
 
