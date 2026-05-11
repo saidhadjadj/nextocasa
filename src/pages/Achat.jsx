@@ -1,11 +1,8 @@
-
-
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropertyCard from '../components/PropertyCard';
+import Map from '../components/Map';
 
-// Icônes SVG personnalisées
 const Icons = {
   Search: () => (
     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -36,6 +33,7 @@ function Achat() {
   const [searchTerm, setSearchTerm] = useState('');
   const [priceRange, setPriceRange] = useState({ min: 0, max: 1000000 });
   const [roomsFilter, setRoomsFilter] = useState('all');
+  const [surfaceMin, setSurfaceMin] = useState(0);
   const [showFilters, setShowFilters] = useState(false);
 
   useEffect(() => {
@@ -53,7 +51,6 @@ function Achat() {
   useEffect(() => {
     let filtered = properties;
 
-    // Filtre par recherche
     if (searchTerm) {
       filtered = filtered.filter(p =>
         p.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -61,18 +58,20 @@ function Achat() {
       );
     }
 
-    // Filtre par prix
     filtered = filtered.filter(p =>
       p.price >= priceRange.min && p.price <= priceRange.max
     );
 
-    // Filtre par nombre de pièces
+    if (surfaceMin > 0) {
+      filtered = filtered.filter(p => p.area >= surfaceMin);
+    }
+
     if (roomsFilter !== 'all') {
       filtered = filtered.filter(p => p.rooms === parseInt(roomsFilter));
     }
 
     setFilteredProperties(filtered);
-  }, [searchTerm, priceRange, roomsFilter, properties]);
+  }, [searchTerm, priceRange, surfaceMin, roomsFilter, properties]);
 
   if (loading) {
     return (
@@ -85,21 +84,16 @@ function Achat() {
   return (
     <div className="min-h-screen bg-gray-50 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* En-tête */}
         <div className="mb-8">
           <Link to="/" className="inline-flex items-center gap-2 text-gray-600 hover:text-blue-600 transition mb-4">
             <Icons.ArrowLeft />
             <span>Retour à l'accueil</span>
           </Link>
           <h1 className="text-4xl font-bold text-gray-900 mb-2">Nos biens à vendre</h1>
-          <p className="text-lg text-gray-600">
-            Découvrez notre sélection d'appartements et maisons disponibles à l'achat.
-          </p>
+          <p className="text-lg text-gray-600">Découvrez notre sélection d'appartements et maisons disponibles à l'achat.</p>
         </div>
 
-        {/* Barre de recherche et filtres */}
         <div className="mb-8 space-y-4">
-          {/* Barre de recherche */}
           <div className="relative">
             <input
               type="text"
@@ -112,8 +106,8 @@ function Achat() {
               <Icons.Search />
             </div>
           </div>
+          <Map properties={filteredProperties} />
 
-          {/* Bouton toggle filtres */}
           <button
             onClick={() => setShowFilters(!showFilters)}
             className="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition font-medium"
@@ -122,7 +116,6 @@ function Achat() {
             <span>{showFilters ? 'Masquer les filtres' : 'Afficher les filtres'}</span>
           </button>
 
-          {/* Filtres avancés */}
           {showFilters && (
             <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100 space-y-6">
               <div>
@@ -143,6 +136,22 @@ function Achat() {
               </div>
 
               <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Surface minimale (m²)</label>
+                <select
+                  value={surfaceMin}
+                  onChange={(e) => setSurfaceMin(Number(e.target.value))}
+                  className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                >
+                  <option value={0}>0 m²</option>
+                  <option value={30}>30 m²</option>
+                  <option value={50}>50 m²</option>
+                  <option value={70}>70 m²</option>
+                  <option value={90}>90 m²</option>
+                  <option value={120}>120 m²</option>
+                </select>
+              </div>
+
+              <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Nombre de pièces</label>
                 <select
                   value={roomsFilter}
@@ -150,21 +159,18 @@ function Achat() {
                   className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                 >
                   <option value="all">Tous</option>
-                  <option value="1">1 pièce</option>
-                  <option value="2">2 pièces</option>
-                  <option value="3">3 pièces</option>
-                  <option value="4">4+ pièces</option>
+                  <option value={1}>1 pièce</option>
+                  <option value={2}>2 pièces</option>
+                  <option value={3}>3 pièces</option>
+                  <option value={4}>4+ pièces</option>
                 </select>
               </div>
             </div>
           )}
         </div>
 
-        {/* Résultats */}
         <div className="mb-4 flex justify-between items-center">
-          <p className="text-gray-600">
-            {filteredProperties.length} bien(s) trouvé(s)
-          </p>
+          <p className="text-gray-600">{filteredProperties.length} bien(s) trouvé(s)</p>
           <div className="flex gap-2">
             <button className="p-2 bg-white rounded-lg shadow hover:bg-gray-50 transition">
               <Icons.Grid />
@@ -172,7 +178,6 @@ function Achat() {
           </div>
         </div>
 
-        {/* Grille des biens */}
         {filteredProperties.length === 0 ? (
           <div className="text-center py-16 bg-white rounded-2xl">
             <p className="text-gray-500 text-lg">Aucun bien ne correspond à vos critères.</p>

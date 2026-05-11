@@ -1,5 +1,4 @@
 
-
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import emailjs from '@emailjs/browser';
@@ -8,9 +7,11 @@ function Contact() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    message: ''
+    phone: '',
+    message: '',
+    callback: false
   });
-  const [status, setStatus] = useState(null); // 'sending', 'success', 'error'
+  const [status, setStatus] = useState(null);
   const [errors, setErrors] = useState({});
 
   const validateForm = () => {
@@ -21,17 +22,20 @@ function Contact() {
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = 'Email invalide';
     }
+    if (!formData.phone.trim()) newErrors.phone = 'Le téléphone est requis';
     if (!formData.message.trim()) newErrors.message = 'Le message est requis';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    // Efface l’erreur du champ quand l’utilisateur tape
+    const { name, value, type, checked } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value
+    }));
     if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: '' }));
+      setErrors((prev) => ({ ...prev, [name]: '' }));
     }
   };
 
@@ -48,7 +52,7 @@ function Contact() {
     emailjs.send(serviceID, templateID, formData, publicKey)
       .then(() => {
         setStatus('success');
-        setFormData({ name: '', email: '', message: '' });
+        setFormData({ name: '', email: '', phone: '', message: '', callback: false });
         setErrors({});
         setTimeout(() => setStatus(null), 5000);
       })
@@ -61,111 +65,183 @@ function Contact() {
   return (
     <>
       <Helmet>
-        <title>NextoCasa — Contactez-nous</title>
-        <meta name="description" content="Une question ? Un projet ? Contactez NextoCasa. Nous vous répondrons rapidement." />
+        <title>NextoCasa — Contact</title>
+        <meta
+          name="description"
+          content="Contactez NextoCasa pour une visite, une estimation ou une consultation privée."
+        />
       </Helmet>
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-          <div className="p-8 md:p-10">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">📞 Contactez-nous</h1>
-            <p className="text-lg text-gray-600 mb-8">
-              Une question ? Un projet ? Laissez-nous un message, nous vous répondrons rapidement.
-            </p>
 
-            {status === 'sending' && (
-              <div className="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
-                <svg className="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                Envoi en cours...
-              </div>
-            )}
-            {status === 'success' && (
-              <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-6">
-                ✅ Message envoyé ! Nous vous contacterons bientôt.
-              </div>
-            )}
-            {status === 'error' && (
-              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-6">
-                ❌ Une erreur est survenue. Veuillez réessayer.
-              </div>
-            )}
+      <main className="bg-[#f7f5f1] text-slate-900">
+        <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+          <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+            <div className="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-black/5 md:p-10">
+              <p className="mb-4 text-sm font-semibold uppercase tracking-[0.3em] text-amber-700">
+                NextoCasa
+              </p>
+              <h1 className="text-3xl font-semibold tracking-tight md:text-5xl">
+                Réserver une consultation privée
+              </h1>
+              <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600">
+                Une question, une visite ou une étude de valeur personnalisée ?
+                Notre équipe vous répond avec attention et réactivité.
+              </p>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                  Nom complet *
+              {status === 'sending' && (
+                <div className="mt-8 rounded-2xl border border-blue-200 bg-blue-50 px-4 py-3 text-blue-700">
+                  Envoi en cours...
+                </div>
+              )}
+              {status === 'success' && (
+                <div className="mt-8 rounded-2xl border border-green-200 bg-green-50 px-4 py-3 text-green-700">
+                  Merci. Votre demande a bien été transmise à notre équipe.
+                </div>
+              )}
+              {status === 'error' && (
+                <div className="mt-8 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-red-700">
+                  Une erreur est survenue. Veuillez réessayer.
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit} className="mt-8 space-y-5">
+                <div className="grid gap-5 md:grid-cols-2">
+                  <div>
+                    <label htmlFor="name" className="mb-2 block text-sm font-medium text-slate-700">
+                      Nom complet *
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      autoComplete="name"
+                      className={`w-full rounded-2xl border px-4 py-3 outline-none transition focus:ring-2 focus:ring-amber-700 ${
+                        errors.name ? 'border-red-500 bg-red-50' : 'border-slate-200'
+                      }`}
+                      placeholder="Jean Dupont"
+                    />
+                    {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name}</p>}
+                  </div>
+
+                  <div>
+                    <label htmlFor="email" className="mb-2 block text-sm font-medium text-slate-700">
+                      Email *
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      autoComplete="email"
+                      className={`w-full rounded-2xl border px-4 py-3 outline-none transition focus:ring-2 focus:ring-amber-700 ${
+                        errors.email ? 'border-red-500 bg-red-50' : 'border-slate-200'
+                      }`}
+                      placeholder="jean.dupont@exemple.fr"
+                    />
+                    {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="phone" className="mb-2 block text-sm font-medium text-slate-700">
+                    Téléphone *
+                  </label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    autoComplete="tel"
+                    className={`w-full rounded-2xl border px-4 py-3 outline-none transition focus:ring-2 focus:ring-amber-700 ${
+                      errors.phone ? 'border-red-500 bg-red-50' : 'border-slate-200'
+                    }`}
+                    placeholder="06 00 00 00 00"
+                  />
+                  {errors.phone && <p className="mt-1 text-sm text-red-600">{errors.phone}</p>}
+                </div>
+
+                <div>
+                  <label htmlFor="message" className="mb-2 block text-sm font-medium text-slate-700">
+                    Message *
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows="6"
+                    value={formData.message}
+                    onChange={handleChange}
+                    className={`w-full resize-none rounded-2xl border px-4 py-3 outline-none transition focus:ring-2 focus:ring-amber-700 ${
+                      errors.message ? 'border-red-500 bg-red-50' : 'border-slate-200'
+                    }`}
+                    placeholder="Décrivez votre projet..."
+                  />
+                  {errors.message && <p className="mt-1 text-sm text-red-600">{errors.message}</p>}
+                </div>
+
+                <label className="flex items-start gap-3 text-sm text-slate-700">
+                  <input
+                    type="checkbox"
+                    name="callback"
+                    checked={formData.callback}
+                    onChange={handleChange}
+                    className="mt-1 h-4 w-4 rounded border-slate-300 text-amber-700 focus:ring-amber-700"
+                  />
+                  <span>Je préfère être rappelé(e) dans les 2 heures ouvrées.</span>
                 </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition ${
-                    errors.name ? 'border-red-500 bg-red-50' : 'border-gray-200'
-                  }`}
-                  placeholder="Jean Dupont"
-                />
-                {errors.name && (
-                  <p className="mt-1 text-sm text-red-600">{errors.name}</p>
-                )}
+
+                <button
+                  type="submit"
+                  disabled={status === 'sending'}
+                  className="w-full rounded-full bg-slate-900 px-6 py-4 text-base font-semibold text-white transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  {status === 'sending' ? 'Envoi en cours...' : 'Envoyer ma demande'}
+                </button>
+
+                <p className="text-xs leading-6 text-slate-500">
+                  Vos informations sont utilisées uniquement pour vous répondre.
+                </p>
+              </form>
+            </div>
+
+            <aside className="rounded-3xl bg-slate-900 p-8 text-white shadow-sm md:p-10">
+              <h2 className="text-2xl font-semibold">Informations utiles</h2>
+              <p className="mt-4 text-white/75">
+                Nous restons disponibles pour échanger sur votre projet immobilier.
+              </p>
+
+              <div className="mt-8 space-y-5 text-sm text-white/85">
+                <p><span className="block text-white font-semibold">Adresse</span> Neuilly-sur-Marne, Île-de-France</p>
+                <p><span className="block text-white font-semibold">Téléphone</span> +33 1 00 00 00 00</p>
+                <p><span className="block text-white font-semibold">Email</span> contact@nextocasa.fr</p>
+                <p><span className="block text-white font-semibold">Horaires</span> Lun–Ven : 9h00–19h00, Sam : 10h00–13h00</p>
               </div>
 
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                  Email *
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition ${
-                    errors.email ? 'border-red-500 bg-red-50' : 'border-gray-200'
-                  }`}
-                  placeholder="jean.dupont@exemple.fr"
-                />
-                {errors.email && (
-                  <p className="mt-1 text-sm text-red-600">{errors.email}</p>
-                )}
+              <div className="mt-10 rounded-2xl border border-white/10 bg-white/5 p-5">
+                <p className="text-sm leading-7 text-white/80">
+                  Chez NextoCasa, chaque contact est traité avec soin,
+                  confidentialité et professionnalisme.
+                </p>
               </div>
-
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                  Message *
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows="5"
-                  value={formData.message}
-                  onChange={handleChange}
-                  className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition resize-none ${
-                    errors.message ? 'border-red-500 bg-red-50' : 'border-gray-200'
-                  }`}
-                  placeholder="Votre message..."
-                />
-                {errors.message && (
-                  <p className="mt-1 text-sm text-red-600">{errors.message}</p>
-                )}
-              </div>
-
-              <button
-                type="submit"
-                disabled={status === 'sending'}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 rounded-xl text-lg shadow-lg hover:shadow-xl transition disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {status === 'sending' ? 'Envoi en cours...' : 'Envoyer le message'}
-              </button>
-            </form>
+            </aside>
           </div>
-        </div>
-      </div>
+        </section>
+      </main>
     </>
   );
 }
 
 export default Contact;
+
+
+
+
+
+
+
+
+
+
+  

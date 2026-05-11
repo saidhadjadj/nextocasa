@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
@@ -27,16 +26,6 @@ const Icons = {
   Calendar: () => (
     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-    </svg>
-  ),
-  Phone: () => (
-    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-    </svg>
-  ),
-  Email: () => (
-    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
     </svg>
   ),
   ArrowLeft: () => (
@@ -110,7 +99,8 @@ function ImageGallery({ images }) {
       )}
     </div>
   );
-} 
+}
+
 function LocationMap({ address }) {
   if (!address) return null;
   const query = encodeURIComponent(address);
@@ -129,7 +119,6 @@ function LocationMap({ address }) {
     </div>
   );
 }
-
 
 function SimilarProperties({ all, currentProperty }) {
   const navigate = useNavigate();
@@ -169,6 +158,20 @@ function SimilarProperties({ all, currentProperty }) {
                 <Icons.Location />
                 <span>{property.city}</span>
               </div>
+              <div className="flex flex-wrap gap-2 mb-4">
+                {property.virtualTour && (
+                  <span className="bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded-full">
+                    🎥 Visite virtuelle
+                  </span>
+                )}
+              </div>
+
+
+
+
+
+
+
               <div className="flex justify-between items-center">
                 <p className="text-xl font-bold text-blue-600">
                   {property.operation === 'Vente'
@@ -184,6 +187,7 @@ function SimilarProperties({ all, currentProperty }) {
     </section>
   );
 }
+
 function PropertyDetail({ properties }) {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -233,11 +237,11 @@ function PropertyDetail({ properties }) {
     property.operation === 'Vente'
       ? `${property.price.toLocaleString('fr-FR')} €`
       : `${property.price} €/mois`;
+      console.log("Propriété chargée :", property);
 
   return (
     <main className="bg-gray-50 min-h-screen py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
         <button
           onClick={() => navigate('/')}
           className="group mb-8 flex items-center gap-2 text-gray-600 hover:text-blue-600 transition"
@@ -247,23 +251,32 @@ function PropertyDetail({ properties }) {
         </button>
 
         <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
-          {/* Galerie */}
           <ImageGallery images={property.images} />
 
-      
           <div className="p-8 md:p-10">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
-              <div>
-                <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">{property.title}</h1>
-                <div className="flex items-center gap-2 text-gray-600">
-                  <Icons.Location />
-                  <span className="text-lg">{property.city}</span>
-                </div>
-              </div>
-              <div className="mt-4 md:mt-0 text-right">
-                <p className="text-4xl font-bold text-blue-600">{priceDisplay}</p>
-                <p className="text-sm text-gray-500 mt-1">{property.operation}</p>
-              </div>
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">{property.title}</h1>
+            <div className="flex items-center gap-2 text-gray-600 mb-6">
+              <Icons.Location />
+              <span className="text-lg">{property.city}</span>
+            </div>
+
+                        <div className="flex flex-wrap gap-2 mb-4">
+              {property.isExclusive && (
+                <span className="bg-yellow-100 text-yellow-800 text-xs font-semibold px-3 py-1 rounded-full">
+                  ⭐ Exclusivité
+                </span>
+              )}
+              {property.virtualTour && (
+                <span className="bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded-full">
+                  🎥 Visite virtuelle
+                </span>
+              )}
+            </div>
+
+
+            <div className="text-right mb-6">
+              <p className="text-4xl font-bold text-blue-600">{priceDisplay}</p>
+              <p className="text-sm text-gray-500 mt-1">{property.operation}</p>
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
@@ -340,21 +353,37 @@ function PropertyDetail({ properties }) {
               </section>
             )}
 
+            <div className="flex flex-wrap gap-2 mb-4">
+              {property.isExclusive && <span className="...">⭐ Exclusivité</span>}
+              {property.virtualTour && <span className="...">🎥 Visite virtuelle</span>}
+            </div>
+
+
             <LocationMap address={property.city} />
+
+            {property.virtualTour && (
+              <div className="mt-6">
+                <a
+                  href="#"
+                  onClick={() => alert("🔗 Lien visite virtuelle (Matterport / YouTube) à configurer")}
+                  className="inline-block bg-green-700 text-white px-6 py-3 rounded-full text-sm shadow hover:bg-green-800 transition"
+                >
+                  🎥 Visite virtuelle
+                </a>
+              </div>
+            )}
 
             <div className="flex flex-col sm:flex-row gap-4 mt-8">
               <button
                 onClick={() => navigate('/contact')}
-                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 rounded-xl text-lg shadow-lg hover:shadow-xl transition flex items-center justify-center gap-3"
+                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 rounded-xl text-lg shadow-lg hover:shadow-xl transition"
               >
-                <Icons.Phone />
                 Contacter l'agence
               </button>
               <button
-                onClick={() => window.location.href = `mailto:contact@immoplus.fr?subject=${encodeURIComponent(`Question concernant ${property.title}`)}`}
-                className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold py-4 px-8 rounded-xl text-lg shadow hover:shadow-md transition flex items-center justify-center gap-3"
+                onClick={() => window.location.href = `mailto:contact@nextocasa.fr?subject=${encodeURIComponent(`Question concernant ${property.title}`)}`}
+                className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold py-4 px-8 rounded-xl text-lg shadow hover:shadow-md transition"
               >
-                <Icons.Email />
                 Envoyer un email
               </button>
             </div>
@@ -368,3 +397,4 @@ function PropertyDetail({ properties }) {
 }
 
 export default PropertyDetail;
+

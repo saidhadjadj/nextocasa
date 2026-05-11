@@ -34,6 +34,11 @@ function App() {
         setError(err.message);
         setLoading(false);
       });
+
+
+
+
+      
   }, []);
 
   useEffect(() => {
@@ -135,6 +140,7 @@ function App() {
         </nav>
 
         <Routes>
+
         <Route
   path="/"
   element={
@@ -195,6 +201,7 @@ function App() {
     </>
   }
 />
+
           <Route path="/biens/:id" element={<PropertyDetail properties={properties} />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
@@ -221,18 +228,4 @@ function App() {
 
 export default App;
 
-
-/*
-
-              <div className="flex flex-wrap justify-center gap-3 mt-2">
-  <span className="bg-white/10 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-full border border-[#ffb800]/30">
-    🏅 Expert local
-  </span>
-  <span className="bg-white/10 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-full border border-[#ffb800]/30">
-    📊 Estimation gratuite
-  </span>
-  <span className="bg-white/10 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-full border border-[#ffb800]/30">
-    🤝 Accompagnement sur mesure
-  </span>
-</div>
-*/
+            

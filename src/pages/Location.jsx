@@ -1,9 +1,7 @@
-
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropertyCard from '../components/PropertyCard';
-
+import Map from '../components/Map';
 
 const Icons = {
   Search: () => (
@@ -33,8 +31,9 @@ function Location() {
   const [filteredProperties, setFilteredProperties] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  const [priceRange, setPriceRange] = useState({ min: 0, max: 5000 });
+  const [priceRange, setPriceRange] = useState({ min: 0, max: 3000 });
   const [roomsFilter, setRoomsFilter] = useState('all');
+  const [surfaceMin, setSurfaceMin] = useState(0);
   const [showFilters, setShowFilters] = useState(false);
 
   useEffect(() => {
@@ -63,12 +62,16 @@ function Location() {
       p.price >= priceRange.min && p.price <= priceRange.max
     );
 
+    if (surfaceMin > 0) {
+      filtered = filtered.filter(p => p.area >= surfaceMin);
+    }
+
     if (roomsFilter !== 'all') {
       filtered = filtered.filter(p => p.rooms === parseInt(roomsFilter));
     }
 
     setFilteredProperties(filtered);
-  }, [searchTerm, priceRange, roomsFilter, properties]);
+  }, [searchTerm, priceRange, surfaceMin, roomsFilter, properties]);
 
   if (loading) {
     return (
@@ -81,20 +84,16 @@ function Location() {
   return (
     <div className="min-h-screen bg-gray-50 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* En-tête */}
         <div className="mb-8">
           <Link to="/" className="inline-flex items-center gap-2 text-gray-600 hover:text-blue-600 transition mb-4">
             <Icons.ArrowLeft />
             <span>Retour à l'accueil</span>
           </Link>
           <h1 className="text-4xl font-bold text-gray-900 mb-2">Nos biens à louer</h1>
-          <p className="text-lg text-gray-600">
-            Découvrez notre sélection d'appartements et maisons disponibles à la location.
-          </p>
+          <p className="text-lg text-gray-600">Découvrez notre sélection d'appartements et maisons disponibles à la location.</p>
         </div>
 
         <div className="mb-8 space-y-4">
-          {/* Barre de recherche */}
           <div className="relative">
             <input
               type="text"
@@ -107,6 +106,7 @@ function Location() {
               <Icons.Search />
             </div>
           </div>
+          <Map properties={filteredProperties} />
 
           <button
             onClick={() => setShowFilters(!showFilters)}
@@ -123,7 +123,7 @@ function Location() {
                 <input
                   type="range"
                   min="0"
-                  max="5000"
+                  max="3000"
                   step="100"
                   value={priceRange.max}
                   onChange={(e) => setPriceRange({ ...priceRange, max: parseInt(e.target.value) })}
@@ -136,6 +136,22 @@ function Location() {
               </div>
 
               <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Surface minimale (m²)</label>
+                <select
+                  value={surfaceMin}
+                  onChange={(e) => setSurfaceMin(Number(e.target.value))}
+                  className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                >
+                  <option value={0}>0 m²</option>
+                  <option value={30}>30 m²</option>
+                  <option value={50}>50 m²</option>
+                  <option value={70}>70 m²</option>
+                  <option value={90}>90 m²</option>
+                  <option value={120}>120 m²</option>
+                </select>
+              </div>
+
+              <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Nombre de pièces</label>
                 <select
                   value={roomsFilter}
@@ -143,21 +159,18 @@ function Location() {
                   className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                 >
                   <option value="all">Tous</option>
-                  <option value="1">1 pièce</option>
-                  <option value="2">2 pièces</option>
-                  <option value="3">3 pièces</option>
-                  <option value="4">4+ pièces</option>
+                  <option value={1}>1 pièce</option>
+                  <option value={2}>2 pièces</option>
+                  <option value={3}>3 pièces</option>
+                  <option value={4}>4+ pièces</option>
                 </select>
               </div>
             </div>
           )}
         </div>
 
-        {/* Résultats */}
         <div className="mb-4 flex justify-between items-center">
-          <p className="text-gray-600">
-            {filteredProperties.length} bien(s) trouvé(s)
-          </p>
+          <p className="text-gray-600">{filteredProperties.length} bien(s) trouvé(s)</p>
           <div className="flex gap-2">
             <button className="p-2 bg-white rounded-lg shadow hover:bg-gray-50 transition">
               <Icons.Grid />
