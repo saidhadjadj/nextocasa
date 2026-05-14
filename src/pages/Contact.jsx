@@ -33,6 +33,9 @@ function Contact() {
     setFormData((prev) => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value
+
+
+      
     }));
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: '' }));
