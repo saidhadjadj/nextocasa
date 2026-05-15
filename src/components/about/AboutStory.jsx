@@ -3,7 +3,7 @@ import { useIntersectionReveal } from "../../hooks/useIntersectionReveal";
 import { story } from "../../data/aboutContent";
 
 export default function AboutStory() {
-  const ref = useRef<HTMLElement>(null);
+  const ref = useRef(null);
   useIntersectionReveal(ref);
 
   return (

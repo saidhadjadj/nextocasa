@@ -3,7 +3,7 @@ import { useIntersectionReveal } from "../../hooks/useIntersectionReveal";
 import { pillars } from "../../data/aboutContent";
 
 export default function AboutPhilosophy() {
-  const ref = useRef<HTMLElement>(null);
+  const ref = useRef(null);
   useIntersectionReveal(ref);
 
   return (

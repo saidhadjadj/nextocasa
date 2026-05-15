@@ -1,4 +1,4 @@
-
+/*
 
 import React from "react";
 import { Link } from "react-router-dom";
@@ -197,4 +197,9 @@ export default function About() {
     </>
   );
 }
-  
+  */
+import AboutPage from "../components/about/AboutPage";
+
+export default function About() {
+  return <AboutPage />;
+}

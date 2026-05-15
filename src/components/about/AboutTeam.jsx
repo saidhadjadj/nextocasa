@@ -3,7 +3,7 @@ import { useIntersectionReveal } from "../../hooks/useIntersectionReveal";
 import { team } from "../../data/aboutContent";
 
 export default function AboutTeam() {
-  const ref = useRef<HTMLElement>(null);
+  const ref = useRef(null);
   useIntersectionReveal(ref);
 
   return (
@@ -32,7 +32,9 @@ export default function AboutTeam() {
               </div>
 
               {/* Identity */}
-              <p className="text-sm font-medium text-stone-800">{member.name}</p>
+              <p className="text-sm font-medium text-stone-800">
+                {member.name}
+              </p>
               <p className="mt-0.5 text-xs tracking-widest uppercase text-stone-400">
                 {member.role}
               </p>
