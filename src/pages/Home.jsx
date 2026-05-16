@@ -1,12 +1,14 @@
-import { Helmet } from 'react-helmet-async';
-import PropertyCard from '../components/PropertyCard';
+import { Helmet } from "react-helmet-async";
+import PropertyCard from "../components/PropertyCard";
 
 function Home({ loading, error, filtered }) {
   if (loading) {
     return (
       <main className="bg-[#f7f5f1] text-slate-900">
         <div className="mx-auto max-w-7xl px-4 py-24 text-center sm:px-6 lg:px-8">
-          <p className="text-lg font-medium text-slate-600">Chargement des biens...</p>
+          <p className="text-lg font-medium text-slate-600">
+            Chargement des biens...
+          </p>
         </div>
       </main>
     );
@@ -45,7 +47,7 @@ function Home({ loading, error, filtered }) {
                 L’art de révéler les lieux d’exception
               </h1>
               <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
-                Depuis 2002, NextoCasa accompagne une clientèle exigeante dans
+                Depuis 2011, NextoCasa accompagne une clientèle exigeante dans
                 l’acquisition, la location et la valorisation de propriétés
                 sélectionnées avec soin.
               </p>
@@ -67,10 +69,10 @@ function Home({ loading, error, filtered }) {
 
               <div className="mt-10 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
                 {[
-                  'Expertise locale',
-                  'Accompagnement personnalisé',
-                  'Biens sélectionnés',
-                  'Réponse rapide',
+                  "Expertise locale",
+                  "Accompagnement personnalisé",
+                  "Biens sélectionnés",
+                  "Réponse rapide",
                 ].map((item) => (
                   <div
                     key={item}
@@ -96,10 +98,10 @@ function Home({ loading, error, filtered }) {
           <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
             <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
               {[
-                'Réponse sous 24h ouvrées',
-                'Biens sélectionnés avec exigence',
-                'Accompagnement personnalisé',
-                'Conseil confidentiel et discret',
+                "Réponse sous 24h ouvrées",
+                "Biens sélectionnés avec exigence",
+                "Accompagnement personnalisé",
+                "Conseil confidentiel et discret",
               ].map((item) => (
                 <div
                   key={item}
@@ -173,16 +175,19 @@ function Home({ loading, error, filtered }) {
             <div className="mt-10 grid gap-8 md:grid-cols-3">
               {[
                 {
-                  quote: 'Un accompagnement discret, précis et très professionnel.',
-                  author: 'Client 1',
+                  quote:
+                    "Un accompagnement discret, précis et très professionnel.",
+                  author: "Client 1",
                 },
                 {
-                  quote: 'Une équipe réactive, attentive et d’un grand sérieux.',
-                  author: 'Client 2',
+                  quote:
+                    "Une équipe réactive, attentive et d’un grand sérieux.",
+                  author: "Client 2",
                 },
                 {
-                  quote: 'Une vraie différence dans la présentation et le suivi du bien.',
-                  author: 'Client 3',
+                  quote:
+                    "Une vraie différence dans la présentation et le suivi du bien.",
+                  author: "Client 3",
                 },
               ].map((item) => (
                 <blockquote
@@ -230,22 +235,3 @@ function Home({ loading, error, filtered }) {
 }
 
 export default Home;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
