@@ -1,3 +1,264 @@
+import { useState, useEffect } from "react";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Link,
+  useLocation,
+} from "react-router-dom";
+import { Helmet, HelmetProvider } from "react-helmet-async";
+import HomePage from "./pages/HomePage";
+/*
+import Blog from "./pages/Blog";
+import BlogArticle from "./pages/BlogArticle";
+*/
+import PropertyDetail from "./pages/PropertyDetail";
+import Achat from "./pages/Achat";
+import Vente from "./pages/Vente";
+import Location from "./pages/Location";
+import Estimation from "./pages/Estimation";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Legal from "./pages/Legal";
+
+// ─── Liens de navigation ──────────────────────────────────────────────────────
+const NAV_LINKS = [
+  { to: "/", label: "Accueil" },
+  { to: "/achat", label: "Achat" },
+  { to: "/vente", label: "Vente" },
+  { to: "/location", label: "Location" },
+  { to: "/estimation", label: "Estimation" },
+  { to: "/blog", label: "Blog" },
+  { to: "/about", label: "À propos" },
+  { to: "/contact", label: "Contact" },
+];
+
+// ─── Navbar ───────────────────────────────────────────────────────────────────
+function Navbar() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { pathname } = useLocation();
+
+  // Fermer au changement de route
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [pathname]);
+
+  // Fermer avec Échap
+  useEffect(() => {
+    const onEsc = (e) => {
+      if (e.key === "Escape") setIsMenuOpen(false);
+    };
+    window.addEventListener("keydown", onEsc);
+    return () => window.removeEventListener("keydown", onEsc);
+  }, []);
+
+  const isActive = (to) =>
+    to === "/" ? pathname === "/" : pathname.startsWith(to);
+
+  return (
+    <nav className="bg-white shadow-sm sticky top-0 z-50 border-b border-gray-100">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-20">
+          {/* Logo */}
+          <Link to="/" className="flex items-center shrink-0">
+            <img
+              src="/logo.png"
+              alt="NextoCasa"
+              className="h-12 w-auto object-contain"
+            />
+          </Link>
+
+          {/* Liens desktop */}
+          <div className="hidden lg:flex items-center space-x-1">
+            {NAV_LINKS.map(({ to, label }) => (
+              <Link
+                key={to}
+                to={to}
+                className={[
+                  "px-3 py-2 rounded-full transition-all duration-200 text-sm font-medium",
+                  isActive(to)
+                    ? "text-[#0022d2] bg-blue-50"
+                    : "text-gray-600 hover:text-[#0022d2] hover:bg-blue-50",
+                ].join(" ")}
+              >
+                {label}
+              </Link>
+            ))}
+          </div>
+
+          {/* CTA desktop */}
+          <div className="hidden lg:block shrink-0">
+            <Link
+              to="/estimation"
+              className="bg-[#ffb800] hover:bg-[#ffc929] text-[#0022d2] font-semibold py-2.5 px-5 rounded-full text-sm transition-all hover:scale-105 shadow-sm whitespace-nowrap"
+            >
+              Estimation gratuite
+            </Link>
+          </div>
+
+          {/* Burger mobile */}
+          <button
+            onClick={() => setIsMenuOpen((prev) => !prev)}
+            className="lg:hidden p-2 text-gray-600 hover:text-[#0022d2] focus:outline-none"
+            aria-label={isMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
+            aria-expanded={isMenuOpen}
+          >
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              {isMenuOpen ? (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              ) : (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              )}
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      {/* Menu mobile */}
+      {isMenuOpen && (
+        <div className="lg:hidden bg-white border-t border-gray-100">
+          <div className="px-4 pt-2 pb-4 space-y-1">
+            {NAV_LINKS.map(({ to, label }) => (
+              <Link
+                key={to}
+                to={to}
+                className={[
+                  "block py-2.5 px-4 rounded-xl transition text-sm font-medium",
+                  isActive(to)
+                    ? "bg-blue-50 text-[#0022d2]"
+                    : "text-gray-700 hover:text-[#0022d2] hover:bg-blue-50",
+                ].join(" ")}
+              >
+                {label}
+              </Link>
+            ))}
+            <div className="pt-3">
+              <Link
+                to="/estimation"
+                className="block text-center bg-[#ffb800] text-[#0022d2] font-semibold py-3 px-5 rounded-full text-sm"
+              >
+                Estimation gratuite
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
+    </nav>
+  );
+}
+
+// ─── Footer ───────────────────────────────────────────────────────────────────
+function Footer() {
+  return (
+    <footer className="bg-[#0022d2] text-white py-10 mt-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+          <p className="font-serif text-xl tracking-widest">
+            NEXTO<span className="italic font-light text-[#ffb800]">CASA</span>
+          </p>
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-white/60">
+            {[
+              { to: "/achat", label: "Achat" },
+              { to: "/vente", label: "Vente" },
+              { to: "/location", label: "Location" },
+              { to: "/estimation", label: "Estimation" },
+              { to: "/blog", label: "Blog" },
+              { to: "/about", label: "À propos" },
+            ].map(({ to, label }) => (
+              <Link
+                key={to}
+                to={to}
+                className="hover:text-[#ffb800] transition"
+              >
+                {label}
+              </Link>
+            ))}
+          </div>
+          <div className="flex gap-4 text-xs text-white/40">
+            <Link
+              to="/mentions-legales"
+              className="hover:text-[#ffb800] transition"
+            >
+              Mentions légales
+            </Link>
+            <span aria-hidden="true">·</span>
+            <Link to="/contact" className="hover:text-[#ffb800] transition">
+              Contact
+            </Link>
+          </div>
+        </div>
+        <p className="text-center text-xs text-white/30 mt-8">
+          © {new Date().getFullYear()} NextoCasa. Tous droits réservés.
+        </p>
+      </div>
+    </footer>
+  );
+}
+
+// ─── App ──────────────────────────────────────────────────────────────────────
+function App() {
+  return (
+    <HelmetProvider>
+      <BrowserRouter>
+        <div className="min-h-screen bg-gray-50 flex flex-col">
+          <Navbar />
+          <main className="flex-1">
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <>
+                    <Helmet>
+                      <title>NextoCasa — Agence immobilière d'exception</title>
+                      <meta
+                        name="description"
+                        content="NextoCasa, agence immobilière premium. Achat, vente, location et estimation gratuite de biens d'exception à Paris, Lyon et Bordeaux."
+                      />
+                    </Helmet>
+                    <HomePage />
+                  </>
+                }
+              />
+              <Route path="/achat" element={<Achat />} />
+              <Route path="/vente" element={<Vente />} />
+              <Route path="/location" element={<Location />} />
+              <Route path="/estimation" element={<Estimation />} />
+
+              {/*<Route path="/blog" element={<Blog />} />*/}
+              {/*<Route path="/blog/:slug" element={<BlogArticle />} />*/}
+
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/biens/:id" element={<PropertyDetail />} />
+              <Route path="/mentions-legales" element={<Legal />} />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
+      </BrowserRouter>
+    </HelmetProvider>
+  );
+}
+
+export default App;
+
+/*
+
 import { useState, useEffect, useMemo } from "react";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
@@ -334,3 +595,4 @@ function App() {
 }
 
 export default App;
+*/

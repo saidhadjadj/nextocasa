@@ -89,6 +89,7 @@ function Contact() {
       <main className="bg-[#f7f5f1] min-h-screen">
         <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
           {/* ── En-tête page ─────────────────────────────────────────────── */}
+
           <div className="mb-12 text-center">
             <p className="text-xs tracking-[0.2em] uppercase text-[#0022d2] font-medium mb-3">
               NextoCasa
@@ -105,8 +106,10 @@ function Contact() {
 
           <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] items-start">
             {/* ── Formulaire ───────────────────────────────────────────────── */}
+
             <div className="rounded-2xl bg-white p-8 shadow-sm ring-1 ring-stone-100 md:p-10">
               {/* Notifications */}
+
               {status === "sending" && (
                 <div className="mb-6 rounded-xl border border-blue-200 bg-blue-50 px-4 py-3 text-sm text-blue-700">
                   Envoi en cours…
@@ -125,6 +128,7 @@ function Contact() {
 
               <form onSubmit={handleSubmit} noValidate className="space-y-5">
                 {/* Nom + Email */}
+
                 <div className="grid gap-5 md:grid-cols-2">
                   <div>
                     <label
@@ -174,6 +178,7 @@ function Contact() {
                 </div>
 
                 {/* Téléphone */}
+
                 <div>
                   <label
                     htmlFor="phone"
@@ -197,6 +202,7 @@ function Contact() {
                 </div>
 
                 {/* Message */}
+
                 <div>
                   <label
                     htmlFor="message"
@@ -221,6 +227,7 @@ function Contact() {
                 </div>
 
                 {/* Rappel */}
+
                 <label className="flex items-start gap-3 cursor-pointer">
                   <input
                     type="checkbox"
@@ -235,6 +242,7 @@ function Contact() {
                 </label>
 
                 {/* Bouton */}
+
                 <button
                   type="submit"
                   disabled={status === "sending"}
@@ -252,8 +260,10 @@ function Contact() {
             </div>
 
             {/* ── Panneau latéral — premium clair ──────────────────────────── */}
+
             <aside className="space-y-5">
               {/* Coordonnées */}
+
               <div className="rounded-2xl bg-white ring-1 ring-stone-100 shadow-sm p-8">
                 <p className="text-xs tracking-[0.15em] uppercase text-[#0022d2] font-medium mb-5">
                   Informations utiles
@@ -284,6 +294,7 @@ function Contact() {
               </div>
 
               {/* Engagement qualité */}
+
               <div className="rounded-2xl border border-[#0022d2]/10 bg-[#0022d2]/[0.03] p-7">
                 <p className="font-serif text-lg font-light italic text-stone-700 leading-relaxed">
                   "Chaque contact est traité avec soin, confidentialité et
@@ -295,6 +306,7 @@ function Contact() {
               </div>
 
               {/* Délai de réponse */}
+
               <div className="rounded-2xl bg-[#ffb800]/10 border border-[#ffb800]/20 p-6 flex items-start gap-4">
                 <span className="text-2xl" aria-hidden="true">
                   ⚡

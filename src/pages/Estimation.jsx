@@ -1,307 +1,631 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
+// ─── Étapes du formulaire ─────────────────────────────────────────────────────
+const STEPS = [
+  { num: 1, label: "Votre bien" },
+  { num: 2, label: "Les détails" },
+  { num: 3, label: "Vos coordonnées" },
+];
 
+const PROPERTY_TYPES = [
+  { key: "appartement", label: "Appartement", icon: "🏢" },
+  { key: "maison", label: "Maison", icon: "🏠" },
+  { key: "villa", label: "Villa", icon: "🏡" },
+  { key: "loft", label: "Loft / Atelier", icon: "🏗️" },
+];
 
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import emailjs from '@emailjs/browser';
+const TRANSACTION_TYPES = [
+  { key: "vente", label: "Je souhaite vendre" },
+  { key: "location", label: "Je souhaite louer" },
+  { key: "info", label: "Simple curiosité / Info" },
+];
 
-const Icons = {
-  Home: () => (
-    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-    </svg>
-  ),
-  Euro: () => (
-    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-    </svg>
-  ),
-  Location: () => (
-    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-    </svg>
-  ),
-  User: () => (
-    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-    </svg>
-  ),
-  Phone: () => (
-    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-    </svg>
-  ),
-  Check: () => (
-    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-    </svg>
-  ),
+const INITIAL = {
+  // Étape 1
+  transactionType: "",
+  propertyType: "",
+  // Étape 2
+  surface: "",
+  rooms: "",
+  floor: "",
+  condition: "",
+  address: "",
+  // Étape 3
+  name: "",
+  email: "",
+  phone: "",
+  message: "",
 };
 
-function Estimation() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    address: '',
-    propertyType: 'appartement',
-    surface: '',
-    rooms: '',
-    message: ''
-  });
-  const [status, setStatus] = useState(null); // 'sending', 'success', 'error'
+export default function Estimation() {
+  const [step, setStep] = useState(1);
+  const [data, setData] = useState(INITIAL);
+  const [sent, setSent] = useState(false);
+  const [errors, setErrors] = useState({});
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+  const update = (field, value) => {
+    setData((prev) => ({ ...prev, [field]: value }));
+    if (errors[field]) setErrors((prev) => ({ ...prev, [field]: "" }));
+  };
+
+  // ── Validation par étape ──────────────────────────────────────────────────
+  const validate = (s) => {
+    const e = {};
+    if (s === 1) {
+      if (!data.transactionType)
+        e.transactionType = "Veuillez choisir une option";
+      if (!data.propertyType)
+        e.propertyType = "Veuillez choisir un type de bien";
+    }
+    if (s === 2) {
+      if (!data.surface) e.surface = "La surface est requise";
+      if (!data.address) e.address = "L'adresse (ou la ville) est requise";
+    }
+    if (s === 3) {
+      if (!data.name.trim()) e.name = "Le nom est requis";
+      if (!data.email.trim()) e.email = "L'email est requis";
+      else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email))
+        e.email = "Email invalide";
+      if (!data.phone.trim()) e.phone = "Le téléphone est requis";
+    }
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  };
+
+  const nextStep = () => {
+    if (validate(step)) setStep((s) => s + 1);
+  };
+  const prevStep = () => {
+    setStep((s) => s - 1);
+    setErrors({});
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setStatus('sending');
-
-    
-    const serviceID = 'service_cw1awli';
-    const templateID = 'template_xxxxxx'; // à remplacer par ton vrai template
-    const publicKey = '2gH9bpuX53nVTdcNy';
-
-    emailjs.send(serviceID, templateID, formData, publicKey)
-      .then(() => {
-        setStatus('success');
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          address: '',
-          propertyType: 'appartement',
-          surface: '',
-          rooms: '',
-          message: ''
-        });
-      })
-      .catch(() => {
-        setStatus('error');
-      });
+    if (!validate(3)) return;
+    // Ici : intégrer EmailJS ou votre API
+    setSent(true);
   };
 
+  const inputClass = (field) =>
+    `w-full rounded-xl border px-4 py-3 text-sm outline-none transition font-light
+     focus:ring-2 focus:ring-[#0022d2]/20 focus:border-[#0022d2]
+     ${errors[field] ? "border-red-300 bg-red-50" : "border-stone-200 bg-white hover:border-stone-300"}`;
+
+  // ── Confirmation ──────────────────────────────────────────────────────────
+  if (sent) {
+    return (
+      <>
+        <Helmet>
+          <title>Estimation envoyée — NextoCasa</title>
+        </Helmet>
+        <div className="bg-[#f7f5f1] min-h-screen flex items-center justify-center px-4">
+          <div className="max-w-md w-full bg-white rounded-3xl border border-stone-100 shadow-sm p-10 text-center">
+            <div className="w-16 h-16 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center mx-auto mb-6">
+              <svg
+                className="w-7 h-7 text-emerald-500"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+            </div>
+            <div className="flex items-center justify-center gap-3 mb-3">
+              <div className="h-px w-6 bg-[#ffb800]" />
+              <p className="text-xs tracking-[0.2em] uppercase text-stone-400 font-light">
+                Demande reçue
+              </p>
+              <div className="h-px w-6 bg-[#ffb800]" />
+            </div>
+            <h1 className="font-serif text-2xl font-light text-stone-800 mb-3">
+              Merci, {data.name.split(" ")[0]} !
+            </h1>
+            <p className="text-stone-500 text-sm font-light leading-relaxed mb-8">
+              Votre demande d'estimation a bien été reçue. Un conseiller
+              NextoCasa vous contactera sous{" "}
+              <strong className="font-medium text-stone-700">
+                48 heures ouvrées
+              </strong>
+              .
+            </p>
+            <Link
+              to="/"
+              className="inline-flex items-center gap-2 bg-[#0022d2] hover:bg-[#001aad] text-white font-semibold py-3.5 px-8 rounded-full text-sm transition-all hover:scale-105 shadow-md"
+            >
+              Retour à l'accueil
+            </Link>
+          </div>
+        </div>
+      </>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* En-tête */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Estimation gratuite
-          </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Décrivez votre bien et recevez une estimation personnalisée sous 48h.
-          </p>
+    <>
+      <Helmet>
+        <title>Estimation gratuite — NextoCasa</title>
+        <meta
+          name="description"
+          content="Obtenez une estimation gratuite et personnalisée de votre bien immobilier. Réponse sous 48h par un conseiller NextoCasa."
+        />
+      </Helmet>
+
+      <div className="bg-[#f7f5f1] min-h-screen">
+        {/* Hero */}
+        <div className="relative h-52 md:h-64 overflow-hidden">
+          <img
+            src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1400&q=80"
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 w-full h-full object-cover object-center"
+          />
+          <div className="absolute inset-0 bg-[#0022d2]/82" />
+          <div className="relative h-full flex flex-col items-center justify-center text-center px-6">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="h-px w-8 bg-[#ffb800]" />
+              <p className="text-[#ffb800] text-xs tracking-[0.25em] uppercase font-medium">
+                Gratuit & sans engagement
+              </p>
+              <div className="h-px w-8 bg-[#ffb800]" />
+            </div>
+            <h1 className="font-serif text-4xl md:text-5xl font-light text-white">
+              Estimer mon{" "}
+              <em className="not-italic italic text-[#ffb800]">bien</em>
+            </h1>
+          </div>
         </div>
 
-        
-        {status === 'sending' && (
-          <div className="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded-lg mb-6">
-            ⏳ Envoi en cours...
-          </div>
-        )}
-        {status === 'success' && (
-          <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-6">
-            ✅ Demande envoyée ! Nous vous recontacterons sous 48h.
-          </div>
-        )}
-        {status === 'error' && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-6">
-            ❌ Une erreur est survenue. Veuillez réessayer.
-          </div>
-        )}
-
-        
-        <form onSubmit={handleSubmit} className="bg-white rounded-3xl shadow-xl overflow-hidden">
-          {/* Section 1 : Vos coordonnées */}
-          <div className="p-8 border-b border-gray-100">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Vos coordonnées</h2>
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                  Nom complet *
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                  placeholder="Jean Dupont"
-                />
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 py-12">
+          {/* Indicateur d'étapes */}
+          <div className="flex items-center justify-center gap-0 mb-10">
+            {STEPS.map((s, i) => (
+              <div key={s.num} className="flex items-center">
+                <div className="flex flex-col items-center gap-1.5">
+                  <div
+                    className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-medium transition-all duration-300 ${
+                      step > s.num
+                        ? "bg-[#0022d2] text-white"
+                        : step === s.num
+                          ? "bg-[#0022d2] text-white shadow-md scale-110"
+                          : "bg-white border border-stone-200 text-stone-400"
+                    }`}
+                  >
+                    {step > s.num ? (
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M5 13l4 4L19 7"
+                        />
+                      </svg>
+                    ) : (
+                      s.num
+                    )}
+                  </div>
+                  <p
+                    className={`text-xs font-light transition-colors ${step === s.num ? "text-[#0022d2]" : "text-stone-400"}`}
+                  >
+                    {s.label}
+                  </p>
+                </div>
+                {i < STEPS.length - 1 && (
+                  <div
+                    className={`w-16 h-px mx-2 mb-4 transition-colors duration-300 ${step > s.num ? "bg-[#0022d2]" : "bg-stone-200"}`}
+                  />
+                )}
               </div>
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                  Email *
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                  placeholder="jean.dupont@exemple.fr"
-                />
-              </div>
-              <div>
-                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                  Téléphone *
-                </label>
-                <input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                  placeholder="06 12 34 56 78"
-                />
-              </div>
-              <div>
-                <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-2">
-                  Adresse du bien *
-                </label>
-                <input
-                  type="text"
-                  id="address"
-                  name="address"
-                  value={formData.address}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                  placeholder="123 rue de la Paix, 75001 Paris"
-                />
-              </div>
-            </div>
+            ))}
           </div>
 
-          {/* Section 2 : Caractéristiques du bien */}
-          <div className="p-8 border-b border-gray-100">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Caractéristiques du bien</h2>
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <label htmlFor="propertyType" className="block text-sm font-medium text-gray-700 mb-2">
-                  Type de bien *
-                </label>
-                <select
-                  id="propertyType"
-                  name="propertyType"
-                  value={formData.propertyType}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                >
-                  <option value="appartement">Appartement</option>
-                  <option value="maison">Maison</option>
-                  <option value="local">Local commercial</option>
-                  <option value="terrain">Terrain</option>
-                </select>
-              </div>
-              <div>
-                <label htmlFor="surface" className="block text-sm font-medium text-gray-700 mb-2">
-                  Surface (m²) *
-                </label>
-                <input
-                  type="number"
-                  id="surface"
-                  name="surface"
-                  value={formData.surface}
-                  onChange={handleChange}
-                  required
-                  min="1"
-                  className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                  placeholder="68"
-                />
-              </div>
-              <div>
-                <label htmlFor="rooms" className="block text-sm font-medium text-gray-700 mb-2">
-                  Nombre de pièces *
-                </label>
-                <input
-                  type="number"
-                  id="rooms"
-                  name="rooms"
-                  value={formData.rooms}
-                  onChange={handleChange}
-                  required
-                  min="1"
-                  className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                  placeholder="3"
-                />
-              </div>
-            </div>
-          </div>
+          {/* Formulaire */}
+          <div className="bg-white rounded-3xl border border-stone-100 shadow-sm p-8 md:p-10">
+            {/* ── Étape 1 ── */}
+            {step === 1 && (
+              <div className="space-y-8">
+                <div>
+                  <div className="flex items-center gap-3 mb-5">
+                    <div className="h-px w-6 bg-[#ffb800]" />
+                    <h2 className="font-serif text-xl font-light text-stone-800">
+                      Votre projet
+                    </h2>
+                  </div>
+                  <div className="grid grid-cols-1 gap-3">
+                    {TRANSACTION_TYPES.map((t) => (
+                      <button
+                        key={t.key}
+                        type="button"
+                        onClick={() => update("transactionType", t.key)}
+                        className={`flex items-center gap-4 p-4 rounded-xl border text-left transition-all duration-200 ${
+                          data.transactionType === t.key
+                            ? "border-[#0022d2] bg-[#0022d2]/5 text-[#0022d2]"
+                            : "border-stone-200 text-stone-600 hover:border-stone-300"
+                        }`}
+                      >
+                        <div
+                          className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors ${
+                            data.transactionType === t.key
+                              ? "border-[#0022d2]"
+                              : "border-stone-300"
+                          }`}
+                        >
+                          {data.transactionType === t.key && (
+                            <div className="w-2.5 h-2.5 rounded-full bg-[#0022d2]" />
+                          )}
+                        </div>
+                        <span className="text-sm font-light">{t.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                  {errors.transactionType && (
+                    <p className="mt-2 text-xs text-red-500">
+                      {errors.transactionType}
+                    </p>
+                  )}
+                </div>
 
-         
-          <div className="p-8">
-            <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-              Informations complémentaires
-            </label>
-            <textarea
-              id="message"
-              name="message"
-              rows="4"
-              value={formData.message}
-              onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition resize-none"
-              placeholder="Précisez ici l'état du bien, les travaux éventuels, etc."
-            />
-          </div>
+                <div>
+                  <div className="flex items-center gap-3 mb-5">
+                    <div className="h-px w-6 bg-[#ffb800]" />
+                    <h2 className="font-serif text-xl font-light text-stone-800">
+                      Type de bien
+                    </h2>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    {PROPERTY_TYPES.map((t) => (
+                      <button
+                        key={t.key}
+                        type="button"
+                        onClick={() => update("propertyType", t.key)}
+                        className={`flex flex-col items-center gap-2 p-5 rounded-xl border text-center transition-all duration-200 ${
+                          data.propertyType === t.key
+                            ? "border-[#0022d2] bg-[#0022d2]/5"
+                            : "border-stone-200 hover:border-stone-300"
+                        }`}
+                      >
+                        <span className="text-2xl" aria-hidden="true">
+                          {t.icon}
+                        </span>
+                        <span
+                          className={`text-sm font-light ${data.propertyType === t.key ? "text-[#0022d2]" : "text-stone-600"}`}
+                        >
+                          {t.label}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                  {errors.propertyType && (
+                    <p className="mt-2 text-xs text-red-500">
+                      {errors.propertyType}
+                    </p>
+                  )}
+                </div>
+              </div>
+            )}
 
-         
-          <div className="p-8 pt-0">
-            <button
-              type="submit"
-              disabled={status === 'sending'}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 rounded-xl text-lg shadow-lg hover:shadow-xl transition disabled:opacity-50 disabled:cursor-not-allowed"
+            {/* ── Étape 2 ── */}
+            {step === 2 && (
+              <div className="space-y-6">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="h-px w-6 bg-[#ffb800]" />
+                  <h2 className="font-serif text-xl font-light text-stone-800">
+                    Les détails du bien
+                  </h2>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="mb-1.5 block text-xs font-medium tracking-wide text-stone-500 uppercase">
+                      Surface (m²) *
+                    </label>
+                    <input
+                      type="number"
+                      value={data.surface}
+                      onChange={(e) => update("surface", e.target.value)}
+                      placeholder="Ex : 85"
+                      className={inputClass("surface")}
+                    />
+                    {errors.surface && (
+                      <p className="mt-1 text-xs text-red-500">
+                        {errors.surface}
+                      </p>
+                    )}
+                  </div>
+                  <div>
+                    <label className="mb-1.5 block text-xs font-medium tracking-wide text-stone-500 uppercase">
+                      Nombre de pièces
+                    </label>
+                    <input
+                      type="number"
+                      value={data.rooms}
+                      onChange={(e) => update("rooms", e.target.value)}
+                      placeholder="Ex : 4"
+                      className={inputClass("rooms")}
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="mb-1.5 block text-xs font-medium tracking-wide text-stone-500 uppercase">
+                      Étage
+                    </label>
+                    <input
+                      type="text"
+                      value={data.floor}
+                      onChange={(e) => update("floor", e.target.value)}
+                      placeholder="Ex : 3ème / 5"
+                      className={inputClass("floor")}
+                    />
+                  </div>
+                  <div>
+                    <label className="mb-1.5 block text-xs font-medium tracking-wide text-stone-500 uppercase">
+                      État général
+                    </label>
+                    <select
+                      value={data.condition}
+                      onChange={(e) => update("condition", e.target.value)}
+                      className={inputClass("condition")}
+                    >
+                      <option value="">Choisir…</option>
+                      <option value="neuf">Neuf / Récent</option>
+                      <option value="bon">Bon état</option>
+                      <option value="travaux">Travaux à prévoir</option>
+                      <option value="renovation">À rénover</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="mb-1.5 block text-xs font-medium tracking-wide text-stone-500 uppercase">
+                    Adresse ou ville *
+                  </label>
+                  <input
+                    type="text"
+                    value={data.address}
+                    onChange={(e) => update("address", e.target.value)}
+                    placeholder="Ex : Paris 16ème, ou adresse complète"
+                    className={inputClass("address")}
+                  />
+                  {errors.address && (
+                    <p className="mt-1 text-xs text-red-500">
+                      {errors.address}
+                    </p>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* ── Étape 3 ── */}
+            {step === 3 && (
+              <div className="space-y-5">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="h-px w-6 bg-[#ffb800]" />
+                  <h2 className="font-serif text-xl font-light text-stone-800">
+                    Vos coordonnées
+                  </h2>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="mb-1.5 block text-xs font-medium tracking-wide text-stone-500 uppercase">
+                      Nom complet *
+                    </label>
+                    <input
+                      type="text"
+                      value={data.name}
+                      onChange={(e) => update("name", e.target.value)}
+                      placeholder="Jean Dupont"
+                      className={inputClass("name")}
+                      autoComplete="name"
+                    />
+                    {errors.name && (
+                      <p className="mt-1 text-xs text-red-500">{errors.name}</p>
+                    )}
+                  </div>
+                  <div>
+                    <label className="mb-1.5 block text-xs font-medium tracking-wide text-stone-500 uppercase">
+                      Téléphone *
+                    </label>
+                    <input
+                      type="tel"
+                      value={data.phone}
+                      onChange={(e) => update("phone", e.target.value)}
+                      placeholder="06 00 00 00 00"
+                      className={inputClass("phone")}
+                      autoComplete="tel"
+                    />
+                    {errors.phone && (
+                      <p className="mt-1 text-xs text-red-500">
+                        {errors.phone}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                <div>
+                  <label className="mb-1.5 block text-xs font-medium tracking-wide text-stone-500 uppercase">
+                    Email *
+                  </label>
+                  <input
+                    type="email"
+                    value={data.email}
+                    onChange={(e) => update("email", e.target.value)}
+                    placeholder="jean.dupont@exemple.fr"
+                    className={inputClass("email")}
+                    autoComplete="email"
+                  />
+                  {errors.email && (
+                    <p className="mt-1 text-xs text-red-500">{errors.email}</p>
+                  )}
+                </div>
+
+                <div>
+                  <label className="mb-1.5 block text-xs font-medium tracking-wide text-stone-500 uppercase">
+                    Message complémentaire
+                  </label>
+                  <textarea
+                    rows={4}
+                    value={data.message}
+                    onChange={(e) => update("message", e.target.value)}
+                    placeholder="Précisions sur votre bien, vos délais, vos attentes…"
+                    className={`resize-none ${inputClass("message")}`}
+                  />
+                </div>
+
+                {/* Récap */}
+                <div className="rounded-xl bg-stone-50 border border-stone-100 p-4 text-xs text-stone-500 font-light space-y-1">
+                  <p className="font-medium text-stone-700 mb-2 text-sm">
+                    Récapitulatif de votre demande
+                  </p>
+                  <p>
+                    Type de projet :{" "}
+                    <span className="text-stone-700">
+                      {
+                        TRANSACTION_TYPES.find(
+                          (t) => t.key === data.transactionType,
+                        )?.label
+                      }
+                    </span>
+                  </p>
+                  <p>
+                    Type de bien :{" "}
+                    <span className="text-stone-700 capitalize">
+                      {
+                        PROPERTY_TYPES.find((t) => t.key === data.propertyType)
+                          ?.label
+                      }
+                    </span>
+                  </p>
+                  <p>
+                    Surface :{" "}
+                    <span className="text-stone-700">{data.surface} m²</span>
+                  </p>
+                  <p>
+                    Localisation :{" "}
+                    <span className="text-stone-700">{data.address}</span>
+                  </p>
+                </div>
+
+                <p className="text-xs text-stone-400 font-light">
+                  Vos informations sont utilisées uniquement pour vous adresser
+                  une estimation personnalisée.
+                </p>
+              </div>
+            )}
+
+            {/* Navigation étapes */}
+            <div
+              className={`flex gap-3 mt-8 ${step > 1 ? "justify-between" : "justify-end"}`}
             >
-              {status === 'sending' ? 'Envoi en cours...' : 'Demander une estimation'}
-            </button>
-            <p className="text-sm text-gray-500 text-center mt-4">
-              * Champs obligatoires. Votre demande sera traitée sous 48h.
-            </p>
+              {step > 1 && (
+                <button
+                  type="button"
+                  onClick={prevStep}
+                  className="flex items-center gap-2 px-6 py-3 border border-stone-200 text-stone-500 rounded-full text-sm font-light hover:border-stone-300 transition-all"
+                >
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1.5}
+                      d="M15 19l-7-7 7-7"
+                    />
+                  </svg>
+                  Retour
+                </button>
+              )}
+              {step < 3 ? (
+                <button
+                  type="button"
+                  onClick={nextStep}
+                  className="flex items-center gap-2 bg-[#0022d2] hover:bg-[#001aad] text-white font-semibold py-3 px-8 rounded-full text-sm transition-all hover:scale-105 shadow-md"
+                >
+                  Continuer
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={handleSubmit}
+                  className="flex items-center gap-2 bg-[#ffb800] hover:bg-[#ffc929] text-[#0022d2] font-bold py-3 px-8 rounded-full text-sm transition-all hover:scale-105 shadow-md"
+                >
+                  Envoyer ma demande
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </button>
+              )}
+            </div>
           </div>
-        </form>
 
-     
-        <section className="mt-16 text-center">
-          <h3 className="text-2xl font-bold text-gray-900 mb-6">Pourquoi nous faire confiance ?</h3>
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-white p-6 rounded-2xl shadow">
-              <div className="text-blue-600 mb-3">
-                <Icons.Check />
+          {/* Garanties */}
+          <div className="mt-8 grid grid-cols-3 gap-4">
+            {[
+              { icon: "🔒", label: "Données protégées" },
+              { icon: "⚡", label: "Réponse sous 48h" },
+              { icon: "🎯", label: "Sans engagement" },
+            ].map((g) => (
+              <div
+                key={g.label}
+                className="flex flex-col items-center gap-1.5 text-center"
+              >
+                <span className="text-xl" aria-hidden="true">
+                  {g.icon}
+                </span>
+                <span className="text-xs text-stone-400 font-light">
+                  {g.label}
+                </span>
               </div>
-              <h4 className="font-bold text-lg mb-2">Estimation gratuite</h4>
-              <p className="text-gray-600">Sans engagement, basée sur une analyse approfondie du marché.</p>
-            </div>
-            <div className="bg-white p-6 rounded-2xl shadow">
-              <div className="text-blue-600 mb-3">
-                <Icons.User />
-              </div>
-              <h4 className="font-bold text-lg mb-2">Experts certifiés</h4>
-              <p className="text-gray-600">Une équipe d'experts à votre écoute, avec une connaissance pointue du marché local.</p>
-            </div>
-            <div className="bg-white p-6 rounded-2xl shadow">
-              <div className="text-blue-600 mb-3">
-                <Icons.Phone />
-              </div>
-              <h4 className="font-bold text-lg mb-2">Suivi personnalisé</h4>
-              <p className="text-gray-600">Un conseiller dédié vous accompagne à chaque étape.</p>
-            </div>
+            ))}
           </div>
-        </section>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
-
-export default Estimation;
