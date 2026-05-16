@@ -20,7 +20,7 @@ import Estimation from "./pages/Estimation";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Legal from "./pages/Legal";
-//import Navbar from "./components/Navbar";
+import Navbar from "./components/about/Navbar";
 
 // ─── Liens de navigation ──────────────────────────────────────────────────────
 const NAV_LINKS = [
@@ -88,7 +88,7 @@ function App() {
     <HelmetProvider>
       <BrowserRouter>
         <div className="min-h-screen bg-gray-50 flex flex-col">
-          {/*<Navbar />*/}
+          <Navbar />
           <main className="flex-1 pt-20">
             <Routes>
               <Route
