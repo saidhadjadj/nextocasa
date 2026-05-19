@@ -9,8 +9,10 @@ export default function AboutStats() {
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.3 }
+      ([entry]) => {
+        if (entry.isIntersecting) setVisible(true);
+      },
+      { threshold: 0.3 },
     );
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
@@ -36,7 +38,9 @@ export default function AboutStats() {
               data-reveal
               className={[
                 "flex flex-col items-center justify-center rounded-sm bg-stone-50 py-8 px-4 text-center transition-all duration-700",
-                visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4",
+                visible
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-4",
               ].join(" ")}
               style={{ transitionDelay: `${i * 100}ms` }}
             >

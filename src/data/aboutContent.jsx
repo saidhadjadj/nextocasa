@@ -50,7 +50,7 @@ export const team = [
 
   {
     initials: "LL",
-    name: "Lefebre Laure",
+    name: "Laure Lefebre",
     role: "Conseilére Senior",
     quote:
       "\u00ab\u00a0J'assure à chaque client un accompagnement personnalisé et une presence continue\u00a0— jusqu'à la concrétisation de son projet.\u00a0\u00bb",
@@ -72,7 +72,7 @@ export const team = [
 ];
 
 export const stats = [
-  { value: "14", label: "Années d\u2019expérience" },
+  { value: "15", label: "Années d\u2019expérience" },
   { value: "620+", label: "Transactions réalisées" },
   { value: "97\u202f%", label: "Clients satisfaits" },
   { value: "3", label: "Villes d\u2019implantation" },

@@ -171,9 +171,9 @@ const ALL_PROPERTIES = [
       "Appartement indépendant",
     ],
     agent: {
-      name: "Marc Verlaine",
+      name: "Dupon Levine",
       role: "Associé — Patrimoine",
-      initials: "MV",
+      initials: "DL",
     },
   },
   {
@@ -206,9 +206,9 @@ const ALL_PROPERTIES = [
       "Gardien 24h/24",
     ],
     agent: {
-      name: "Claire Renaud",
+      name: "Lajoie Hind",
       role: "Fondatrice & Directrice",
-      initials: "CR",
+      initials: "LH",
     },
   },
 ];
