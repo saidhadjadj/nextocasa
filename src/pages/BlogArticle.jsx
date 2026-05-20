@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { ARTICLES } from "../data/BlogContent";
+import { ARTICLES } from "../data/blogContent";
 
 // ─── Rendu markdown simplifié ─────────────────────────────────────────────────
 function ArticleBody({ content }) {

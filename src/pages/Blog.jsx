@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { ARTICLES, CATEGORIES, BLOG_BENEFITS } from "../data/BlogContent";
+import { ARTICLES, CATEGORIES, BLOG_BENEFITS } from "../data/blogContent";
 
 // ─── Carte article standard ───────────────────────────────────────────────────
 function ArticleCard({ article }) {

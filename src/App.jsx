@@ -8,10 +8,8 @@ import {
 } from "react-router-dom";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import HomePage from "./pages/HomePage";
-/*
 import Blog from "./pages/Blog";
 import BlogArticle from "./pages/BlogArticle";
-*/
 import PropertyDetail from "./pages/PropertyDetail";
 import Achat from "./pages/Achat";
 import Vente from "./pages/Vente";
@@ -110,10 +108,8 @@ function App() {
               <Route path="/vente" element={<Vente />} />
               <Route path="/location" element={<Location />} />
               <Route path="/estimation" element={<Estimation />} />
-              {/*
               <Route path="/blog" element={<Blog />} />
-              */}
-              {/* <Route path="/blog/:slug" element={<BlogArticle />} />*/}
+              <Route path="/blog/:slug" element={<BlogArticle />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/biens/:id" element={<PropertyDetail />} />
