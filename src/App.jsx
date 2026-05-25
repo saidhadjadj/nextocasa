@@ -7,18 +7,37 @@ import {
   useLocation,
 } from "react-router-dom";
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import HomePage from "./pages/HomePage";
-import Blog from "./pages/Blog";
-import BlogArticle from "./pages/BlogArticle";
-import PropertyDetail from "./pages/PropertyDetail";
-import Achat from "./pages/Achat";
-import Vente from "./pages/Vente";
-import Location from "./pages/Location";
-import Estimation from "./pages/Estimation";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
-import Legal from "./pages/Legal";
+import { lazy, Suspense } from "react";
 import Navbar from "./components/about/Navbar";
+
+// ─── Chargement immédiat — page critique ─────────────────────────────────────
+import HomePage from "./pages/HomePage";
+
+// ─── Chargement différé — pages secondaires (réduit le TBT) ──────────────────
+const Blog = lazy(() => import("./pages/Blog"));
+const BlogArticle = lazy(() => import("./pages/BlogArticle"));
+const PropertyDetail = lazy(() => import("./pages/PropertyDetail"));
+const Achat = lazy(() => import("./pages/Achat"));
+const Vente = lazy(() => import("./pages/Vente"));
+const Location = lazy(() => import("./pages/Location"));
+const Estimation = lazy(() => import("./pages/Estimation"));
+const About = lazy(() => import("./pages/About"));
+const Contact = lazy(() => import("./pages/Contact"));
+const Legal = lazy(() => import("./pages/Legal"));
+
+// ─── Fallback pendant le chargement ──────────────────────────────────────────
+function PageLoader() {
+  return (
+    <div className="min-h-screen bg-[#f7f5f1] flex items-center justify-center">
+      <div className="flex flex-col items-center gap-4">
+        <p className="font-serif text-2xl font-light text-stone-300 animate-pulse">
+          NEXTO<span className="italic text-[#ffb800]">CASA</span>
+        </p>
+        <div className="w-8 h-px bg-gradient-to-r from-transparent via-[#ffb800] to-transparent animate-pulse" />
+      </div>
+    </div>
+  );
+}
 
 // ─── Liens de navigation ──────────────────────────────────────────────────────
 const NAV_LINKS = [
@@ -27,7 +46,7 @@ const NAV_LINKS = [
   { to: "/vente", label: "Vente" },
   { to: "/location", label: "Location" },
   { to: "/estimation", label: "Estimation" },
-  { to: "/blog", label: "Blog" },
+  { to: "/observatoire", label: "L'Observatoire" },
   { to: "/about", label: "À propos" },
   { to: "/contact", label: "Contact" },
 ];
@@ -47,7 +66,7 @@ function Footer() {
               { to: "/vente", label: "Vente" },
               { to: "/location", label: "Location" },
               { to: "/estimation", label: "Estimation" },
-              { to: "/blog", label: "Blog" },
+              { to: "/observatoire", label: "L'Observatoire" },
               { to: "/about", label: "À propos" },
             ].map(({ to, label }) => (
               <Link
@@ -88,33 +107,37 @@ function App() {
         <div className="min-h-screen bg-gray-50 flex flex-col">
           <Navbar />
           <main className="flex-1 pt-20">
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <>
-                    <Helmet>
-                      <title>NextoCasa — Agence immobilière d'exception</title>
-                      <meta
-                        name="description"
-                        content="NextoCasa, agence immobilière premium. Achat, vente, location et estimation gratuite de biens d'exception à Paris, Lyon et Bordeaux."
-                      />
-                    </Helmet>
-                    <HomePage />
-                  </>
-                }
-              />
-              <Route path="/achat" element={<Achat />} />
-              <Route path="/vente" element={<Vente />} />
-              <Route path="/location" element={<Location />} />
-              <Route path="/estimation" element={<Estimation />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/blog/:slug" element={<BlogArticle />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/biens/:id" element={<PropertyDetail />} />
-              <Route path="/mentions-legales" element={<Legal />} />
-            </Routes>
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
+                <Route
+                  path="/"
+                  element={
+                    <>
+                      <Helmet>
+                        <title>
+                          NextoCasa — Agence immobilière d'exception
+                        </title>
+                        <meta
+                          name="description"
+                          content="NextoCasa, agence immobilière premium. Achat, vente, location et estimation gratuite de biens d'exception à Paris, Lyon et Bordeaux."
+                        />
+                      </Helmet>
+                      <HomePage />
+                    </>
+                  }
+                />
+                <Route path="/achat" element={<Achat />} />
+                <Route path="/vente" element={<Vente />} />
+                <Route path="/location" element={<Location />} />
+                <Route path="/estimation" element={<Estimation />} />
+                <Route path="/observatoire" element={<Blog />} />
+                <Route path="/observatoire/:slug" element={<BlogArticle />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/biens/:id" element={<PropertyDetail />} />
+                <Route path="/mentions-legales" element={<Legal />} />
+              </Routes>
+            </Suspense>
           </main>
           <Footer />
         </div>

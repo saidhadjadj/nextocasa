@@ -1,0 +1,11 @@
+# NextoCasa — robots.txt
+# https://nextocasa.fr
+
+User-agent: *
+Allow: /
+
+# Exclure les pages sans valeur SEO
+Disallow: /mentions-legales
+
+# Sitemap
+Sitemap: https://nextocasa.fr/sitemap.xml

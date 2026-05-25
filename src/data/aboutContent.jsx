@@ -16,7 +16,7 @@ export const story = {
     "Aujourd\u2019hui implantée à Paris, Lyon et Bordeaux, l\u2019agence reste volontairement à taille humaine, avec un portefeuille sélectif de biens exceptionnels — souvent en vente discrète, toujours avec une histoire à raconter.",
   ],
   quote: {
-    text: "\u00ab\u00a0Chaque bien que nous représentons, nous devons être en mesure de l\u2019habiter par l\u2019imagination avant de le proposer à nos clients.\u00a0\u00bb",
+    text: "\u00ab\u00a0Chaque bien que nous présentons, nous devons être en mesure de l\u2019habiter par l\u2019imagination avant de le proposer à nos clients.\u00a0\u00bb",
     author: "Lajoie Hind, fondatrice",
   },
 };

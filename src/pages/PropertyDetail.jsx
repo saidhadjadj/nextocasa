@@ -36,9 +36,9 @@ const ALL_PROPERTIES = [
       "Gardien",
     ],
     agent: {
-      name: "Claire Renaud",
+      name: "Lajoie Hind",
       role: "Fondatrice & Directrice",
-      initials: "CR",
+      initials: "LH",
     },
   },
   {
@@ -72,9 +72,9 @@ const ALL_PROPERTIES = [
       "Alarme",
     ],
     agent: {
-      name: "Marc Verlaine",
+      name: "William Max",
       role: "Associé — Patrimoine",
-      initials: "MV",
+      initials: "WM",
     },
   },
   {

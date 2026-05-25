@@ -7,7 +7,7 @@ const NAV_LINKS = [
   { to: "/vente", label: "Vente" },
   { to: "/location", label: "Location" },
   { to: "/estimation", label: "Estimation" },
-  { to: "/blog", label: "Blog" },
+  { to: "/observatoire", label: "L'Observatoire" },
   { to: "/about", label: "À propos" },
   { to: "/contact", label: "Contact" },
 ];
@@ -19,7 +19,7 @@ const HERO_PAGES = [
   "/vente",
   "/location",
   "/estimation",
-  "/blog",
+  "/observatoire",
   "/about",
 ];
 

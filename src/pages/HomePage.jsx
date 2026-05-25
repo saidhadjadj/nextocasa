@@ -131,7 +131,7 @@ const SERVICES = [
 ];
 
 const STATS = [
-  { value: "14", label: "Années d'expérience" },
+  { value: "15", label: "Années d'expérience" },
   { value: "620+", label: "Transactions réalisées" },
   { value: "97 %", label: "Clients satisfaits" },
   { value: "3", label: "Villes d'implantation" },

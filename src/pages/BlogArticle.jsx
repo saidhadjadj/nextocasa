@@ -98,10 +98,10 @@ export default function BlogArticle() {
           Article introuvable
         </p>
         <Link
-          to="/blog"
+          to="/observatoire"
           className="text-sm text-[#0022d2] hover:underline font-light"
         >
-          Retour au blog
+          Retour à L'Observatoire
         </Link>
       </div>
     );
@@ -110,7 +110,7 @@ export default function BlogArticle() {
   return (
     <>
       <Helmet>
-        <title>{article.title} — NextoCasa Blog</title>
+        <title>{article.title} — L'Observatoire NextoCasa</title>
         <meta name="description" content={article.excerpt} />
       </Helmet>
 
@@ -153,7 +153,10 @@ export default function BlogArticle() {
               Accueil
             </Link>
             <span>/</span>
-            <Link to="/blog" className="hover:text-[#0022d2] transition-colors">
+            <Link
+              to="/observatoire"
+              className="hover:text-[#0022d2] transition-colors"
+            >
               Blog
             </Link>
             <span>/</span>

@@ -147,10 +147,10 @@ export default function Blog() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [search, setSearch] = useState("");
 
-  const featuredArticle = ARTICLES.find((a) => a.featured);
+  const featuredArticle = ARTICLES.find((a) => a.featured && a.published);
 
   const filtered = useMemo(() => {
-    return ARTICLES.filter((a) => {
+    return ARTICLES.filter((a) => a.published).filter((a) => {
       if (a.featured && activeCategory === "all" && search === "") return false;
       const matchCat =
         activeCategory === "all" || a.category === activeCategory;
@@ -166,10 +166,10 @@ export default function Blog() {
   return (
     <>
       <Helmet>
-        <title>Blog — NextoCasa</title>
+        <title>L'Observatoire — NextoCasa</title>
         <meta
           name="description"
-          content="Analyses du marché parisien, conseils acheteurs, guides investisseurs. L'expertise NextoCasa au service de votre projet immobilier."
+          content="L'Observatoire NextoCasa — analyses du marché parisien, conseils acheteurs et guides investisseurs par nos experts."
         />
       </Helmet>
 
@@ -187,17 +187,20 @@ export default function Blog() {
             <div className="flex items-center gap-3 mb-4">
               <div className="h-px w-8 bg-[#ffb800]" />
               <p className="text-[#ffb800] text-xs tracking-[0.25em] uppercase font-medium">
-                Expertise & actualités — Paris
+                Analyses & expertises — Paris
               </p>
               <div className="h-px w-8 bg-[#ffb800]" />
             </div>
             <h1 className="font-serif text-4xl md:text-5xl font-light text-white mb-3">
-              Le <em className="not-italic italic text-[#ffb800]">blog</em>{" "}
+              L'
+              <em className="not-italic italic text-[#ffb800]">
+                Observatoire
+              </em>{" "}
               NextoCasa
             </h1>
             <p className="text-white/60 text-sm font-light max-w-lg">
-              Marché immobilier parisien, financement, investissement, fiscalité
-              — 14 articles rédigés par nos experts pour décider avec clarté.
+              Analyses de marché, décryptages et conseils d'experts. Tout ce
+              qu'il faut savoir pour décider avec clarté.
             </p>
           </div>
         </div>
@@ -215,7 +218,6 @@ export default function Blog() {
               <FeaturedArticle article={featuredArticle} />
             </div>
           )}
-
           {/* ── Filtres + recherche ───────────────────────────────────────── */}
           <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between mb-8">
             <div
@@ -263,7 +265,6 @@ export default function Blog() {
               />
             </div>
           </div>
-
           {/* ── Grille ───────────────────────────────────────────────────── */}
           {filtered.length === 0 ? (
             <div className="text-center py-20">
@@ -292,7 +293,6 @@ export default function Blog() {
               </div>
             </>
           )}
-
           {/* ── Bénéfices ────────────────────────────────────────────────── */}
           <div className="mt-20 rounded-3xl bg-[#0022d2] px-8 py-14 md:px-16">
             <div className="flex items-center justify-center gap-3 mb-3">
@@ -303,7 +303,7 @@ export default function Blog() {
               <div className="h-px w-6 bg-[#ffb800]/50" />
             </div>
             <h2 className="font-serif text-2xl md:text-3xl font-light text-white text-center mb-12">
-              Un blog au service de{" "}
+              L'Observatoire au service de{" "}
               <em className="not-italic italic text-[#ffb800]">votre projet</em>
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -322,7 +322,7 @@ export default function Blog() {
               ))}
             </div>
           </div>
-
+          s
           {/* ── CTA contact ──────────────────────────────────────────────── */}
           <div className="mt-10 rounded-2xl bg-white border border-stone-100 shadow-sm px-8 py-12 flex flex-col md:flex-row items-center justify-between gap-6">
             <div>

@@ -4,41 +4,42 @@
 // Données de référence maintenues cohérentes (cf. section 12 du document)
 
 export const CATEGORIES = [
-  { key: 'all',          label: 'Tous les articles'       },
-  { key: 'marche',       label: 'Marché & tendances'      },
-  { key: 'achat',        label: 'Achat premium'           },
-  { key: 'investissement', label: 'Investissement locatif' },
-  { key: 'financement',  label: 'Financement & crédit'    },
-  { key: 'juridique',    label: 'Juridique & fiscal'      },
+  { key: "all", label: "Tous les articles" },
+  { key: "marche", label: "Marché & tendances" },
+  { key: "achat", label: "Achat premium" },
+  { key: "investissement", label: "Investissement locatif" },
+  { key: "financement", label: "Financement & crédit" },
+  { key: "juridique", label: "Juridique & fiscal" },
 ];
 
 // ─── Données de référence (cohérence inter-articles) ─────────────────────────
 export const DATA_REF = {
-  prixMedianParis: '9 400 – 9 600 €/m²',
-  correction: '−8 à −13 % selon arrondissements',
-  tauxCredit20ans: '~3,8 %',
-  rendementBrut: '3,5 – 4,8 %',
-  rendementNet: '2,3 – 3,4 %',
-  apportMinimum: '20 % (CDI) · 25–30 % (indépendant)',
-  tauxEndettementMax: '35 % assurance incluse',
+  prixMedianParis: "9 400 – 9 600 €/m²",
+  correction: "−8 à −13 % selon arrondissements",
+  tauxCredit20ans: "~3,8 %",
+  rendementBrut: "3,5 – 4,8 %",
+  rendementNet: "2,3 – 3,4 %",
+  apportMinimum: "20 % (CDI) · 25–30 % (indépendant)",
+  tauxEndettementMax: "35 % assurance incluse",
 };
 
 export const ARTICLES = [
-
   // ════════════════════════════════════════════════════════════════════════════
   // ARTICLES PILIERS (A·)
   // ════════════════════════════════════════════════════════════════════════════
 
   {
     id: 1,
-    ref: 'A·01',
-    slug: 'marche-immobilier-paris-2025',
-    category: 'marche',
-    tag: 'Marché & tendances',
-    type: 'pilier',
+    ref: "A·01",
+    slug: "marche-immobilier-paris-2025",
+    category: "marche",
+    tag: "Marché & tendances",
+    type: "pilier",
     featured: true,
-    title: 'Marché immobilier à Paris en 2025 : état des lieux et perspectives',
-    excerpt: 'Après deux années de correction, le marché parisien amorce une stabilisation. Prix médian, volumes de transactions, taux d'intérêt : notre analyse complète pour décider avec clarté.',
+    published: true, // ✅ Publié — visible sur le site
+    title: "Marché immobilier à Paris en 2025 : état des lieux et perspectives",
+    excerpt:
+      "Après deux années de correction, le marché parisien amorce une stabilisation. Prix médian, volumes de transactions, taux d'intérêt : notre analyse complète pour décider avec clarté.",
     body: `
 Deux ans après le début de la remontée des taux directeurs de la BCE, le marché immobilier parisien présente un visage contrasté. La correction est réelle — entre −8 et −13 % selon les arrondissements — mais les signaux d'un plancher se multiplient depuis la fin 2024.
 
@@ -78,26 +79,33 @@ Notre analyse privilégie le scénario central. Pour les acquéreurs dont le pro
 
 Pour aller plus loin : [Les quartiers de Paris où investir en 2025](/blog/quartiers-paris-investir-2025) · [Quel apport pour acheter dans le 8e, 16e ou 17e](/blog/apport-achat-arrondissements-paris)
     `.trim(),
-    author: 'Claire Renaud',
-    authorRole: 'Fondatrice & Directrice',
-    authorInitials: 'CR',
-    date: '12 mai 2025',
-    readTime: '8 min',
+    author: "Lajoie HIND",
+    authorRole: "Fondatrice & Directrice",
+    authorInitials: "LH",
+    date: "12 mai 2025",
+    readTime: "8 min",
     wordCount: 2250,
-    image: 'https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?w=900&q=80',
-    interlinks: ['quartiers-paris-investir-2025', 'apport-achat-arrondissements-paris', 'investissement-locatif-paris-rentabilite'],
+    image:
+      "https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?w=900&q=80",
+    interlinks: [
+      "quartiers-paris-investir-2025",
+      "apport-achat-arrondissements-paris",
+      "investissement-locatif-paris-rentabilite",
+    ],
   },
 
   {
     id: 2,
-    ref: 'A·02',
-    slug: 'acheter-bien-prestige-paris-etapes',
-    category: 'achat',
-    tag: 'Achat premium',
-    type: 'pilier',
+    ref: "A·02",
+    slug: "acheter-bien-prestige-paris-etapes",
+    category: "achat",
+    tag: "Achat premium",
+    type: "pilier",
     featured: false,
-    title: 'Acheter un bien de prestige à Paris : les 7 étapes clés',
-    excerpt: 'De la définition du projet à la signature chez le notaire : les étapes incontournables d\'un achat réussi dans le segment haut de gamme parisien. Méthode, pièges à éviter, conseils d\'initiés.',
+    published: false, // 🔒 Brouillon — non visible
+    title: "Acheter un bien de prestige à Paris : les 7 étapes clés",
+    excerpt:
+      "De la définition du projet à la signature chez le notaire : les étapes incontournables d'un achat réussi dans le segment haut de gamme parisien. Méthode, pièges à éviter, conseils d'initiés.",
     body: `
 Acheter un bien de prestige à Paris ne s'improvise pas. Le segment haut de gamme obéit à des règles spécifiques — délais, intermédiaires, négociation, financement — que les acquéreurs découvrent souvent trop tard. Voici la méthode complète pour aborder ce marché avec sérénité.
 
@@ -137,26 +145,34 @@ Environ trois mois après le compromis. Les fonds sont versés par le notaire ap
 
 Pour aller plus loin : [Négocier le prix d'un appartement à Paris](/blog/negocier-prix-appartement-paris) · [Acheter un Haussmannien : points de vigilance](/blog/acheter-haussmannien-paris-vigilance) · [Quel apport pour les arrondissements premium](/blog/apport-achat-arrondissements-paris)
     `.trim(),
-    author: 'Sofia Lemos',
-    authorRole: 'Conseillère senior',
-    authorInitials: 'SL',
-    date: '28 avril 2025',
-    readTime: '7 min',
+    author: "Laure Lefebre",
+    authorRole: "Conseillère senior",
+    authorInitials: "LL",
+    date: "28 avril 2025",
+    readTime: "7 min",
     wordCount: 2200,
-    image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=900&q=80',
-    interlinks: ['negocier-prix-appartement-paris', 'acheter-haussmannien-paris-vigilance', 'apport-achat-arrondissements-paris'],
+    image:
+      "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=900&q=80",
+    interlinks: [
+      "negocier-prix-appartement-paris",
+      "acheter-haussmannien-paris-vigilance",
+      "apport-achat-arrondissements-paris",
+    ],
   },
 
   {
     id: 3,
-    ref: 'A·03',
-    slug: 'investissement-locatif-paris-rentabilite',
-    category: 'investissement',
-    tag: 'Investissement locatif',
-    type: 'pilier',
+    ref: "A·03",
+    slug: "investissement-locatif-paris-rentabilite",
+    category: "investissement",
+    tag: "Investissement locatif",
+    type: "pilier",
     featured: false,
-    title: 'Rendement locatif à Paris en 2025 : brut, net, net-net — ce qui compte vraiment',
-    excerpt: 'Rendement brut affiché, rendement net réel, cash-flow après impôt : les trois indicateurs que tout investisseur parisien doit maîtriser avant de signer. Méthode et exemples chiffrés.',
+    published: false, // 🔒 Brouillon — non visible
+    title:
+      "Rendement locatif à Paris en 2025 : brut, net, net-net — ce qui compte vraiment",
+    excerpt:
+      "Rendement brut affiché, rendement net réel, cash-flow après impôt : les trois indicateurs que tout investisseur parisien doit maîtriser avant de signer. Méthode et exemples chiffrés.",
     body: `
 Le rendement locatif est l'indicateur le plus cité et le plus mal compris de l'investissement immobilier. Voici comment le calculer correctement, et ce qu'il révèle vraiment sur la qualité d'un investissement à Paris.
 
@@ -196,28 +212,36 @@ Le cash-flow est la différence entre le loyer perçu et l'ensemble des sorties 
 
 Paris n'est pas le marché le plus rentable de France en termes de rendement locatif pur — les villes de taille moyenne offrent souvent 5 à 7 % brut. Mais la liquidité du marché parisien, la profondeur de la demande locative et la résilience des prix sur le long terme justifient un rendement inférieur. C'est un actif de patrimoine, pas un actif de rendement.
 
-Pour aller plus loin : [SCI ou achat en nom propre](/blog/sci-vs-nom-propre-paris) · [LMNP à Paris en 2025](/blog/lmnp-paris-2025-rentable-reformes) · [Colocation haut de gamme](/blog/colocation-haut-de-gamme-paris-investissement).
+Pour aller plus loin : [SCI ou achat en nom propre](/blog/sci-vs-nom-propre-paris) · [LMNP à Paris en 2025](/blog/lmnp-paris-2025-rentable-reformes) · [Colocation haut de gamme](/blog/colocation-haut-de-gamme-paris-investissement)
     `.trim(),
-    author: 'Marc Verlaine',
-    authorRole: 'Associé — Patrimoine',
-    authorInitials: 'MV',
-    date: '15 avril 2025',
-    readTime: '8 min',
+    author: "Dupon Levine",
+    authorRole: "Associé — Patrimoine",
+    authorInitials: "DL",
+    date: "15 avril 2025",
+    readTime: "8 min",
     wordCount: 2300,
-    image: 'https://images.unsplash.com/photo-1460472178825-e5240623afd5?w=900&q=80',
-    interlinks: ['sci-vs-nom-propre-paris', 'lmnp-paris-2025-rentable-reformes', 'colocation-haut-de-gamme-paris-investissement'],
+    image:
+      "https://images.unsplash.com/photo-1460472178825-e5240623afd5?w=900&q=80",
+    interlinks: [
+      "sci-vs-nom-propre-paris",
+      "lmnp-paris-2025-rentable-reformes",
+      "colocation-haut-de-gamme-paris-investissement",
+    ],
   },
 
   {
     id: 4,
-    ref: 'A·04',
-    slug: 'apport-achat-arrondissements-paris',
-    category: 'financement',
-    tag: 'Financement & crédit',
-    type: 'pilier',
+    ref: "A·04",
+    slug: "apport-achat-arrondissements-paris",
+    category: "financement",
+    tag: "Financement & crédit",
+    type: "pilier",
     featured: false,
-    title: 'Quel apport pour acheter dans le 8e, le 16e ou le 17e arrondissement ?',
-    excerpt: 'Les arrondissements premium parisiens imposent des niveaux d\'apport spécifiques. Voici ce que les banques exigent vraiment — et comment optimiser votre dossier selon votre profil.',
+    published: false, // 🔒 Brouillon — non visible
+    title:
+      "Quel apport pour acheter dans le 8e, le 16e ou le 17e arrondissement ?",
+    excerpt:
+      "Les arrondissements premium parisiens imposent des niveaux d'apport spécifiques. Voici ce que les banques exigent vraiment — et comment optimiser votre dossier selon votre profil.",
     body: `
 Acheter dans les arrondissements les plus prisés de Paris — le 8ème, le 16ème, le 17ème — implique des niveaux de financement significatifs. Les règles générales s'appliquent, mais les pratiques bancaires sur ce segment présentent des spécificités qu'il est essentiel de connaître.
 
@@ -251,26 +275,33 @@ Un apport de 30 % constitué d'une donation récente sera analysé différemment
 
 Pour aller plus loin : [Négocier son taux en 2025](/blog/negocier-prix-appartement-paris) · [Acheter un bien de prestige : les 7 étapes](/blog/acheter-bien-prestige-paris-etapes)
     `.trim(),
-    author: 'Marc Verlaine',
-    authorRole: 'Associé — Patrimoine',
-    authorInitials: 'MV',
-    date: '5 avril 2025',
-    readTime: '7 min',
+    author: "William Max",
+    authorRole: "Associé — Patrimoine",
+    authorInitials: "WM",
+    date: "5 avril 2025",
+    readTime: "7 min",
     wordCount: 2200,
-    image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=900&q=80',
-    interlinks: ['negocier-prix-appartement-paris', 'acheter-bien-prestige-paris-etapes', 'credit-immobilier-haut-de-gamme-dossier'],
+    image:
+      "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=900&q=80",
+    interlinks: [
+      "negocier-prix-appartement-paris",
+      "acheter-bien-prestige-paris-etapes",
+      "credit-immobilier-haut-de-gamme-dossier",
+    ],
   },
 
   {
     id: 5,
-    ref: 'A·05',
-    slug: 'sci-vs-nom-propre-paris',
-    category: 'juridique',
-    tag: 'Juridique & fiscal',
-    type: 'pilier',
+    ref: "A·05",
+    slug: "sci-vs-nom-propre-paris",
+    category: "juridique",
+    tag: "Juridique & fiscal",
+    type: "pilier",
     featured: false,
-    title: 'SCI ou achat en nom propre : que choisir pour investir à Paris ?',
-    excerpt: 'La question revient sur tous les projets patrimoniaux. SCI à l\'IR, SCI à l\'IS, achat en nom propre : comparaison objective des trois options selon votre profil et vos objectifs.',
+    published: false, // 🔒 Brouillon — non visible
+    title: "SCI ou achat en nom propre : que choisir pour investir à Paris ?",
+    excerpt:
+      "La question revient sur tous les projets patrimoniaux. SCI à l'IR, SCI à l'IS, achat en nom propre : comparaison objective des trois options selon votre profil et vos objectifs.",
     body: `
 La question de la structure juridique d'acquisition est souvent traitée trop tard — parfois après la signature du compromis. Or, le choix entre achat en nom propre et création d'une SCI a des implications fiscales, successorales et patrimoniales majeures qui méritent une analyse approfondie en amont.
 
@@ -302,26 +333,34 @@ Un entretien avec un notaire ou un conseiller en gestion de patrimoine avant tou
 
 Pour aller plus loin : [Rendement locatif à Paris](/blog/investissement-locatif-paris-rentabilite) · [Transmission d'un patrimoine immobilier parisien](/blog/transmission-patrimoine-immobilier-paris)
     `.trim(),
-    author: 'Marc Verlaine',
-    authorRole: 'Associé — Patrimoine',
-    authorInitials: 'MV',
-    date: '28 mars 2025',
-    readTime: '8 min',
+    author: "William Max",
+    authorRole: "Associé — Patrimoine",
+    authorInitials: "WM",
+    date: "28 mars 2025",
+    readTime: "8 min",
     wordCount: 2400,
-    image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=900&q=80',
-    interlinks: ['investissement-locatif-paris-rentabilite', 'transmission-patrimoine-immobilier-paris', 'fiscalite-revenus-locatifs-paris'],
+    image:
+      "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=900&q=80",
+    interlinks: [
+      "investissement-locatif-paris-rentabilite",
+      "transmission-patrimoine-immobilier-paris",
+      "fiscalite-revenus-locatifs-paris",
+    ],
   },
 
   {
     id: 6,
-    ref: 'A·06',
-    slug: 'quartiers-paris-investir-2025',
-    category: 'marche',
-    tag: 'Marché & tendances',
-    type: 'pilier',
+    ref: "A·06",
+    slug: "quartiers-paris-investir-2025",
+    category: "marche",
+    tag: "Marché & tendances",
+    type: "pilier",
     featured: false,
-    title: 'Les quartiers de Paris où investir en 2025 : notre sélection commentée',
-    excerpt: 'Belleville, Oberkampf, les Batignolles, le Canal Saint-Martin... Ces quartiers concentrent les meilleures dynamiques de 2025. Notre analyse secteur par secteur, avec chiffres et nuances.',
+    published: false, // 🔒 Brouillon — non visible
+    title:
+      "Les quartiers de Paris où investir en 2025 : notre sélection commentée",
+    excerpt:
+      "Belleville, Oberkampf, les Batignolles, le Canal Saint-Martin... Ces quartiers concentrent les meilleures dynamiques de 2025. Notre analyse secteur par secteur, avec chiffres et nuances.",
     body: `
 Tous les quartiers parisiens ne se comportent pas de la même façon face aux cycles immobiliers. Certains résistent mieux à la correction, d'autres offrent encore des décotes intéressantes pour les investisseurs patients. Voici notre sélection commentée pour 2025.
 
@@ -353,14 +392,19 @@ Les arrondissements périphériques (18ème nord, 19ème est, 20ème) présenten
 
 Pour aller plus loin : [Marché immobilier Paris 2025](/blog/marche-immobilier-paris-2025) · [Investissement locatif : rendement réel](/blog/investissement-locatif-paris-rentabilite)
     `.trim(),
-    author: 'Claire Renaud',
-    authorRole: 'Fondatrice & Directrice',
-    authorInitials: 'CR',
-    date: '18 mars 2025',
-    readTime: '8 min',
+    author: "Lajoie Hind",
+    authorRole: "Fondatrice & Directrice",
+    authorInitials: "LH",
+    date: "18 mars 2025",
+    readTime: "8 min",
     wordCount: 2500,
-    image: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=900&q=80',
-    interlinks: ['marche-immobilier-paris-2025', 'investissement-locatif-paris-rentabilite', 'apport-achat-arrondissements-paris'],
+    image:
+      "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=900&q=80",
+    interlinks: [
+      "marche-immobilier-paris-2025",
+      "investissement-locatif-paris-rentabilite",
+      "apport-achat-arrondissements-paris",
+    ],
   },
 
   // ════════════════════════════════════════════════════════════════════════════
@@ -369,14 +413,17 @@ Pour aller plus loin : [Marché immobilier Paris 2025](/blog/marche-immobilier-p
 
   {
     id: 7,
-    ref: 'S·01',
-    slug: 'negocier-prix-appartement-paris',
-    category: 'achat',
-    tag: 'Achat premium',
-    type: 'calendrier',
+    ref: "S·01",
+    slug: "negocier-prix-appartement-paris",
+    category: "achat",
+    tag: "Achat premium",
+    type: "calendrier",
     featured: false,
-    title: 'Négocier le prix d\'un appartement à Paris : ce qui fonctionne vraiment',
-    excerpt: 'La négociation immobilière parisienne a ses règles non écrites. Timing, arguments, posture : les techniques qui aboutissent — et celles qui ferment des portes.',
+    published: false, // 🔒 Brouillon — non visible
+    title:
+      "Négocier le prix d'un appartement à Paris : ce qui fonctionne vraiment",
+    excerpt:
+      "La négociation immobilière parisienne a ses règles non écrites. Timing, arguments, posture : les techniques qui aboutissent — et celles qui ferment des portes.",
     body: `
 La négociation immobilière à Paris est un art délicat. Trop agressif, vous fermez la porte à des biens bien positionnés. Trop passif, vous laissez de l'argent sur la table. Voici ce qui fonctionne vraiment, sur la base de notre expérience de terrain.
 
@@ -406,26 +453,34 @@ Sur les biens présentés en exclusivité ou en off-market, la logique est diff�
 
 Pour aller plus loin : [Acheter un bien de prestige : les 7 étapes](/blog/acheter-bien-prestige-paris-etapes) · [Acheter un Haussmannien](/blog/acheter-haussmannien-paris-vigilance)
     `.trim(),
-    author: 'Sofia Lemos',
-    authorRole: 'Conseillère senior',
-    authorInitials: 'SL',
-    date: '2 mai 2025',
-    readTime: '5 min',
+    author: "Laure Lefebre",
+    authorRole: "Conseillère senior",
+    authorInitials: "LL",
+    date: "2 mai 2025",
+    readTime: "5 min",
     wordCount: 1500,
-    image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=900&q=80',
-    interlinks: ['acheter-bien-prestige-paris-etapes', 'acheter-haussmannien-paris-vigilance', 'apport-achat-arrondissements-paris'],
+    image:
+      "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=900&q=80",
+    interlinks: [
+      "acheter-bien-prestige-paris-etapes",
+      "acheter-haussmannien-paris-vigilance",
+      "apport-achat-arrondissements-paris",
+    ],
   },
 
   {
     id: 8,
-    ref: 'S·02',
-    slug: 'fiscalite-revenus-locatifs-paris',
-    category: 'juridique',
-    tag: 'Juridique & fiscal',
-    type: 'calendrier',
+    ref: "S·02",
+    slug: "fiscalite-revenus-locatifs-paris",
+    category: "juridique",
+    tag: "Juridique & fiscal",
+    type: "calendrier",
     featured: false,
-    title: 'Fiscalité des revenus locatifs à Paris : régime micro vs réel en 2025',
-    excerpt: 'Micro-foncier ou régime réel : le choix de régime fiscal peut faire varier votre imposition de plusieurs milliers d\'euros par an. Comparaison chiffrée et cas pratiques.',
+    published: false, // 🔒 Brouillon — non visible
+    title:
+      "Fiscalité des revenus locatifs à Paris : régime micro vs réel en 2025",
+    excerpt:
+      "Micro-foncier ou régime réel : le choix de régime fiscal peut faire varier votre imposition de plusieurs milliers d'euros par an. Comparaison chiffrée et cas pratiques.",
     body: `
 Le choix du régime fiscal pour vos revenus fonciers est l'une des décisions les plus impactantes de votre investissement locatif. Et pourtant, de nombreux propriétaires bailleurs restent au régime micro-foncier par inertie, en laissant filer un avantage fiscal significatif.
 
@@ -455,26 +510,34 @@ Dès que vos charges réelles annuelles dépassent 30 % de vos revenus fonciers 
 
 Pour aller plus loin : [SCI ou nom propre](/blog/sci-vs-nom-propre-paris) · [Rendement net-net à Paris](/blog/investissement-locatif-paris-rentabilite)
     `.trim(),
-    author: 'Marc Verlaine',
-    authorRole: 'Associé — Patrimoine',
-    authorInitials: 'MV',
-    date: '18 avril 2025',
-    readTime: '5 min',
+    author: "Dupon Levine",
+    authorRole: "Associé — Patrimoine",
+    authorInitials: "DL",
+    date: "18 avril 2025",
+    readTime: "5 min",
     wordCount: 1600,
-    image: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=900&q=80',
-    interlinks: ['sci-vs-nom-propre-paris', 'investissement-locatif-paris-rentabilite', 'lmnp-paris-2025-rentable-reformes'],
+    image:
+      "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=900&q=80",
+    interlinks: [
+      "sci-vs-nom-propre-paris",
+      "investissement-locatif-paris-rentabilite",
+      "lmnp-paris-2025-rentable-reformes",
+    ],
   },
 
   {
     id: 9,
-    ref: 'S·03',
-    slug: 'credit-immobilier-haut-de-gamme-dossier',
-    category: 'financement',
-    tag: 'Financement & crédit',
-    type: 'calendrier',
+    ref: "S·03",
+    slug: "credit-immobilier-haut-de-gamme-dossier",
+    category: "financement",
+    tag: "Financement & crédit",
+    type: "calendrier",
     featured: false,
-    title: 'Crédit immobilier haut de gamme à Paris : ce que les banques évaluent vraiment',
-    excerpt: 'Au-delà du taux d\'endettement, les banques scrutent votre dossier sous des angles que la plupart des acquéreurs ignorent. Ce que les établissements premium regardent vraiment.',
+    published: false, // 🔒 Brouillon — non visible
+    title:
+      "Crédit immobilier haut de gamme à Paris : ce que les banques évaluent vraiment",
+    excerpt:
+      "Au-delà du taux d'endettement, les banques scrutent votre dossier sous des angles que la plupart des acquéreurs ignorent. Ce que les établissements premium regardent vraiment.",
     body: `
 Obtenir un crédit immobilier pour un bien de prestige parisien n'est pas simplement une question de revenus suffisants. Les établissements bancaires qui financent ce segment — BNP Patrimoine, Société Générale Private Banking, Crédit Agricole Île-de-France — appliquent des grilles d'analyse spécifiques.
 
@@ -500,26 +563,34 @@ Préparer son dossier 6 à 12 mois avant la recherche active permet d'optimiser 
 
 Pour aller plus loin : [Quel apport pour les arrondissements premium](/blog/apport-achat-arrondissements-paris) · [Négocier son taux](/blog/negocier-prix-appartement-paris)
     `.trim(),
-    author: 'Marc Verlaine',
-    authorRole: 'Associé — Patrimoine',
-    authorInitials: 'MV',
-    date: '8 avril 2025',
-    readTime: '5 min',
+    author: "Dupon Levine",
+    authorRole: "Associé — Patrimoine",
+    authorInitials: "DL",
+    date: "8 avril 2025",
+    readTime: "5 min",
     wordCount: 1550,
-    image: 'https://images.unsplash.com/photo-1601597111158-2fceff292cdc?w=900&q=80',
-    interlinks: ['apport-achat-arrondissements-paris', 'negocier-prix-appartement-paris', 'acheter-bien-prestige-paris-etapes'],
+    image:
+      "https://images.unsplash.com/photo-1601597111158-2fceff292cdc?w=900&q=80",
+    interlinks: [
+      "apport-achat-arrondissements-paris",
+      "negocier-prix-appartement-paris",
+      "acheter-bien-prestige-paris-etapes",
+    ],
   },
 
   {
     id: 10,
-    ref: 'S·04',
-    slug: 'colocation-haut-de-gamme-paris-investissement',
-    category: 'investissement',
-    tag: 'Investissement locatif',
-    type: 'calendrier',
+    ref: "S·04",
+    slug: "colocation-haut-de-gamme-paris-investissement",
+    category: "investissement",
+    tag: "Investissement locatif",
+    type: "calendrier",
     featured: false,
-    title: 'Colocation haut de gamme à Paris : une stratégie d\'investissement méconnue',
-    excerpt: 'La colocation premium — grandes surfaces, finition haut de gamme, colocataires sélectionnés — affiche des rendements 30 à 50 % supérieurs à la location classique. Mode d\'emploi.',
+    published: false, // 🔒 Brouillon — non visible
+    title:
+      "Colocation haut de gamme à Paris : une stratégie d'investissement méconnue",
+    excerpt:
+      "La colocation premium — grandes surfaces, finition haut de gamme, colocataires sélectionnés — affiche des rendements 30 à 50 % supérieurs à la location classique. Mode d'emploi.",
     body: `
 La colocation souffre d'une image qui ne correspond plus à la réalité du segment premium. Dans les grandes surfaces parisiennes — à partir de 120 m² — la colocation haut de gamme est devenue une stratégie d'investissement sophistiquée, prisée des patrimoniaux qui cherchent à optimiser leur rendement sans sacrifier la qualité de leur actif.
 
@@ -545,26 +616,34 @@ La colocation haut de gamme est une stratégie pertinente pour les grandes surfa
 
 Pour aller plus loin : [Rendement locatif Paris](/blog/investissement-locatif-paris-rentabilite) · [SCI ou nom propre](/blog/sci-vs-nom-propre-paris)
     `.trim(),
-    author: 'Sofia Lemos',
-    authorRole: 'Conseillère senior',
-    authorInitials: 'SL',
-    date: '25 mars 2025',
-    readTime: '5 min',
+    author: "Laure Lefebre",
+    authorRole: "Conseillère senior",
+    authorInitials: "LL",
+    date: "25 mars 2025",
+    readTime: "5 min",
     wordCount: 1500,
-    image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=900&q=80',
-    interlinks: ['investissement-locatif-paris-rentabilite', 'sci-vs-nom-propre-paris', 'lmnp-paris-2025-rentable-reformes'],
+    image:
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=900&q=80",
+    interlinks: [
+      "investissement-locatif-paris-rentabilite",
+      "sci-vs-nom-propre-paris",
+      "lmnp-paris-2025-rentable-reformes",
+    ],
   },
 
   {
     id: 11,
-    ref: 'S·05',
-    slug: 'acheter-haussmannien-paris-vigilance',
-    category: 'achat',
-    tag: 'Achat premium',
-    type: 'calendrier',
+    ref: "S·05",
+    slug: "acheter-haussmannien-paris-vigilance",
+    category: "achat",
+    tag: "Achat premium",
+    type: "calendrier",
     featured: false,
-    title: 'Acheter un Haussmannien à Paris : les points de vigilance avant de signer',
-    excerpt: 'Parquet point de Hongrie, moulures, cheminées en marbre... Le Haussmannien fait rêver. Mais derrière la beauté des volumes se cachent des contraintes spécifiques à connaître absolument.',
+    published: false, // 🔒 Brouillon — non visible
+    title:
+      "Acheter un Haussmannien à Paris : les points de vigilance avant de signer",
+    excerpt:
+      "Parquet point de Hongrie, moulures, cheminées en marbre... Le Haussmannien fait rêver. Mais derrière la beauté des volumes se cachent des contraintes spécifiques à connaître absolument.",
     body: `
 L'appartement haussmannien reste le produit immobilier le plus recherché du marché parisien premium. Sa rareté, ses volumes et son cachet architectural justifient une prime de prix significative. Mais cette typologie présente aussi des contraintes spécifiques que tout acquéreur doit évaluer avant de s'engager.
 
@@ -590,26 +669,34 @@ L'exposition et le niveau sonore varient considérablement selon l'étage et l'o
 
 Pour aller plus loin : [Les 7 étapes d'un achat de prestige](/blog/acheter-bien-prestige-paris-etapes) · [Négocier le prix](/blog/negocier-prix-appartement-paris)
     `.trim(),
-    author: 'Claire Renaud',
-    authorRole: 'Fondatrice & Directrice',
-    authorInitials: 'CR',
-    date: '10 mars 2025',
-    readTime: '5 min',
+    author: "Lajoie Hind",
+    authorRole: "Fondatrice & Directrice",
+    authorInitials: "LH",
+    date: "10 mars 2025",
+    readTime: "5 min",
     wordCount: 1550,
-    image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=900&q=80',
-    interlinks: ['acheter-bien-prestige-paris-etapes', 'negocier-prix-appartement-paris', 'marche-immobilier-paris-2025'],
+    image:
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=900&q=80",
+    interlinks: [
+      "acheter-bien-prestige-paris-etapes",
+      "negocier-prix-appartement-paris",
+      "marche-immobilier-paris-2025",
+    ],
   },
 
   {
     id: 12,
-    ref: 'S·06',
-    slug: 'transmission-patrimoine-immobilier-paris',
-    category: 'juridique',
-    tag: 'Juridique & fiscal',
-    type: 'calendrier',
+    ref: "S·06",
+    slug: "transmission-patrimoine-immobilier-paris",
+    category: "juridique",
+    tag: "Juridique & fiscal",
+    type: "calendrier",
     featured: false,
-    title: 'Transmission d\'un patrimoine immobilier parisien : donation vs succession',
-    excerpt: 'Donner de son vivant ou laisser passer par la succession ? La réponse dépend de votre âge, de la valeur du patrimoine et de la structure familiale. Comparaison objective.',
+    published: false, // 🔒 Brouillon — non visible
+    title:
+      "Transmission d'un patrimoine immobilier parisien : donation vs succession",
+    excerpt:
+      "Donner de son vivant ou laisser passer par la succession ? La réponse dépend de votre âge, de la valeur du patrimoine et de la structure familiale. Comparaison objective.",
     body: `
 La transmission d'un patrimoine immobilier parisien est l'une des questions patrimoniales les plus complexes — et les plus coûteuses si elle est mal anticipée. Les droits de succession sur un bien parisien de 800 000 € peuvent dépasser 150 000 € en l'absence de préparation. Voici les leviers à connaître.
 
@@ -635,26 +722,33 @@ La transmission d'un patrimoine immobilier parisien se prépare idéalement 10 �
 
 Pour aller plus loin : [SCI ou nom propre](/blog/sci-vs-nom-propre-paris) · [Fiscalité des revenus locatifs](/blog/fiscalite-revenus-locatifs-paris)
     `.trim(),
-    author: 'Marc Verlaine',
-    authorRole: 'Associé — Patrimoine',
-    authorInitials: 'MV',
-    date: '24 février 2025',
-    readTime: '5 min',
+    author: "William Max",
+    authorRole: "Associé — Patrimoine",
+    authorInitials: "WM",
+    date: "24 février 2025",
+    readTime: "5 min",
     wordCount: 1500,
-    image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=900&q=80',
-    interlinks: ['sci-vs-nom-propre-paris', 'fiscalite-revenus-locatifs-paris', 'investissement-locatif-paris-rentabilite'],
+    image:
+      "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=900&q=80",
+    interlinks: [
+      "sci-vs-nom-propre-paris",
+      "fiscalite-revenus-locatifs-paris",
+      "investissement-locatif-paris-rentabilite",
+    ],
   },
 
   {
     id: 13,
-    ref: 'S·07',
-    slug: '8e-arrondissement-paris-marche-2025',
-    category: 'marche',
-    tag: 'Marché & tendances',
-    type: 'calendrier',
+    ref: "S·07",
+    slug: "8e-arrondissement-paris-marche-2025",
+    category: "marche",
+    tag: "Marché & tendances",
+    type: "calendrier",
     featured: false,
-    title: 'Le 8e arrondissement en 2025 : analyse du marché et opportunités',
-    excerpt: 'Triangle d\'Or, Monceau, Miromesnil : le 8ème concentre certaines des adresses les plus convoitées de Paris. Notre analyse du marché, secteur par secteur.',
+    published: false, // 🔒 Brouillon — non visible
+    title: "Le 8e arrondissement en 2025 : analyse du marché et opportunités",
+    excerpt:
+      "Triangle d'Or, Monceau, Miromesnil : le 8ème concentre certaines des adresses les plus convoitées de Paris. Notre analyse du marché, secteur par secteur.",
     body: `
 Le 8ème arrondissement occupe une place à part dans la géographie immobilière parisienne. Ses trois micro-marchés — le Triangle d'Or, le secteur Monceau et les abords de Miromesnil — obéissent à des dynamiques distinctes que tout acquéreur ou investisseur doit comprendre.
 
@@ -682,26 +776,34 @@ Le 8ème reste un arrondissement de conservation du capital plus que de rendemen
 
 Pour aller plus loin : [Quartiers de Paris où investir](/blog/quartiers-paris-investir-2025) · [Quel apport pour le 8ème](/blog/apport-achat-arrondissements-paris)
     `.trim(),
-    author: 'Claire Renaud',
-    authorRole: 'Fondatrice & Directrice',
-    authorInitials: 'CR',
-    date: '10 février 2025',
-    readTime: '5 min',
+    author: "Lajoie Hind",
+    authorRole: "Fondatrice & Directrice",
+    authorInitials: "LH",
+    date: "10 février 2025",
+    readTime: "5 min",
     wordCount: 1500,
-    image: 'https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?w=900&q=80',
-    interlinks: ['quartiers-paris-investir-2025', 'apport-achat-arrondissements-paris', 'marche-immobilier-paris-2025'],
+    image:
+      "https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?w=900&q=80",
+    interlinks: [
+      "quartiers-paris-investir-2025",
+      "apport-achat-arrondissements-paris",
+      "marche-immobilier-paris-2025",
+    ],
   },
 
   {
     id: 14,
-    ref: 'S·08',
-    slug: 'lmnp-paris-2025-rentable-reformes',
-    category: 'juridique',
-    tag: 'Juridique & fiscal',
-    type: 'calendrier',
+    ref: "S·08",
+    slug: "lmnp-paris-2025-rentable-reformes",
+    category: "juridique",
+    tag: "Juridique & fiscal",
+    type: "calendrier",
     featured: false,
-    title: 'LMNP à Paris en 2025 : est-ce encore rentable après les réformes fiscales ?',
-    excerpt: 'La loi de finances 2024 a modifié les règles du LMNP. Amortissements, plus-values, régime micro-BIC : ce qui change concrètement et ce qui reste avantageux.',
+    published: false, // 🔒 Brouillon — non visible
+    title:
+      "LMNP à Paris en 2025 : est-ce encore rentable après les réformes fiscales ?",
+    excerpt:
+      "La loi de finances 2024 a modifié les règles du LMNP. Amortissements, plus-values, régime micro-BIC : ce qui change concrètement et ce qui reste avantageux.",
     body: `
 Le statut de Loueur en Meublé Non Professionnel (LMNP) a longtemps été considéré comme l'outil fiscal optimal pour l'investissement locatif à Paris. Les réformes introduites par la loi de finances 2024 en ont modifié l'équilibre. Voici ce qui change et ce qui reste pertinent.
 
@@ -727,20 +829,37 @@ Le LMNP est particulièrement adapté aux investisseurs qui envisagent une déte
 
 Pour aller plus loin : [Fiscalité des revenus locatifs](/blog/fiscalite-revenus-locatifs-paris) · [SCI ou nom propre](/blog/sci-vs-nom-propre-paris) · [Rendement locatif Paris](/blog/investissement-locatif-paris-rentabilite)
     `.trim(),
-    author: 'Marc Verlaine',
-    authorRole: 'Associé — Patrimoine',
-    authorInitials: 'MV',
-    date: '27 janvier 2025',
-    readTime: '6 min',
+    author: "William Max",
+    authorRole: "Associé — Patrimoine",
+    authorInitials: "WM",
+    date: "27 janvier 2025",
+    readTime: "6 min",
     wordCount: 1600,
-    image: 'https://images.unsplash.com/photo-1460472178825-e5240623afd5?w=900&q=80',
-    interlinks: ['fiscalite-revenus-locatifs-paris', 'sci-vs-nom-propre-paris', 'investissement-locatif-paris-rentabilite'],
+    image:
+      "https://images.unsplash.com/photo-1460472178825-e5240623afd5?w=900&q=80",
+    interlinks: [
+      "fiscalite-revenus-locatifs-paris",
+      "sci-vs-nom-propre-paris",
+      "investissement-locatif-paris-rentabilite",
+    ],
   },
 ];
 
 // ─── Bénéfices du blog ────────────────────────────────────────────────────────
 export const BLOG_BENEFITS = [
-  { icon: '📈', title: 'Trafic SEO',        desc: "Chaque article = une porte d'entrée sur Google, sans publicité payante."         },
-  { icon: '✨', title: 'Image premium',      desc: "Un blog soigné renforce le positionnement haut de gamme de l'agence."            },
-  { icon: '🤝', title: 'Audience récurrente', desc: "Des lecteurs qui reviennent = une communauté qui crée du bouche à oreille."      },
+  {
+    icon: "📈",
+    title: "Comprendre",
+    desc: " Decrypter le marché avec précision Tendances,prix,opportunités.",
+  },
+  {
+    icon: "✨",
+    title: "Valoriser",
+    desc: "Un contenu riche, une ligne éditoriale soignée.",
+  },
+  {
+    icon: "🤝",
+    title: "Audience récurrente",
+    desc: "Une communauté qui se construit dans la confiance.",
+  },
 ];
