@@ -62,7 +62,7 @@ export default function Vente() {
         {/* Hero */}
         <div className="relative h-64 md:h-80 overflow-hidden">
           <img
-            src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1400&q=80"
+            src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&q=70&fm=webp&auto=format"
             alt=""
             aria-hidden="true"
             className="absolute inset-0 w-full h-full object-cover object-center"

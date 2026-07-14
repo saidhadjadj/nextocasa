@@ -2,17 +2,25 @@ import { useState, useEffect, useCallback, useMemo } from "react";
 import { Link } from "react-router-dom";
 
 // ─── Slides hero ──────────────────────────────────────────────────────────────
+// Paramètres Unsplash optimisés : WebP + dimensions adaptées
+const BASE = "https://images.unsplash.com";
+const opt = (id, w, q) =>
+  `${BASE}/${id}?w=${w}&q=${q}&fm=webp&fit=crop&auto=format`;
+
 const HERO_SLIDES = [
   {
-    url: "https://images.unsplash.com/photo-1600210492493-0946911123ea?w=1600&q=85",
+    desktop: opt("photo-1600210492493-0946911123ea", 1200, 75),
+    mobile: opt("photo-1600210492493-0946911123ea", 640, 65),
     label: "Salon d'exception — Paris 7ème",
   },
   {
-    url: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1600&q=85",
+    desktop: opt("photo-1600596542815-ffad4c1539a9", 1200, 75),
+    mobile: opt("photo-1600596542815-ffad4c1539a9", 640, 65),
     label: "Villa contemporaine — Neuilly-sur-Seine",
   },
   {
-    url: "https://images.unsplash.com/photo-1613977257363-707ba9348227?w=1600&q=85",
+    desktop: opt("photo-1613977257363-707ba9348227", 1200, 75),
+    mobile: opt("photo-1613977257363-707ba9348227", 640, 65),
     label: "Penthouse lumineux — Paris 16ème",
   },
 ];
@@ -28,7 +36,7 @@ const PROPERTIES = [
     surface: 187,
     rooms: 6,
     image:
-      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=480&q=70&fm=webp&auto=format",
     tag: "Exclusivité",
   },
   {
@@ -40,7 +48,7 @@ const PROPERTIES = [
     surface: 210,
     rooms: 7,
     image:
-      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80",
+      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=480&q=70&fm=webp&auto=format",
     tag: "Coup de cœur",
   },
   {
@@ -52,7 +60,7 @@ const PROPERTIES = [
     surface: 120,
     rooms: 3,
     image:
-      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&q=80",
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=480&q=70&fm=webp&auto=format",
     tag: "Nouveau",
   },
   {
@@ -64,7 +72,7 @@ const PROPERTIES = [
     surface: 98,
     rooms: 4,
     image:
-      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=80",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=480&q=70&fm=webp&auto=format",
     tag: null,
   },
   {
@@ -76,7 +84,7 @@ const PROPERTIES = [
     surface: 280,
     rooms: 9,
     image:
-      "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=600&q=80",
+      "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=480&q=70&fm=webp&auto=format",
     tag: "Off-market",
   },
   {
@@ -88,7 +96,7 @@ const PROPERTIES = [
     surface: 165,
     rooms: 4,
     image:
-      "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=600&q=80",
+      "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=480&q=70&fm=webp&auto=format",
     tag: "Premium",
   },
 ];
@@ -131,7 +139,7 @@ const SERVICES = [
 ];
 
 const STATS = [
-  { value: "15", label: "Années d'expérience" },
+  { value: "14", label: "Années d'expérience" },
   { value: "620+", label: "Transactions réalisées" },
   { value: "97 %", label: "Clients satisfaits" },
   { value: "3", label: "Villes d'implantation" },
@@ -174,6 +182,9 @@ function PropertyCard({ property }) {
           alt={property.title}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
           loading="lazy"
+          decoding="async"
+          width="480"
+          height="224"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         <div className="absolute top-3 left-3 flex gap-2">
@@ -275,12 +286,29 @@ function HeroCarousel() {
   return (
     <section className="relative h-screen max-h-[860px] min-h-[580px] overflow-hidden">
       {/* Image active */}
-      <img
-        src={HERO_SLIDES[current].url}
-        alt={HERO_SLIDES[current].label}
-        className="absolute inset-0 w-full h-full object-cover object-center"
-        style={{ opacity, transition: "opacity 0.6s ease" }}
-      />
+      {/* Image responsive : mobile 640px WebP / desktop 1200px WebP */}
+      <picture>
+        <source
+          media="(max-width: 768px)"
+          srcSet={HERO_SLIDES[current].mobile}
+          type="image/webp"
+        />
+        <source
+          media="(min-width: 769px)"
+          srcSet={HERO_SLIDES[current].desktop}
+          type="image/webp"
+        />
+        <img
+          src={HERO_SLIDES[current].desktop}
+          alt={HERO_SLIDES[current].label}
+          className="absolute inset-0 w-full h-full object-cover object-center"
+          style={{ opacity, transition: "opacity 0.6s ease" }}
+          fetchPriority="high"
+          decoding="async"
+          width="1200"
+          height="800"
+        />
+      </picture>
 
       {/* Dégradé */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-black/10" />
@@ -530,7 +558,7 @@ export default function HomePage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="relative rounded-3xl overflow-hidden">
           <img
-            src="https://images.unsplash.com/photo-1600210492493-0946911123ea?w=1400&q=80"
+            src="https://images.unsplash.com/photo-1600210492493-0946911123ea?w=1000&q=65&fm=webp&auto=format"
             alt=""
             aria-hidden="true"
             className="absolute inset-0 w-full h-full object-cover object-center"

@@ -12,7 +12,7 @@ const PROPERTIES = [
     surface: 187,
     rooms: 6,
     image:
-      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=480&q=70&fm=webp&auto=format",
     tag: "Exclusivité",
   },
   {
@@ -24,7 +24,7 @@ const PROPERTIES = [
     surface: 210,
     rooms: 7,
     image:
-      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80",
+      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=480&q=70&fm=webp&auto=format",
     tag: "Coup de cœur",
   },
   {
@@ -36,7 +36,7 @@ const PROPERTIES = [
     surface: 98,
     rooms: 4,
     image:
-      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=80",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=480&q=70&fm=webp&auto=format",
     tag: null,
   },
   {
@@ -48,7 +48,7 @@ const PROPERTIES = [
     surface: 130,
     rooms: 5,
     image:
-      "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=600&q=80",
+      "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=480&q=70&fm=webp&auto=format",
     tag: "Nouveau",
   },
   {
@@ -60,7 +60,7 @@ const PROPERTIES = [
     surface: 80,
     rooms: 3,
     image:
-      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=480&q=70&fm=webp&auto=format",
     tag: null,
   },
   {
@@ -72,7 +72,7 @@ const PROPERTIES = [
     surface: 220,
     rooms: 8,
     image:
-      "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&q=80",
+      "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=480&q=70&fm=webp&auto=format",
     tag: "Off-market",
   },
 ];
@@ -117,7 +117,7 @@ export default function Achat() {
         {/* Hero page */}
         <div className="relative h-64 md:h-80 overflow-hidden">
           <img
-            src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1400&q=80"
+            src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&q=70&fm=webp&auto=format"
             alt=""
             aria-hidden="true"
             className="absolute inset-0 w-full h-full object-cover object-center"

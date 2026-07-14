@@ -20,10 +20,10 @@ const ALL_PROPERTIES = [
     dpe: "C",
     tag: "Exclusivité",
     images: [
-      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=900&q=85",
-      "https://images.unsplash.com/photo-1600210492493-0946911123ea?w=900&q=85",
-      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=900&q=85",
-      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=900&q=85",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=75&fm=webp&auto=format",
+      "https://images.unsplash.com/photo-1600210492493-0946911123ea?w=800&q=75&fm=webp&auto=format",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=75&fm=webp&auto=format",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=75&fm=webp&auto=format",
     ],
     description:
       "Situé au cœur du 7ème arrondissement, à deux pas du musée d'Orsay, cet appartement haussmannien d'exception offre des volumes rares et une lumière traversante remarquable. Entièrement rénové par un architecte d'intérieur, il conjugue le cachet de l'époque — parquet point de Hongrie, moulures, cheminées en marbre — avec des prestations contemporaines haut de gamme. Le bien se compose d'une entrée avec dégagement, d'un grand salon-salle à manger de 65 m², d'une cuisine équipée ouverte, de quatre chambres dont une suite parentale, et de deux salles de bain en marbre.",
@@ -36,9 +36,9 @@ const ALL_PROPERTIES = [
       "Gardien",
     ],
     agent: {
-      name: "Lajoie Hind",
+      name: "Claire Renaud",
       role: "Fondatrice & Directrice",
-      initials: "LH",
+      initials: "CR",
     },
   },
   {
@@ -57,9 +57,9 @@ const ALL_PROPERTIES = [
     dpe: "B",
     tag: "Coup de cœur",
     images: [
-      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=900&q=85",
-      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=900&q=85",
-      "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=900&q=85",
+      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=75&fm=webp&auto=format",
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=75&fm=webp&auto=format",
+      "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=75&fm=webp&auto=format",
     ],
     description:
       "Villa contemporaine de standing élevé, construite en 2018, implantée sur une parcelle paysagée de 420 m². Architecture sobre et élégante, grandes ouvertures vitrées, matériaux nobles. Le rez-de-chaussée offre une vaste pièce de vie ouverte sur la terrasse et le jardin, une cuisine de chef équipée, et un bureau indépendant. L'étage accueille cinq chambres dont deux suites parentales, trois salles de bain et un dressing sur-mesure.",
@@ -72,9 +72,9 @@ const ALL_PROPERTIES = [
       "Alarme",
     ],
     agent: {
-      name: "William Max",
+      name: "Marc Verlaine",
       role: "Associé — Patrimoine",
-      initials: "WM",
+      initials: "MV",
     },
   },
   {
@@ -93,9 +93,9 @@ const ALL_PROPERTIES = [
     dpe: "D",
     tag: "Nouveau",
     images: [
-      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=900&q=85",
-      "https://images.unsplash.com/photo-1560185008-a33f5a7b2800?w=900&q=85",
-      "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=900&q=85",
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=75&fm=webp&auto=format",
+      "https://images.unsplash.com/photo-1560185008-a33f5a7b2800?w=800&q=75&fm=webp&auto=format",
+      "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800&q=75&fm=webp&auto=format",
     ],
     description:
       "Ancien atelier d'artiste entièrement rénové avec soin, ce loft atypique séduit par ses volumes, sa hauteur sous plafond de 3,80 m et ses grandes verrières apportant une lumière exceptionnelle. La pièce de vie principale, de 65 m², est ouverte sur une cuisine de chef. Deux chambres, une salle de bain en béton ciré et un espace bureau complètent la distribution. Parquet chêne massif, poutres apparentes, briques.",
@@ -125,8 +125,8 @@ const ALL_PROPERTIES = [
     dpe: "C",
     tag: null,
     images: [
-      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=900&q=85",
-      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=900&q=85",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=75&fm=webp&auto=format",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=75&fm=webp&auto=format",
     ],
     description:
       "Appartement de caractère situé dans un immeuble Belle Époque classé, boulevard des Belges. Beaux volumes, parquet en point de Hongrie, hauts plafonds à caissons. Séjour de 35 m² avec bow-window, cuisine séparée, deux chambres, salle de bain avec baignoire îlot. Ascenseur, gardien, cave. Vue dégagée sur le boulevard.",
@@ -156,9 +156,9 @@ const ALL_PROPERTIES = [
     dpe: "E",
     tag: "Off-market",
     images: [
-      "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=900&q=85",
-      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=900&q=85",
-      "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=900&q=85",
+      "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=75&fm=webp&auto=format",
+      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=75&fm=webp&auto=format",
+      "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&q=75&fm=webp&auto=format",
     ],
     description:
       "Remarquable maison de maître girondine dans le quartier des Chartrons, à deux pas des antiquaires et des galeries d'art. Bâtisse du Second Empire entièrement restaurée, préservant ses boiseries d'origine, ses parquets Versailles et ses cheminées en marbre. Trois niveaux d'exception : réception, espaces nuit et appartement indépendant en rez-de-jardin. Patio privatif de 80 m².",
@@ -171,9 +171,9 @@ const ALL_PROPERTIES = [
       "Appartement indépendant",
     ],
     agent: {
-      name: "Dupon Levine",
+      name: "Marc Verlaine",
       role: "Associé — Patrimoine",
-      initials: "DL",
+      initials: "MV",
     },
   },
   {
@@ -192,8 +192,8 @@ const ALL_PROPERTIES = [
     dpe: "B",
     tag: "Premium",
     images: [
-      "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=900&q=85",
-      "https://images.unsplash.com/photo-1600210492493-0946911123ea?w=900&q=85",
+      "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=800&q=75&fm=webp&auto=format",
+      "https://images.unsplash.com/photo-1600210492493-0946911123ea?w=800&q=75&fm=webp&auto=format",
     ],
     description:
       "Exceptionnel penthouse au dernier étage d'une résidence de prestige avenue Foch. Vue à 270° sur Paris, la Tour Eiffel et le Bois de Boulogne. Grande terrasse de 45 m² aménagée. Intérieur contemporain signé par un architecte d'intérieur renommé : cuisine ouverte Bulthaup, salles de bain en marbre Calacatta, dressing sur-mesure. Gardien 24h/24, parking double en sous-sol.",
@@ -206,9 +206,9 @@ const ALL_PROPERTIES = [
       "Gardien 24h/24",
     ],
     agent: {
-      name: "Lajoie Hind",
+      name: "Claire Renaud",
       role: "Fondatrice & Directrice",
-      initials: "LH",
+      initials: "CR",
     },
   },
 ];

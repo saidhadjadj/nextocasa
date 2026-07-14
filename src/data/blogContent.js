@@ -4,12 +4,12 @@
 // Données de référence maintenues cohérentes (cf. section 12 du document)
 
 export const CATEGORIES = [
-  { key: "all", label: "Tous les articles" },
-  { key: "marche", label: "Marché & tendances" },
-  { key: "achat", label: "Achat premium" },
-  { key: "investissement", label: "Investissement locatif" },
-  { key: "financement", label: "Financement & crédit" },
-  { key: "juridique", label: "Juridique & fiscal" },
+  { key: "all",           label: "Tous les articles",     icon: "🗂️"  },
+  { key: "marche",        label: "Marché & tendances",    icon: "📊"  },
+  { key: "achat",         label: "Achat premium",         icon: "🏛️" },
+  { key: "investissement",label: "Investissement locatif",icon: "📈"  },
+  { key: "financement",   label: "Financement & crédit",  icon: "💶"  },
+  { key: "juridique",     label: "Juridique & fiscal",    icon: "⚖️" },
 ];
 
 // ─── Données de référence (cohérence inter-articles) ─────────────────────────
@@ -39,11 +39,13 @@ export const ARTICLES = [
     published: true, // ✅ Publié — visible sur le site
     title: "Marché immobilier à Paris en 2025 : état des lieux et perspectives",
     excerpt:
-      "Après deux années de correction, le marché parisien amorce une stabilisation. Prix médian, volumes de transactions, taux d'intérêt : notre analyse complète pour décider avec clarté.",
+      "Après deux années de correction, le marché parisien amorce une stabilisation. Prix médian, volumes de transactions, taux d\'intérêt : notre analyse complète pour décider avec clarté.",
     body: `
-Deux ans après le début de la remontée des taux directeurs de la BCE, le marché immobilier parisien présente un visage contrasté. La correction est réelle — entre −8 et −13 % selon les arrondissements — mais les signaux d'un plancher se multiplient depuis la fin 2024.
+Deux
 
-## Un prix médian qui se stabilise
+ après le début de la remontée des taux directeurs de la BCE, le marché immobilier parisien présente un visage contrasté. La correction est réelle — entre −8 et −13 % selon les arrondissements — mais les signaux d'un plancher se multiplient depuis la fin 2024.
+
+## Un prix médian qui se stabilise.
 
 Le prix médian parisien s'établit autour de **9 400 – 9 600 €/m²** au quatrième trimestre 2024 (source : Notaires de Paris), contre un pic de 10 800 €/m² en 2021. Cette correction, significative en valeur absolue, reste modérée en comparaison des cycles précédents.
 
@@ -79,14 +81,14 @@ Notre analyse privilégie le scénario central. Pour les acquéreurs dont le pro
 
 Pour aller plus loin : [Les quartiers de Paris où investir en 2025](/blog/quartiers-paris-investir-2025) · [Quel apport pour acheter dans le 8e, 16e ou 17e](/blog/apport-achat-arrondissements-paris)
     `.trim(),
-    author: "Lajoie HIND",
+    author: "Lajoie Hind",
     authorRole: "Fondatrice & Directrice",
     authorInitials: "LH",
     date: "12 mai 2025",
     readTime: "8 min",
     wordCount: 2250,
     image:
-      "https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?w=900&q=80",
+      "https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?w=700&q=70&fm=webp&auto=format",
     interlinks: [
       "quartiers-paris-investir-2025",
       "apport-achat-arrondissements-paris",
@@ -152,7 +154,7 @@ Pour aller plus loin : [Négocier le prix d'un appartement à Paris](/blog/negoc
     readTime: "7 min",
     wordCount: 2200,
     image:
-      "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=900&q=80",
+      "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=700&q=70&fm=webp&auto=format",
     interlinks: [
       "negocier-prix-appartement-paris",
       "acheter-haussmannien-paris-vigilance",
@@ -221,7 +223,7 @@ Pour aller plus loin : [SCI ou achat en nom propre](/blog/sci-vs-nom-propre-pari
     readTime: "8 min",
     wordCount: 2300,
     image:
-      "https://images.unsplash.com/photo-1460472178825-e5240623afd5?w=900&q=80",
+      "https://images.unsplash.com/photo-1460472178825-e5240623afd5?w=700&q=70&fm=webp&auto=format",
     interlinks: [
       "sci-vs-nom-propre-paris",
       "lmnp-paris-2025-rentable-reformes",
@@ -275,14 +277,14 @@ Un apport de 30 % constitué d'une donation récente sera analysé différemment
 
 Pour aller plus loin : [Négocier son taux en 2025](/blog/negocier-prix-appartement-paris) · [Acheter un bien de prestige : les 7 étapes](/blog/acheter-bien-prestige-paris-etapes)
     `.trim(),
-    author: "William Max",
+    author: "Dupon Levine",
     authorRole: "Associé — Patrimoine",
-    authorInitials: "WM",
+    authorInitials: "DL",
     date: "5 avril 2025",
     readTime: "7 min",
     wordCount: 2200,
     image:
-      "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=900&q=80",
+      "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=700&q=70&fm=webp&auto=format",
     interlinks: [
       "negocier-prix-appartement-paris",
       "acheter-bien-prestige-paris-etapes",
@@ -333,14 +335,14 @@ Un entretien avec un notaire ou un conseiller en gestion de patrimoine avant tou
 
 Pour aller plus loin : [Rendement locatif à Paris](/blog/investissement-locatif-paris-rentabilite) · [Transmission d'un patrimoine immobilier parisien](/blog/transmission-patrimoine-immobilier-paris)
     `.trim(),
-    author: "William Max",
+    author: "Dupon Levine",
     authorRole: "Associé — Patrimoine",
-    authorInitials: "WM",
+    authorInitials: "DL",
     date: "28 mars 2025",
     readTime: "8 min",
     wordCount: 2400,
     image:
-      "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=900&q=80",
+      "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=700&q=70&fm=webp&auto=format",
     interlinks: [
       "investissement-locatif-paris-rentabilite",
       "transmission-patrimoine-immobilier-paris",
@@ -399,7 +401,7 @@ Pour aller plus loin : [Marché immobilier Paris 2025](/blog/marche-immobilier-p
     readTime: "8 min",
     wordCount: 2500,
     image:
-      "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=900&q=80",
+      "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=700&q=70&fm=webp&auto=format",
     interlinks: [
       "marche-immobilier-paris-2025",
       "investissement-locatif-paris-rentabilite",
@@ -460,7 +462,7 @@ Pour aller plus loin : [Acheter un bien de prestige : les 7 étapes](/blog/achet
     readTime: "5 min",
     wordCount: 1500,
     image:
-      "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=900&q=80",
+      "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=700&q=70&fm=webp&auto=format",
     interlinks: [
       "acheter-bien-prestige-paris-etapes",
       "acheter-haussmannien-paris-vigilance",
@@ -517,7 +519,7 @@ Pour aller plus loin : [SCI ou nom propre](/blog/sci-vs-nom-propre-paris) · [Re
     readTime: "5 min",
     wordCount: 1600,
     image:
-      "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=900&q=80",
+      "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=700&q=70&fm=webp&auto=format",
     interlinks: [
       "sci-vs-nom-propre-paris",
       "investissement-locatif-paris-rentabilite",
@@ -570,7 +572,7 @@ Pour aller plus loin : [Quel apport pour les arrondissements premium](/blog/appo
     readTime: "5 min",
     wordCount: 1550,
     image:
-      "https://images.unsplash.com/photo-1601597111158-2fceff292cdc?w=900&q=80",
+      "https://images.unsplash.com/photo-1601597111158-2fceff292cdc?w=700&q=70&fm=webp&auto=format",
     interlinks: [
       "apport-achat-arrondissements-paris",
       "negocier-prix-appartement-paris",
@@ -623,7 +625,7 @@ Pour aller plus loin : [Rendement locatif Paris](/blog/investissement-locatif-pa
     readTime: "5 min",
     wordCount: 1500,
     image:
-      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=900&q=80",
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=700&q=70&fm=webp&auto=format",
     interlinks: [
       "investissement-locatif-paris-rentabilite",
       "sci-vs-nom-propre-paris",
@@ -676,7 +678,7 @@ Pour aller plus loin : [Les 7 étapes d'un achat de prestige](/blog/acheter-bien
     readTime: "5 min",
     wordCount: 1550,
     image:
-      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=900&q=80",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=700&q=70&fm=webp&auto=format",
     interlinks: [
       "acheter-bien-prestige-paris-etapes",
       "negocier-prix-appartement-paris",
@@ -722,14 +724,14 @@ La transmission d'un patrimoine immobilier parisien se prépare idéalement 10 �
 
 Pour aller plus loin : [SCI ou nom propre](/blog/sci-vs-nom-propre-paris) · [Fiscalité des revenus locatifs](/blog/fiscalite-revenus-locatifs-paris)
     `.trim(),
-    author: "William Max",
+    author: "Dupon Levine",
     authorRole: "Associé — Patrimoine",
-    authorInitials: "WM",
+    authorInitials: "DL",
     date: "24 février 2025",
     readTime: "5 min",
     wordCount: 1500,
     image:
-      "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=900&q=80",
+      "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=700&q=70&fm=webp&auto=format",
     interlinks: [
       "sci-vs-nom-propre-paris",
       "fiscalite-revenus-locatifs-paris",
@@ -783,7 +785,7 @@ Pour aller plus loin : [Quartiers de Paris où investir](/blog/quartiers-paris-i
     readTime: "5 min",
     wordCount: 1500,
     image:
-      "https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?w=900&q=80",
+      "https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?w=700&q=70&fm=webp&auto=format",
     interlinks: [
       "quartiers-paris-investir-2025",
       "apport-achat-arrondissements-paris",
@@ -829,14 +831,14 @@ Le LMNP est particulièrement adapté aux investisseurs qui envisagent une déte
 
 Pour aller plus loin : [Fiscalité des revenus locatifs](/blog/fiscalite-revenus-locatifs-paris) · [SCI ou nom propre](/blog/sci-vs-nom-propre-paris) · [Rendement locatif Paris](/blog/investissement-locatif-paris-rentabilite)
     `.trim(),
-    author: "William Max",
+    author: "Dupon Levine",
     authorRole: "Associé — Patrimoine",
-    authorInitials: "WM",
+    authorInitials: "DL",
     date: "27 janvier 2025",
     readTime: "6 min",
     wordCount: 1600,
     image:
-      "https://images.unsplash.com/photo-1460472178825-e5240623afd5?w=900&q=80",
+      "https://images.unsplash.com/photo-1460472178825-e5240623afd5?w=700&q=70&fm=webp&auto=format",
     interlinks: [
       "fiscalite-revenus-locatifs-paris",
       "sci-vs-nom-propre-paris",
@@ -850,16 +852,16 @@ export const BLOG_BENEFITS = [
   {
     icon: "📈",
     title: "Comprendre",
-    desc: " Decrypter le marché avec précision Tendances,prix,opportunités.",
+    desc: "Décrypter le marché avec précision Tendances,prix,opportunités.",
   },
   {
     icon: "✨",
     title: "Valoriser",
-    desc: "Un contenu riche, une ligne éditoriale soignée.",
+    desc: "Un contenu riche,une ligne éditoriale soignée",
   },
   {
     icon: "🤝",
     title: "Audience récurrente",
-    desc: "Une communauté qui se construit dans la confiance.",
+    desc: "Une communauté qui se construiit dans la confiance.",
   },
 ];

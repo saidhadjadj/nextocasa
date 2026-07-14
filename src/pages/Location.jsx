@@ -11,7 +11,7 @@ const RENTALS = [
     surface: 120,
     rooms: 3,
     image:
-      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&q=80",
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=480&q=70&fm=webp&auto=format",
     tag: "Nouveau",
     dispo: "Disponible maintenant",
   },
@@ -23,7 +23,7 @@ const RENTALS = [
     surface: 165,
     rooms: 4,
     image:
-      "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=600&q=80",
+      "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=480&q=70&fm=webp&auto=format",
     tag: "Premium",
     dispo: "Disponible maintenant",
   },
@@ -35,7 +35,7 @@ const RENTALS = [
     surface: 110,
     rooms: 4,
     image:
-      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=480&q=70&fm=webp&auto=format",
     tag: null,
     dispo: "Disponible le 1er juin",
   },
@@ -47,7 +47,7 @@ const RENTALS = [
     surface: 45,
     rooms: 1,
     image:
-      "https://images.unsplash.com/photo-1560185008-a33f5a7b2800?w=600&q=80",
+      "https://images.unsplash.com/photo-1560185008-a33f5a7b2800?w=480&q=70&fm=webp&auto=format",
     tag: null,
     dispo: "Disponible maintenant",
   },
@@ -59,7 +59,7 @@ const RENTALS = [
     surface: 200,
     rooms: 6,
     image:
-      "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=600&q=80",
+      "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=480&q=70&fm=webp&auto=format",
     tag: "Coup de cœur",
     dispo: "Disponible maintenant",
   },
@@ -71,7 +71,7 @@ const RENTALS = [
     surface: 72,
     rooms: 3,
     image:
-      "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=600&q=80",
+      "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=480&q=70&fm=webp&auto=format",
     tag: null,
     dispo: "Disponible le 15 juin",
   },
@@ -129,7 +129,7 @@ export default function Location() {
         {/* Hero */}
         <div className="relative h-64 md:h-80 overflow-hidden">
           <img
-            src="https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=1400&q=80"
+            src="https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=1200&q=70&fm=webp&auto=format"
             alt=""
             aria-hidden="true"
             className="absolute inset-0 w-full h-full object-cover object-center"
