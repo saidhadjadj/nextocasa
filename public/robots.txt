@@ -1,5 +1,5 @@
 # NextoCasa — robots.txt
-# https://nextocasa.fr
+# https://nextocasa.com
 
 User-agent: *
 Allow: /

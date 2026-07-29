@@ -275,7 +275,7 @@ function Contact() {
                       value: "Neuilly-sur-Marne, Île-de-France",
                     },
                     { label: "Téléphone", value: "+33 1 00 00 00 00" },
-                    { label: "Email", value: "contact@nextocasa.fr" },
+                    { label: "Email", value: "contact@nextocasa.com" },
                     {
                       label: "Horaires",
                       value: "Lun–Ven : 9h–19h · Sam : 10h–13h",

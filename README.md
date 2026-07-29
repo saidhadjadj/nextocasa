@@ -247,12 +247,20 @@ Un grand merci à la communauté Unsplash et à tous les photographes qui metten
 
 - [ ] Intégration **Sanity.io** (CMS headless) pour la gestion des articles sans toucher au code
 - [ ] Connexion au vrai `properties.json` avec les biens réels
-- [ ] **Domaine personnalisé** `nextocasa.fr`
+- [ ] **Domaine personnalisé** `nextocasa.com`
 - [ ] Articles S·09 à S·26 (calendrier éditorial sur 12 mois)
 - [ ] Guide PDF premium téléchargeable (monétisation)
 - [ ] Newsletter mensuelle (Brevo / Mailchimp)
 - [ ] Page Glossaire immobilier (`/glossaire`)
 
 ---
+## ## 📚 Documentation
+
+- [Stripe - PDF Setup](docs/Stripe-pdf-setup.md)
+- [SEO Technique](docs/SEO-technique.md)
+- [Intégration Sanity](docs/intégration-sanity.md)
+- [Plan LinkedIn](docs/Linkedin-plan-26-posts.md)
+
+
 
 _Projet conçu et développé avec soin. © 2025 NextoCasa._

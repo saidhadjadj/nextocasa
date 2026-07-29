@@ -394,7 +394,7 @@ Avant
 Après
 “NextoCasa – L’élégance immobilière
 12 rue de la Paix, 75002 Paris – Du lundi au samedi de 10h à 19h
-Tél. 01 23 45 67 89 – accueil@nextocasa.fr
+Tél. 01 23 45 67 89 – accueil@nextocasa.com
 SIRET 123 456 789 00012 – TVA non applicable – Carte professionnelle CPI 7501 2025 000 123 456”
 Liens : Mentions légales · Politique de confidentialité · Plan du site · Crédits
 Newsletter : “Recevez nos exclusivités avant tout le monde” (email + bouton “M’abonner”)
