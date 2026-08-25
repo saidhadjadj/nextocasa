@@ -273,27 +273,6 @@ export default function Blog() {
             </div>
           </div>
 
-          <div className="mt-10 rounded-2xl bg-white border border-stone-100 shadow-sm px-8 py-12 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div>
-              <div className="flex items-center gap-3 mb-3">
-                <div className="h-px w-6 bg-[#ffb800]" />
-                <p className="text-xs tracking-[0.18em] uppercase text-stone-400 font-light">Votre projet</p>
-              </div>
-              <h2 className="font-serif text-2xl font-light text-stone-800 mb-1">
-                Une question sur votre projet <em className="not-italic italic text-[#0022d2]">immobilier ?</em>
-              </h2>
-              <p className="text-stone-400 text-sm font-light">Nos conseillers répondent sous 24h, sans engagement.</p>
-            </div>
-            <Link
-              to="/contact"
-              className="shrink-0 inline-flex items-center gap-2 bg-[#0022d2] hover:bg-[#001aad] text-white font-semibold py-3.5 px-8 rounded-full text-sm transition-all hover:scale-105 shadow-md whitespace-nowrap"
-            >
-              Nous contacter
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </Link>
-          </div>
         </div>
       </div>
     </>

@@ -35,3 +35,38 @@
     @apply text-stone-900 border-b border-stone-900 pb-px;
   }
 }
+.article-body table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  margin: 24px 0;
+}
+
+.article-body th {
+  background: #1A1814;
+  color: #F7F4EE;
+  padding: 10px 12px;
+  text-align: left;
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+
+.article-body td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #E8E4DC;
+  vertical-align: top;
+  line-height: 1.5;
+}
+
+.article-body tr:nth-child(even) td {
+  background: #F7F4EE;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 24px 0;
+  border-radius: 8px;
+  border: 1px solid #E8E4DC;
+}

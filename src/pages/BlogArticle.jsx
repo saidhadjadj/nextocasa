@@ -310,24 +310,6 @@ export default function BlogArticle() {
             </div>
           )}
 
-          <div className="mt-10 rounded-2xl bg-[#0022d2] px-8 py-10">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="h-px w-5 bg-[#ffb800]/60" />
-              <p className="text-[#ffb800]/70 text-xs tracking-[0.18em] uppercase font-light">
-                Votre expérience compte
-              </p>
-            </div>
-            <p className="font-serif text-xl md:text-2xl font-light text-white leading-relaxed mb-4">
-              Le marché immobilier se lit aussi sur le terrain.
-            </p>
-            <p className="text-white/60 text-sm font-light leading-relaxed mb-6 max-w-2xl">
-              Vous avez acheté, vendu, investi à Paris ? Un délai de vente observé, une négociation menée, un arrondissement qui surprend ? Vos observations éclairent ce que les chiffres ne montrent pas toujours.
-            </p>
-            <p className="font-serif text-[#ffb800] text-base font-light italic">
-              Partagez votre analyse en commentaires.
-            </p>
-          </div>
-
           <div className="mt-8 flex items-center justify-between">
             <button
               onClick={() => navigate(-1)}
