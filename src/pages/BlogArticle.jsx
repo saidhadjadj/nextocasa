@@ -3,6 +3,7 @@ import { PortableText } from '@portabletext/react'
 import { useParams, Link, useNavigate } from "react-router-dom"
 import { Helmet } from "react-helmet-async"
 import { useSanityArticle, useSanityArticles } from "../hooks/useSanityArticles"
+import { RichTable } from 'sanity-plugin-rich-table/react'
 
 const portableTextComponents = {
   block: {
@@ -86,6 +87,7 @@ const portableTextComponents = {
         </div>
       )
     },
+    richTableBlock:RichTable,
     image: ({ value }) => (
       <figure className="my-8">
         <img
