@@ -70,12 +70,13 @@ const cleanBody = (body) => {
         'Métadonnées SEO',
         'Sources à consulter',
         'Note éditoriale',
-        'Interlinks',           // ← Ajout
-        'Reserve éditoriale',   // ← Ajout
+        'Interlinks', 
+        'reserve éditoriale',          // ← Ajout
+        'Reserve éditoriale constituée',   // ← Ajout
         'interlinks',           // ← Ajout (minuscule)
         'reserve editoriale',   // ← Ajout (minuscule)
 ]  
-       
+
       for (const keyword of metadataKeywords) {
         if (text.startsWith(keyword)) {
           return false
