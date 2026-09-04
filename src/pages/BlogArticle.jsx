@@ -3,7 +3,44 @@ import { PortableText } from '@portabletext/react'
 import { useParams, Link, useNavigate } from "react-router-dom"
 import { Helmet } from "react-helmet-async"
 import { useSanityArticle, useSanityArticles } from "../hooks/useSanityArticles"
-import RichTable from 'sanity-plugin-rich-table'
+
+
+// Composant personnalisé pour afficher les tableaux
+const RichTable = ({ value }) => {
+  if (!value || !value.rows || value.rows.length === 0) {
+    return null
+  }
+
+  const headerRow = value.rows[0]
+  const dataRows = value.rows.slice(1)
+
+  return (
+    <div className="my-8 overflow-x-auto">
+      <table className="min-w-full border border-stone-200 rounded-lg text-sm">
+        <thead>
+          <tr className="bg-stone-50 border-b border-stone-200">
+            {headerRow?.cells?.map((cell, index) => (
+              <th key={index} className="px-4 py-3 text-left font-semibold text-stone-700">
+                {cell}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {dataRows.map((row, rowIndex) => (
+            <tr key={rowIndex} className="border-b border-stone-100 hover:bg-stone-50/50">
+              {row?.cells?.map((cell, cellIndex) => (
+                <td key={cellIndex} className="px-4 py-3 text-stone-600">
+                  {cell}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}
 
 const cleanBody = (body) => {
   if (!Array.isArray(body)) return []
@@ -97,8 +134,11 @@ const portableTextComponents = {
           </p>
         </div>
       )
+
     },
+
     richTableBlock:RichTable,
+
     image: ({ value }) => (
       <figure className="my-8">
         <img
