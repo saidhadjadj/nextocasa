@@ -46,9 +46,42 @@ const cleanBody = (body) => {
   if (!Array.isArray(body)) return []
   return body.filter(block => {
     if (!block || typeof block !== 'object') return false
+    
+    // Supprimer les blocs qui contiennent des métadonnées
     if (block._type === 'metadata') return false
     if (block._type === 'system') return false
+    
+    // Vérifier le contenu du texte
+    if (block.children && Array.isArray(block.children)) {
+      const text = block.children.map(child => child.text || '').join('')
+      
+      // Supprimer les blocs qui commencent par des mots-clés de métadonnées
+      const metadataKeywords = [
+        '▸ Champ · Valeur',
+        'Slug —',
+        'Mot-clé principal',
+        'Mots-clés secondaires',
+        'Méta-description',
+        'Cible —',
+        'Longueur cible',
+        'Statut —',
+        'Date de publication',
+        'Priorité —',
+        'Métadonnées SEO',
+        'Sources à consulter',
+        'Note éditoriale'
+      ]
+      
+      for (const keyword of metadataKeywords) {
+        if (text.startsWith(keyword)) {
+          return false
+        }
+      }
+    }
+    
+    // Supprimer les blocs qui n'ont ni contenu textuel ni image
     if (block._type && !block.children && !block.asset) return false
+    
     return true
   })
 }
