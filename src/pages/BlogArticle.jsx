@@ -3,7 +3,7 @@ import { PortableText } from '@portabletext/react'
 import { useParams, Link, useNavigate } from "react-router-dom"
 import { Helmet } from "react-helmet-async"
 import { useSanityArticle, useSanityArticles } from "../hooks/useSanityArticles"
-import { RichTable } from 'sanity-plugin-rich-table/react'
+import RichTable from 'sanity-plugin-rich-table'
 
 const portableTextComponents = {
   block: {
