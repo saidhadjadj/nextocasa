@@ -5,6 +5,17 @@ import { Helmet } from "react-helmet-async"
 import { useSanityArticle, useSanityArticles } from "../hooks/useSanityArticles"
 import RichTable from 'sanity-plugin-rich-table'
 
+const cleanBody = (body) => {
+  if (!Array.isArray(body)) return []
+  return body.filter(block => {
+    if (!block || typeof block !== 'object') return false
+    if (block._type === 'metadata') return false
+    if (block._type === 'system') return false
+    if (block._type && !block.children && !block.asset) return false
+    return true
+  })
+}
+
 const portableTextComponents = {
   block: {
     h2: ({ children }) => (
@@ -138,9 +149,10 @@ function ArticleBody({ content }) {
   }
 
   if (Array.isArray(content)) {
+    console.log('📦 Contenu du body (brut) :', JSON.stringify(content, null, 2))
     return (
       <div className="article-body">
-        <PortableText value={content} components={portableTextComponents} />
+        <PortableText value={cleanBody(content)} components={portableTextComponents} />
       </div>
     )
   }
