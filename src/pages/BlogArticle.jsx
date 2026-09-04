@@ -69,9 +69,13 @@ const cleanBody = (body) => {
         'Priorité —',
         'Métadonnées SEO',
         'Sources à consulter',
-        'Note éditoriale'
-      ]
-      
+        'Note éditoriale',
+        'Interlinks',           // ← Ajout
+        'Reserve éditoriale',   // ← Ajout
+        'interlinks',           // ← Ajout (minuscule)
+        'reserve editoriale',   // ← Ajout (minuscule)
+]  
+       
       for (const keyword of metadataKeywords) {
         if (text.startsWith(keyword)) {
           return false
