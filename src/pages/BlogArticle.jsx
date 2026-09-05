@@ -41,52 +41,32 @@ const RichTable = ({ value }) => {
     </div>
   )
 }
-
 const cleanBody = (body) => {
   if (!Array.isArray(body)) return []
+  
+  let foundFirstTitle = false
+  
   return body.filter(block => {
     if (!block || typeof block !== 'object') return false
     
-    // Supprimer les blocs qui contiennent des métadonnées
+    // Métadonnées
     if (block._type === 'metadata') return false
     if (block._type === 'system') return false
     
-    // Vérifier le contenu du texte
-    if (block.children && Array.isArray(block.children)) {
-      const text = block.children.map(child => child.text || '').join('')
-      
-      // Supprimer les blocs qui commencent par des mots-clés de métadonnées
-      const metadataKeywords = [
-        '▸ Champ · Valeur',
-        'Slug —',
-        'Mot-clé principal',
-        'Mots-clés secondaires',
-        'Méta-description',
-        'Cible —',
-        'Longueur cible',
-        'Statut —',
-        'Date de publication',
-        'Priorité —',
-        'Métadonnées SEO',
-        'Sources à consulter',
-        'Note éditoriale',
-        'Interlinks', 
-        'reserve éditoriale',          // ← Ajout
-        'Reserve éditoriale constituée',   // ← Ajout
-        'interlinks',           // ← Ajout (minuscule)
-        'reserve editoriale',   // ← Ajout (minuscule)
-]  
-
-      for (const keyword of metadataKeywords) {
-        if (text.startsWith(keyword)) {
-          return false
-        }
-      }
+    // Vérifier si c'est un titre (h1, h2, h3)
+    const isTitle = block.style === 'h1' || block.style === 'h2' || block.style === 'h3'
+    
+    if (isTitle) {
+      foundFirstTitle = true
+      return true
     }
     
-    // Supprimer les blocs qui n'ont ni contenu textuel ni image
-    if (block._type && !block.children && !block.asset) return false
+    // Supprimer tous les blocs avant le premier titre
+    if (!foundFirstTitle) {
+      return false
+    }
     
+    // Garder le reste
     return true
   })
 }
