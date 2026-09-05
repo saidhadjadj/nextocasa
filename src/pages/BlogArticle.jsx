@@ -113,6 +113,9 @@ const cleanBody = (body) => {
     // 1. Supprimer les métadonnées
     if (block._type === 'metadata') return false
     if (block._type === 'system') return false
+
+
+    if (block._type === 'richTableBlock') return true  // ← AJOUTER ICI  if (block._type === 'richTableBlock') return true  // ← AJOUTER ICI  if (block._type === 'richTableBlock') return true  // ← AJOUTER ICI  if (block._type === 'richTableBlock') return true  // ← AJOUTER ICI
     
     // 2. Supprimer les blocs qui contiennent des mots-clés de métadonnées
     if (block.children && Array.isArray(block.children)) {
