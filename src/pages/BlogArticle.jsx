@@ -7,39 +7,79 @@ import { useSanityArticle, useSanityArticles } from "../hooks/useSanityArticles"
 
 // Composant personnalisé pour afficher les tableaux
 const RichTable = ({ value }) => {
-  if (!value || !value.rows || value.rows.length === 0) {
-    return null
-  }
+  console.log('📋 RichTable appelé avec :', value)  // ← AJOUT
+  if (!value) return null
 
-  const headerRow = value.rows[0]
-  const dataRows = value.rows.slice(1)
+  // Format rich-table (nouveau plugin)
+  if (value.rows && Array.isArray(value.rows) && value.rows.length > 0) {
+    const headerRow = value.rows[0]
+    const dataRows = value.rows.slice(1)
 
-  return (
-    <div className="my-8 overflow-x-auto">
-      <table className="min-w-full border border-stone-200 rounded-lg text-sm">
-        <thead>
-          <tr className="bg-stone-50 border-b border-stone-200">
-            {headerRow?.cells?.map((cell, index) => (
-              <th key={index} className="px-4 py-3 text-left font-semibold text-stone-700">
-                {cell}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {dataRows.map((row, rowIndex) => (
-            <tr key={rowIndex} className="border-b border-stone-100 hover:bg-stone-50/50">
-              {row?.cells?.map((cell, cellIndex) => (
-                <td key={cellIndex} className="px-4 py-3 text-stone-600">
+    return (
+      <div className="my-8 overflow-x-auto">
+        <table className="min-w-full border border-stone-200 rounded-lg text-sm">
+          <thead>
+            <tr className="bg-stone-50 border-b border-stone-200">
+              {headerRow?.cells?.map((cell, index) => (
+                <th key={index} className="px-4 py-3 text-left font-semibold text-stone-700">
                   {cell}
-                </td>
+                </th>
               ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  )
+          </thead>
+          <tbody>
+            {dataRows.map((row, rowIndex) => (
+              <tr key={rowIndex} className="border-b border-stone-100 hover:bg-stone-50/50">
+                {row?.cells?.map((cell, cellIndex) => (
+                  <td key={cellIndex} className="px-4 py-3 text-stone-600">
+                    {cell}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    )
+  }
+
+  // Format @sanity/table (ancien plugin)
+  if (value.rows && Array.isArray(value.rows)) {
+    // Structure différente : { rows: [{ cells: [...] }] }
+    const headerRow = value.rows[0]
+    const dataRows = value.rows.slice(1)
+
+    return (
+      <div className="my-8 overflow-x-auto">
+        <table className="min-w-full border border-stone-200 rounded-lg text-sm">
+          <thead>
+            <tr className="bg-stone-50 border-b border-stone-200">
+              {headerRow?.cells?.map((cell, index) => (
+                <th key={index} className="px-4 py-3 text-left font-semibold text-stone-700">
+                  {cell}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {dataRows.map((row, rowIndex) => (
+              <tr key={rowIndex} className="border-b border-stone-100 hover:bg-stone-50/50">
+                {row?.cells?.map((cell, cellIndex) => (
+                  <td key={cellIndex} className="px-4 py-3 text-stone-600">
+                    {cell}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    )
+  }
+
+  // Si le format n'est pas reconnu
+  console.warn('📋 Format de tableau non reconnu :', value)
+  return <p className="text-stone-400 text-sm">Tableau non reconnu</p>
 }
 
 const cleanBody = (body) => {
@@ -62,7 +102,7 @@ const cleanBody = (body) => {
     'Note éditoriale',
     'Interlinks',
     'Reserve éditoriale',
-    'Reserve éditoriale constituée',
+    'Réserve éditoriale constituée',
     'interlinks',
     'reserve editoriale',
   ]
@@ -187,7 +227,7 @@ const portableTextComponents = {
 
     },
 
-    richTableBlock:RichTable,
+    richTableBlock: RichTable,
 
     image: ({ value }) => (
       <figure className="my-8">
