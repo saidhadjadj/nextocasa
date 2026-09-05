@@ -145,7 +145,6 @@ const cleanBody = (body) => {
     return true
   })
 }
-
 const portableTextComponents = {
   block: {
     h2: ({ children }) => (
