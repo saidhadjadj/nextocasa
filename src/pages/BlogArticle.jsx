@@ -115,7 +115,7 @@ const cleanBody = (body) => {
     if (block._type === 'system') return false
 
 
-    if (block._type === 'richTableBlock') return true  // ← AJOUTER ICI  if (block._type === 'richTableBlock') return true  // ← AJOUTER ICI  if (block._type === 'richTableBlock') return true  // ← AJOUTER ICI  if (block._type === 'richTableBlock') return true  // ← AJOUTER ICI
+    if (block._type === 'richTableBlock') return true  
     
     // 2. Supprimer les blocs qui contiennent des mots-clés de métadonnées
     if (block.children && Array.isArray(block.children)) {
@@ -145,6 +145,7 @@ const cleanBody = (body) => {
     return true
   })
 }
+
 const portableTextComponents = {
   block: {
     h2: ({ children }) => (
