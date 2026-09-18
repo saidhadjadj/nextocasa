@@ -4,148 +4,77 @@ import { useParams, Link, useNavigate } from "react-router-dom"
 import { Helmet } from "react-helmet-async"
 import { useSanityArticle, useSanityArticles } from "../hooks/useSanityArticles"
 
+// ── DÉTECTION ET GROUPEMENT DES TABLEAUX ────────────────────────────────────
+function groupBlocks(blocks) {
+  const result = []
+  let i = 0
+  while (i < blocks.length) {
+    const block = blocks[i]
+    const text = block?.children?.[0]?.text || ''
 
-// Composant personnalisé pour afficher les tableaux
-const RichTable = ({ value }) => {
-  console.log('📋 RichTable appelé avec :', value)  // ← AJOUT
-  if (!value) return null
+    // Bloc markdownTable (du script v3)
+    if (block._type === 'markdownTable') {
+      result.push({ type: 'table', rows: block.rows })
+      i++
+      continue
+    }
 
-  // Format rich-table (nouveau plugin)
-  if (value.rows && Array.isArray(value.rows) && value.rows.length > 0) {
-    const headerRow = value.rows[0]
-    const dataRows = value.rows.slice(1)
-
-    return (
-      <div className="my-8 overflow-x-auto">
-        <table className="min-w-full border border-stone-200 rounded-lg text-sm">
-          <thead>
-            <tr className="bg-stone-50 border-b border-stone-200">
-              {headerRow?.cells?.map((cell, index) => (
-                <th key={index} className="px-4 py-3 text-left font-semibold text-stone-700">
-                  {cell}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {dataRows.map((row, rowIndex) => (
-              <tr key={rowIndex} className="border-b border-stone-100 hover:bg-stone-50/50">
-                {row?.cells?.map((cell, cellIndex) => (
-                  <td key={cellIndex} className="px-4 py-3 text-stone-600">
-                    {cell}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    )
-  }
-
-  // Format @sanity/table (ancien plugin)
-  if (value.rows && Array.isArray(value.rows)) {
-    // Structure différente : { rows: [{ cells: [...] }] }
-    const headerRow = value.rows[0]
-    const dataRows = value.rows.slice(1)
-
-    return (
-      <div className="my-8 overflow-x-auto">
-        <table className="min-w-full border border-stone-200 rounded-lg text-sm">
-          <thead>
-            <tr className="bg-stone-50 border-b border-stone-200">
-              {headerRow?.cells?.map((cell, index) => (
-                <th key={index} className="px-4 py-3 text-left font-semibold text-stone-700">
-                  {cell}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {dataRows.map((row, rowIndex) => (
-              <tr key={rowIndex} className="border-b border-stone-100 hover:bg-stone-50/50">
-                {row?.cells?.map((cell, cellIndex) => (
-                  <td key={cellIndex} className="px-4 py-3 text-stone-600">
-                    {cell}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    )
-  }
-
-  // Si le format n'est pas reconnu
-  console.warn('📋 Format de tableau non reconnu :', value)
-  return <p className="text-stone-400 text-sm">Tableau non reconnu</p>
-}
-
-const cleanBody = (body) => {
-  if (!Array.isArray(body)) return []
-  
-  let foundFirstTitle = false
-  const metadataKeywords = [
-    '▸ Champ · Valeur',
-    'Slug —',
-    'Mot-clé principal',
-    'Mots-clés secondaires',
-    'Méta-description',
-    'Cible —',
-    'Longueur cible',
-    'Statut —',
-    'Date de publication',
-    'Priorité —',
-    'Métadonnées SEO',
-    'Sources à consulter',
-    'Note éditoriale',
-    'Interlinks',
-    'Reserve éditoriale',
-    'Réserve éditoriale constituée',
-    'interlinks',
-    'reserve editoriale',
-  ]
-  
-  return body.filter(block => {
-    if (!block || typeof block !== 'object') return false
-    
-    // 1. Supprimer les métadonnées
-    if (block._type === 'metadata') return false
-    if (block._type === 'system') return false
-
-
-    if (block._type === 'richTableBlock') return true  
-    
-    // 2. Supprimer les blocs qui contiennent des mots-clés de métadonnées
-    if (block.children && Array.isArray(block.children)) {
-      const text = block.children.map(child => child.text || '').join('')
-      for (const keyword of metadataKeywords) {
-        if (text.includes(keyword)) {
-          return false
-        }
+    // Ligne d'en-tête de tableau inline (▸ col1 · col2 · col3)
+    if (block._type === 'block' && text.startsWith('▸ ')) {
+      const header = text.replace('▸ ', '').split(' · ')
+      const rows = []
+      i++
+      while (i < blocks.length) {
+        const next = blocks[i]
+        const nextText = next?.children?.[0]?.text || ''
+        if (next._type === 'block' && nextText.includes(' — ') && !nextText.startsWith('▸')) {
+          rows.push(nextText.split(' — '))
+          i++
+        } else break
       }
+      result.push({ type: 'table', header, rows })
+      continue
     }
-    
-    // 3. Supprimer les blocs avant le premier titre
-    const isTitle = block.style === 'h1' || block.style === 'h2' || block.style === 'h3'
-    
-    if (isTitle) {
-      foundFirstTitle = true
-      return true
-    }
-    
-    if (!foundFirstTitle) {
-      return false
-    }
-    
-    // 4. Supprimer les blocs sans contenu
-    if (block._type && !block.children && !block.asset) return false
-    
-    return true
-  })
+
+    result.push({ type: 'block', block })
+    i++
+  }
+  return result
 }
 
+// ── COMPOSANT TABLEAU ────────────────────────────────────────────────────────
+function TableBlock({ header, rows }) {
+  return (
+    <div className="overflow-x-auto -webkit-overflow-scrolling-touch my-8 rounded-xl border border-stone-200">
+      <table className="w-full text-sm border-collapse">
+        {header && header.length > 0 && (
+          <thead>
+            <tr>
+              {header.map((h, j) => (
+                <th key={j} className="bg-[#1A1814] text-[#F7F4EE] px-4 py-3 text-left font-medium text-xs tracking-wide whitespace-nowrap">
+                  {h}
+                </th>
+              ))}
+            </tr>
+          </thead>
+        )}
+        <tbody>
+          {rows.map((row, j) => (
+            <tr key={j} className={j % 2 === 0 ? 'bg-white' : 'bg-[#F7F4EE]'}>
+              {row.map((cell, k) => (
+                <td key={k} className="px-4 py-3 border-b border-stone-100 text-stone-600 font-light align-top leading-relaxed">
+                  {cell}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
+// ── COMPOSANTS PORTABLE TEXT ─────────────────────────────────────────────────
 const portableTextComponents = {
   block: {
     h2: ({ children }) => (
@@ -171,6 +100,26 @@ const portableTextComponents = {
       </div>
     ),
   },
+  list: {
+    bullet: ({ children }) => (
+      <ul className="my-5 space-y-2 pl-0">
+        {children}
+      </ul>
+    ),
+    number: ({ children }) => (
+      <ol className="my-5 space-y-2 pl-5 list-decimal text-stone-600 font-light">
+        {children}
+      </ol>
+    ),
+  },
+  listItem: {
+    bullet: ({ children }) => (
+      <li className="flex items-start gap-2 text-stone-600 font-light text-base leading-relaxed">
+        <span className="text-[#ffb800] mt-1 shrink-0">→</span>
+        <span>{children}</span>
+      </li>
+    ),
+  },
   marks: {
     strong: ({ children }) => (
       <strong className="font-semibold text-stone-800">{children}</strong>
@@ -179,7 +128,8 @@ const portableTextComponents = {
       <em className="italic text-stone-700">{children}</em>
     ),
     link: ({ value, children }) => (
-      <a
+        <a
+      
         href={value?.href}
         className="text-[#0022d2] underline underline-offset-2 hover:text-[#001aad] transition-colors"
         target={value?.href?.startsWith('http') ? '_blank' : undefined}
@@ -190,48 +140,6 @@ const portableTextComponents = {
     ),
   },
   types: {
-    callout: ({ value }) => {
-      const styles = {
-        chiffre:    { bg: '#E6F1FB', border: '#185FA5', label: '#0C447C' },
-        retenir:    { bg: '#E1F5EE', border: '#0F6E56', label: '#085041' },
-        alerte:     { bg: '#FAECE7', border: '#E24B4A', label: '#712B13' },
-        historique: { bg: '#EEEDFE', border: '#534AB7', label: '#3C3489' },
-      }
-      const s = styles[value?.type] || styles.chiffre
-      return (
-        <div
-          style={{
-            background: s.bg,
-            borderLeft: `3px solid ${s.border}`,
-            borderRadius: '0 8px 8px 0',
-            padding: '12px 16px',
-            margin: '24px 0'
-          }}
-        >
-          {value?.label && (
-            <p
-              style={{
-                fontSize: '11px',
-                fontWeight: 500,
-                textTransform: 'uppercase',
-                letterSpacing: '0.06em',
-                color: s.label,
-                marginBottom: '6px'
-              }}
-            >
-              {value.label}
-            </p>
-          )}
-          <p style={{ fontSize: '14px', lineHeight: 1.6, margin: 0, color: '#1A1814' }}>
-            {value?.content}
-          </p>
-        </div>
-      )
-
-    },
-
-    richTableBlock: RichTable,
-
     image: ({ value }) => (
       <figure className="my-8">
         <img
@@ -248,79 +156,63 @@ const portableTextComponents = {
       </figure>
     ),
   },
-  list: {
-    bullet: ({ children }) => (
-      <ul className="list-none space-y-2 my-5 pl-0">
-        {children}
-      </ul>
-    ),
-    number: ({ children }) => (
-      <ol className="list-decimal pl-5 space-y-2 my-5 text-stone-600 font-light text-base">
-        {children}
-      </ol>
-    ),
-  },
-  listItem: {
-    bullet: ({ children }) => (
-      <li className="flex items-start gap-2 text-stone-600 font-light text-base leading-relaxed">
-        <span className="text-[#ffb800] mt-1 shrink-0">→</span>
-        <span>{children}</span>
-      </li>
-    ),
-  },
 }
 
+// ── ARTICLE BODY ─────────────────────────────────────────────────────────────
 function ArticleBody({ content }) {
-  if (!content) {
-    return (
-      <div className="py-10 text-center">
-        <p className="font-serif text-xl font-light text-stone-300 italic">
-          Contenu en cours de rédaction…
-        </p>
-      </div>
-    )
-  }
+  if (!content) return (
+    <div className="py-10 text-center">
+      <p className="font-serif text-xl font-light text-stone-300 italic">
+        Contenu en cours de rédaction…
+      </p>
+    </div>
+  )
 
+  // Portable Text (tableau de blocs Sanity)
   if (Array.isArray(content)) {
-    console.log('📦 Contenu du body (brut) :', JSON.stringify(content, null, 2))
+    const grouped = groupBlocks(content)
     return (
       <div className="article-body">
-        <PortableText value={cleanBody(content)} components={portableTextComponents} />
-      </div>
-    )
-  }
-
-  if (typeof content === 'string') {
-    return (
-      <div className="article-body">
-        {content.split('\n').filter(l => l.trim()).map((line, i) => {
-          if (line.startsWith('## ')) {
+        {grouped.map((item, idx) => {
+          if (item.type === 'table') {
             return (
-              <h2 key={i} className="font-serif text-2xl font-light text-stone-800 mt-10 mb-4">
-                {line.replace('## ', '')}
-              </h2>
-            )
-          }
-          if (line.startsWith('### ')) {
-            return (
-              <h3 key={i} className="text-sm font-medium text-stone-700 uppercase tracking-widest mt-8 mb-3">
-                {line.replace('### ', '')}
-              </h3>
+              <TableBlock
+                key={idx}
+                header={item.header || (item.rows?.[0] ? null : null)}
+                rows={item.rows || []}
+              />
             )
           }
           return (
-            <p key={i} className="text-stone-600 text-base font-light leading-relaxed mb-5">
-              {line}
-            </p>
+            <PortableText
+              key={idx}
+              value={[item.block]}
+              components={portableTextComponents}
+            />
           )
         })}
       </div>
     )
   }
 
+  // Fallback texte brut
+  if (typeof content === 'string') {
+    return (
+      <div className="article-body">
+        {content.split('\n').filter(l => l.trim()).map((line, i) => {
+          if (line.startsWith('## '))
+            return <h2 key={i} className="font-serif text-2xl font-light text-stone-800 mt-10 mb-4">{line.replace('## ', '')}</h2>
+          if (line.startsWith('### '))
+            return <h3 key={i} className="text-sm font-medium text-stone-700 uppercase tracking-widest mt-8 mb-3">{line.replace('### ', '')}</h3>
+          return <p key={i} className="text-stone-600 text-base font-light leading-relaxed mb-5">{line}</p>
+        })}
+      </div>
+    )
+  }
   return null
 }
 
+// ── PAGE ARTICLE ─────────────────────────────────────────────────────────────
 export default function BlogArticle() {
   const { slug } = useParams()
   const navigate = useNavigate()
@@ -337,26 +229,22 @@ export default function BlogArticle() {
     ).slice(0, 3)
   }, [article, allArticles, slug])
 
-  if (loading) {
-    return (
-      <div className="bg-[#f7f5f1] min-h-[70vh] flex items-center justify-center">
-        <p className="font-serif text-2xl font-light text-stone-300 animate-pulse">
-          L'<em className="not-italic italic text-[#ffb800]">Observatoire</em>
-        </p>
-      </div>
-    )
-  }
+  if (loading) return (
+    <div className="bg-[#f7f5f1] min-h-[70vh] flex items-center justify-center">
+      <p className="font-serif text-2xl font-light text-stone-300 animate-pulse">
+        L'<em className="not-italic italic text-[#ffb800]">Observatoire</em>
+      </p>
+    </div>
+  )
 
-  if (!article) {
-    return (
-      <div className="bg-[#f7f5f1] min-h-[70vh] flex flex-col items-center justify-center gap-6 px-4">
-        <p className="font-serif text-4xl font-light text-stone-300">Article introuvable</p>
-        <Link to="/observatoire" className="text-sm text-[#0022d2] hover:underline font-light">
-          Retour à L'Observatoire
-        </Link>
-      </div>
-    )
-  }
+  if (!article) return (
+    <div className="bg-[#f7f5f1] min-h-[70vh] flex flex-col items-center justify-center gap-6 px-4">
+      <p className="font-serif text-4xl font-light text-stone-300">Article introuvable</p>
+      <Link to="/observatoire" className="text-sm text-[#0022d2] hover:underline font-light">
+        Retour à L'Observatoire
+      </Link>
+    </div>
+  )
 
   return (
     <>
@@ -366,13 +254,11 @@ export default function BlogArticle() {
       </Helmet>
 
       <div className="bg-[#f7f5f1] min-h-screen">
+
+        {/* ── HERO ──────────────────────────────────────────────────────── */}
         <div className="relative h-72 md:h-96 overflow-hidden">
           {article.image ? (
-            <img
-              src={article.image}
-              alt={article.title}
-              className="absolute inset-0 w-full h-full object-cover object-center"
-            />
+            <img src={article.image} alt={article.title} className="absolute inset-0 w-full h-full object-cover object-center" />
           ) : (
             <div className="absolute inset-0 bg-gradient-to-br from-[#0022d2] to-[#001aad]" />
           )}
@@ -397,24 +283,28 @@ export default function BlogArticle() {
           </div>
         </div>
 
+        {/* ── FIL D'ARIANE ─────────────────────────────────────────────── */}
         <div className="max-w-3xl mx-auto px-4 sm:px-6 pt-6 pb-2">
           <nav className="flex items-center gap-2 text-xs text-stone-400 font-light" aria-label="Fil d'Ariane">
             <Link to="/" className="hover:text-[#0022d2] transition-colors">Accueil</Link>
             <span>/</span>
-            <Link to="/observatoire" className="hover:text-[#0022d2] transition-colors">Blog</Link>
+            <Link to="/observatoire" className="hover:text-[#0022d2] transition-colors">L'Observatoire</Link>
             <span>/</span>
             <span className="text-stone-600 truncate max-w-[200px]">{article.title}</span>
           </nav>
         </div>
 
+        {/* ── CONTENU ───────────────────────────────────────────────────── */}
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-10">
+
+          {/* Auteur + méta */}
           <div className="flex items-center gap-4 mb-10 pb-8 border-b border-stone-200">
-            <div className="w-12 h-12 rounded-full bg-stone-100 flex items-center justify-center font-serif text-sm text-stone-500 shrink-0">
+            <div className="w-12 h-12 rounded-full bg-[#0022d2]/10 flex items-center justify-center font-serif text-sm text-[#0022d2] shrink-0 border border-[#0022d2]/20">
               {article.authorInitials}
             </div>
             <div>
               <p className="text-sm font-medium text-stone-800">{article.author}</p>
-              <p className="text-xs text-stone-400 font-light">{article.authorRole}</p>
+              <p className="text-xs text-stone-400 font-light italic">{article.authorRole}</p>
             </div>
             <div className="ml-auto text-right">
               <p className="text-xs text-stone-400 font-light">
@@ -424,12 +314,15 @@ export default function BlogArticle() {
             </div>
           </div>
 
-          <p className="font-serif text-xl font-light text-stone-700 leading-relaxed mb-8 italic border-l-2 border-[#ffb800] pl-6">
+          {/* Chapeau */}
+          <p className="font-serif text-xl font-light text-stone-700 leading-relaxed mb-10 italic border-l-2 border-[#ffb800] pl-6">
             {article.excerpt}
           </p>
 
+          {/* Corps de l'article */}
           <ArticleBody content={article.body} />
 
+          {/* Interlinks */}
           {article.interlinks && article.interlinks.length > 0 && (
             <div className="mt-10 p-6 rounded-2xl bg-white border border-stone-100">
               <div className="flex items-center gap-3 mb-4">
@@ -457,7 +350,8 @@ export default function BlogArticle() {
             </div>
           )}
 
-          <div className="mt-8 flex items-center justify-between">
+          {/* Navigation */}
+          <div className="mt-10 flex items-center justify-between">
             <button
               onClick={() => navigate(-1)}
               className="flex items-center gap-2 text-stone-400 hover:text-stone-600 text-sm font-light transition-colors"
@@ -465,7 +359,7 @@ export default function BlogArticle() {
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 19l-7-7 7-7" />
               </svg>
-              Article précédent
+              Retour
             </button>
             <Link to="/observatoire" className="text-sm text-[#0022d2] hover:underline font-light flex items-center gap-1">
               Tous les articles
@@ -476,6 +370,7 @@ export default function BlogArticle() {
           </div>
         </div>
 
+        {/* ── ARTICLES LIÉS ─────────────────────────────────────────────── */}
         {relatedArticles.length > 0 && (
           <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
             <div className="border-t border-stone-200 pt-14">
@@ -496,14 +391,9 @@ export default function BlogArticle() {
                   >
                     <div className="relative h-36 overflow-hidden bg-stone-100">
                       {a.image ? (
-                        <img
-                          src={a.image}
-                          alt={a.title}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                          loading="lazy"
-                        />
+                        <img src={a.image} alt={a.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
                       ) : (
-                        <div className="w-full h-full bg-gradient-to-br from-stone-200 to-stone-300" />
+                        <div className="w-full h-full bg-gradient-to-br from-[#0022d2]/10 to-[#0022d2]/20" />
                       )}
                       <span className="absolute top-3 left-3 text-xs font-medium px-2.5 py-1 rounded-full bg-white/90 text-stone-600 backdrop-blur-sm">
                         {a.tag}
@@ -521,6 +411,7 @@ export default function BlogArticle() {
             </div>
           </section>
         )}
+
       </div>
     </>
   )
