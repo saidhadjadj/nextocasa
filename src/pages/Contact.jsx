@@ -82,7 +82,7 @@ function Contact() {
         <title>NextoCasa — Contact</title>
         <meta
           name="description"
-          content="Contactez NextoCasa pour une visite, une estimation ou une consultation privée."
+          content="Contactez NextoCasa — questions sur le marché, suggestions d'analyses, retours terrain."
         />
       </Helmet>
 
@@ -96,11 +96,11 @@ function Contact() {
             </p>
             <h1 className="font-serif text-4xl md:text-5xl font-light text-stone-800 leading-tight">
               Réserver une{" "}
-              <span className="italic text-[#0022d2]">consultation privée</span>
+              <span className="italic text-[#0022d2]">question ou suggestion</span>
             </h1>
             <p className="mt-4 text-stone-500 text-base font-light max-w-xl mx-auto leading-relaxed">
-              Une question, une visite ou une étude de valeur personnalisée ?
-              Notre équipe vous répond avec attention et réactivité.
+              Une question sur le marché, une analyse à suggérer, un retour terrain ?
+              L'Observatoire vous répond avec attention.
             </p>
           </div>
 
@@ -117,7 +117,7 @@ function Contact() {
               )}
               {status === "success" && (
                 <div className="mb-6 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
-                  ✓ Merci. Votre demande a bien été transmise à notre équipe.
+                  ✓ Merci. Votre message a bien été transmis. À très bientôt.
                 </div>
               )}
               {status === "error" && (
@@ -301,7 +301,7 @@ function Contact() {
                   professionnalisme."
                 </p>
                 <p className="mt-4 text-xs tracking-widest uppercase text-[#0022d2]">
-                  L'équipe NextoCasa
+                  L'Observatoire NextoCasa
                 </p>
               </div>
 
@@ -316,7 +316,7 @@ function Contact() {
                     Réponse sous 24h
                   </p>
                   <p className="text-xs text-stone-500 font-light leading-relaxed">
-                    Notre équipe s'engage à vous répondre le jour ouvré suivant
+                    Nous nous engageons à vous répondre sous 48h
                     votre demande.
                   </p>
                 </div>

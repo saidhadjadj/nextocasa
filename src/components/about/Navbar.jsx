@@ -3,10 +3,10 @@ import { Link, useLocation } from "react-router-dom";
 
 const NAV_LINKS = [
   { to: "/", label: "Accueil" },
-  { to: "/achat", label: "Achat" },
-  { to: "/vente", label: "Vente" },
-  { to: "/location", label: "Location" },
-  { to: "/estimation", label: "Estimation" },
+
+
+
+
   { to: "/observatoire", label: "L'Observatoire" },
   { to: "/about", label: "À propos" },
   { to: "/contact", label: "Contact" },
@@ -15,10 +15,6 @@ const NAV_LINKS = [
 // Pages avec hero plein écran — navbar transparente au départ
 const HERO_PAGES = [
   "/",
-  "/achat",
-  "/vente",
-  "/location",
-  "/estimation",
   "/observatoire",
   "/about",
 ];
@@ -178,31 +174,7 @@ export default function Navbar() {
               ].join(" ")}
             />
 
-            <Link
-              to="/estimation"
-              className={[
-                "inline-flex items-center gap-2 py-2.5 px-5 rounded-full text-xs font-semibold tracking-wide transition-all duration-300 hover:scale-105",
-                isTransparent
-                  ? "bg-[#ffb800] text-[#0022d2] hover:bg-[#ffc929] shadow-lg shadow-black/20"
-                  : "bg-[#ffb800] text-[#0022d2] hover:bg-[#ffc929] shadow-md",
-              ].join(" ")}
-            >
-              Estimation gratuite
-              <svg
-                className="w-3.5 h-3.5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </Link>
+       
           </div>
 
           {/* ── Burger mobile ─────────────────────────────────────────────── */}
@@ -272,26 +244,7 @@ export default function Navbar() {
 
           {/* CTA mobile */}
           <div className="pt-3 pb-2">
-            <Link
-              to="/estimation"
-              className="flex items-center justify-center gap-2 w-full bg-[#ffb800] text-[#0022d2] font-semibold py-3.5 px-6 rounded-full text-sm transition-all hover:bg-[#ffc929]"
-            >
-              Estimation gratuite
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </Link>
+       
           </div>
         </div>
       </div>

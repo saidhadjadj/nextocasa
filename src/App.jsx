@@ -42,10 +42,10 @@ function PageLoader() {
 // ─── Liens de navigation ──────────────────────────────────────────────────────
 const NAV_LINKS = [
   { to: "/", label: "Accueil" },
-  { to: "/achat", label: "Achat" },
-  { to: "/vente", label: "Vente" },
-  { to: "/location", label: "Location" },
-  { to: "/estimation", label: "Estimation" },
+
+
+
+
   { to: "/observatoire", label: "L'Observatoire" },
   { to: "/about", label: "À propos" },
   { to: "/contact", label: "Contact" },
@@ -62,10 +62,10 @@ function Footer() {
           </p>
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-white/60">
             {[
-              { to: "/achat", label: "Achat" },
-              { to: "/vente", label: "Vente" },
-              { to: "/location", label: "Location" },
-              { to: "/estimation", label: "Estimation" },
+            
+            
+            
+            
               { to: "/observatoire", label: "L'Observatoire" },
               { to: "/about", label: "À propos" },
             ].map(({ to, label }) => (
@@ -119,7 +119,7 @@ function App() {
                         </title>
                         <meta
                           name="description"
-                          content="NextoCasa, agence immobilière premium. Achat, vente, location et estimation gratuite de biens d'exception à Paris, Lyon et Bordeaux."
+                          content="NextoCasa — Analyses et décryptages du marché immobilier parisien haut de gamme. L'Observatoire : chaque mercredi, une analyse experte fondée sur les données officielles."
                         />
                       </Helmet>
                       <HomePage />

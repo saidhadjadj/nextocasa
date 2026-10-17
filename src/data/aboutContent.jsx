@@ -1,85 +1,64 @@
-// ─── NextoCasa — Contenu de la page "L'agence" ───────────────────────────────
+// ─── NextoCasa — Contenu de la page "À propos" ───────────────────────────────
+// Plateforme éditoriale — pas une agence immobilière
 
 export const hero = {
-  eyebrow: "Notre histoire — Paris, depuis 2011",
+  eyebrow: "Notre mission — Paris, immobilier & analyses",
   headline: [
     "Nous ne vendons pas des biens.",
-    "Nous accompagnons des projets de vie.",
+    "Nous éclairons des décisions.",
   ],
-  lead: "NextoCasa est née d'une conviction\u00a0: l\u2019immobilier d\u2019exception mérite un regard singulier, une écoute rare et une expertise sans compromis. Quinze années au service des biens qui ont une âme.",
+  lead: "NextoCasa est une plateforme éditoriale indépendante dédiée au marché immobilier parisien haut de gamme. Notre mission\u00a0: décrypter le marché, analyser les données officielles, orienter les décisions d'achat et d'investissement.",
 };
 
 export const story = {
-  year: "2011",
+  year: "2024",
   paragraphs: [
-    "Fondée par Lajoie Hind et Kevine Dupon, tous deux issus du monde de l\u2019architecture et de la gestion de patrimoine, NextoCasa a ouvert ses portes dans le Marais avec une idée simple\u00a0: que chaque transaction soit traitée comme une relation de confiance, pas comme une transaction.",
-    "Aujourd\u2019hui implantée à Paris, Lyon et Bordeaux, l\u2019agence reste volontairement à taille humaine, avec un portefeuille sélectif de biens exceptionnels — souvent en vente discrète, toujours avec une histoire à raconter.",
+    "NextoCasa est née d'un constat\u00a0: l'information immobilière de qualité est rare, dispersée, souvent partiale. Les acheteurs et investisseurs sérieux méritent des analyses rigoureuses, fondées sur des données officielles vérifiées — pas des argumentaires commerciaux.",
+    "L'Observatoire NextoCasa est le cœur éditorial du projet\u00a0: chaque mercredi, une analyse du marché parisien rédigée par L'Observateur de l'Immobilier. Prix au m², rendements, arrondissements, fiscalité, financement — des contenus pensés pour décider avec clarté.",
   ],
   quote: {
-    text: "\u00ab\u00a0Chaque bien que nous présentons, nous devons être en mesure de l\u2019habiter par l\u2019imagination avant de le proposer à nos clients.\u00a0\u00bb",
-    author: "Lajoie Hind, fondatrice",
+    text: "\u00ab\u00a0L'immobilier d'exception mérite une information d'exception\u00a0— rigoureuse, honnête, sans détour.\u00a0\u00bb",
+    author: "L'Observateur de l'Immobilier",
   },
 };
 
 export const pillars = [
   {
     index: "I.",
-    title: "Sélectivité",
-    body: "Un portefeuille restreint de biens d\u2019exception. Jamais plus de 40 mandats actifs simultanément, pour garantir à chaque bien toute notre attention.",
+    title: "Rigueur",
+    body: "Chaque donnée citée provient de sources officielles vérifiées\u00a0: Notaires du Grand Paris, DVF, Banque de France, BCE, INSEE. Aucun chiffre sans source.",
   },
   {
     index: "II.",
-    title: "Discrétion",
-    body: "Jusqu\u2019à 60\u202f% de nos transactions se concluent hors marché. La confidentialité n\u2019est pas une option chez NextoCasa\u00a0— c\u2019est une promesse.",
+    title: "Indépendance",
+    body: "NextoCasa n'est pas une agence immobilière. Nous ne réalisons aucune transaction, ne percevons aucune commission. Notre seul intérêt\u00a0: la qualité de l'information.",
   },
   {
     index: "III.",
-    title: "Sur-mesure",
-    body: "Chaque client est accompagné par un conseiller dédié, de la première visite jusqu\u2019à la remise des clés\u00a0— et au-delà si besoin.",
+    title: "Clarté",
+    body: "Analyser, expliquer, orienter — sans jargon inutile. Nos analyses sont accessibles à tout lecteur sérieux, qu'il soit primo-accédant ou investisseur chevronné.",
   },
 ];
 
 export const team = [
   {
-    initials: "LH",
-    name: "Lajoie Hind",
-    role: "Fondatrice & Directrice",
+    initials: "OI",
+    name: "L'Observateur de l'Immobilier",
+    role: "Rédaction — Blog L'Observatoire NextoCasa",
     quote:
-      "\u00ab\u00a0Je cherche dans chaque bien ce que les plans ne montrent pas\u00a0— sa lumière, son silence, son énergie.\u00a0\u00bb",
-  },
-
-  {
-    initials: "LL",
-    name: "Laure Lefebre",
-    role: "Conseilére Senior",
-    quote:
-      "\u00ab\u00a0J'assure à chaque client un accompagnement personnalisé et une presence continue\u00a0— jusqu'à la concrétisation de son projet.\u00a0\u00bb",
-  },
-  {
-    initials: "WM",
-    name: "William Max",
-    role: "Conseiller immobilier",
-    quote:
-      "\u00ab\u00a0La valeur d\u2019un bien ne se résume pas à son prix. Elle se lit dans son histoire et son potentiel.\u00a0\u00bb",
-  },
-  {
-    initials: "DL",
-    name: "Dupon Levine",
-    role: "Expert estimation",
-    quote:
-      "\u00ab\u00a0Comprendre ce qu\u2019un client ne dit pas encore\u00a0— c\u2019est là que commence vraiment mon travail.\u00a0\u00bb",
+      "\u00ab\u00a0Le marché parisien est lisible pour qui sait où chercher. Notre travail\u00a0: chercher, vérifier, transmettre.\u00a0\u00bb",
   },
 ];
 
 export const stats = [
-  { value: "15", label: "Années d\u2019expérience" },
-  { value: "620+", label: "Transactions réalisées" },
-  { value: "97\u202f%", label: "Clients satisfaits" },
-  { value: "3", label: "Villes d\u2019implantation" },
+  { value: "32", label: "Analyses publiées" },
+  { value: "100%", label: "Sources officielles" },
+  { value: "0", label: "Transaction réalisée" },
+  { value: "1", label: "Obsession\u00a0: la clarté" },
 ];
 
 export const cta = {
-  text: "Prenons le temps d\u2019un échange\u00a0— sans engagement, sans précipitation.",
-  label: "Nous contacter",
+  text: "Une question sur le marché\u00a0? Une analyse que vous souhaiteriez voir publiée\u00a0?",
+  label: "Nous écrire",
   href: "/contact",
 };
