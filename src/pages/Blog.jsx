@@ -60,52 +60,6 @@ function ArticleSemaine({ article }) {
   );
 }
 
-function Newsletter({ articleTitle }) {
-  const [email, setEmail] = useState("");
-  const [sent, setSent] = useState(false);
-  const handleSubmit = (e) => { e.preventDefault(); if (email) setSent(true); };
-  return (
-    <div className="bg-[#1A1814] rounded-2xl px-6 py-8 md:px-10 md:py-10">
-      <div className="flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-12">
-        <div className="flex-1">
-          <div className="flex items-center gap-2 mb-3">
-            <div className="h-px w-5 bg-[#ffb800]" />
-            <span className="text-[10px] tracking-[0.2em] uppercase text-[#ffb800]/70 font-medium">Newsletter hebdomadaire</span>
-          </div>
-          <h3 className="font-serif text-xl font-light text-white mb-2">
-            Chaque mercredi, <em className="not-italic italic text-[#ffb800]">l'analyse</em> dans votre boîte.
-          </h3>
-          {articleTitle && (
-            <p className="text-white/40 text-xs font-light mt-2">
-            la semaine prochaine : <span className="text-white/60 italic">"{articleTitle}"</span>
-            </p>
-          )}
-        </div>
-        <div className="w-full md:w-auto md:min-w-[320px]">
-          {sent ? (
-            <div className="bg-white/5 rounded-xl px-5 py-4 text-center">
-              <p className="text-[#ffb800] text-sm font-light">✓ Inscription confirmée — à mercredi prochain.</p>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="flex gap-2">
-              <input
-                type="email" value={email} onChange={(e) => setEmail(e.target.value)}
-                placeholder="votre@email" required
-                style={{ background: "rgba(255,255,255,0.05)" }}
-                className="flex-1 border border-white/10 rounded-full px-4 py-2.5 text-sm text-white placeholder-white/30 outline-none focus:border-yellow-400/50 transition font-light"
-              />
-              <button type="submit" className="bg-[#ffb800] hover:bg-[#ffc929] text-[#1A1814] font-semibold text-sm py-2.5 px-5 rounded-full transition whitespace-nowrap">
-                S'abonner
-              </button>
-            </form>
-          )}
-          <p className="text-white/50 text-[10px] font-light mt-2 text-center">Pas de publicité. Désabonnement en un clic.</p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function Archives({ articles, currentSlug }) {
   const [activeFilter, setActiveFilter] = useState("all");
   const [expanded, setExpanded] = useState(false);
@@ -223,7 +177,6 @@ export default function Blog() {
               <ArticleSemaine article={articleSemaine} />
             </section>
           )}
-          <Newsletter articleTitle={articleSemaine?.title} />
           <Archives articles={articles} currentSlug={articleSemaine?.slug} />
         </div>
       </div>

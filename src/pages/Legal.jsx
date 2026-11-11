@@ -87,17 +87,10 @@ export default function Legal() {
               4. Données personnelles
             </h2>
             <p>
-              NextoCasa ne collecte pas de données personnelles via un formulaire. Si vous nous écrivez par e-mail, vos données ne sont utilisées que pour vous répondre et ne sont pas transmises à des tiers.
+              NextoCasa ne collecte aucune donnée personnelle auprès de ses lecteurs : ni compte, ni formulaire, ni newsletter, ni commentaires.
             </p>
             <p className="mt-3">
-              Conformément au Règlement Général sur la Protection des Données (RGPD)
-              et à la loi Informatique et Libertés, vous disposez d'un droit d'accès,
-              de rectification et de suppression de vos données. Pour exercer ce droit,
-              écrivez-nous à observatoire@nextocasa.com.
-            </p>
-            <p className="mt-3">
-              Les abonnés à la newsletter peuvent se désabonner à tout moment via
-              le lien présent dans chaque e-mail.
+              Comme tout site web, celui-ci repose sur des services techniques. L'hébergeur (Vercel) peut enregistrer des journaux de connexion standard (adresse IP, pages consultées), les articles sont servis par Sanity et certaines images par Unsplash : votre navigateur communique donc avec ces services lors de la consultation. L'éditeur n'exploite aucune de ces données à des fins publicitaires.
             </p>
           </section>
 
@@ -134,17 +127,15 @@ export default function Legal() {
           {/* Contact */}
           <section>
             <h2 className="font-serif text-xl font-light text-stone-800 mb-3 pb-2 border-b border-stone-200">
-              7. Contact
+              7. Signalement et droit de réponse
             </h2>
             <p>
-              Pour toute question relative aux présentes mentions légales,
-              écrivez-nous à{" "}
-              <a href="mailto:observatoire@nextocasa.com" className="text-[#0022d2] hover:underline">observatoire@nextocasa.com</a>.
+              Ce site est une publication éditoriale sans service client, sans formulaire de contact et sans adresse de messagerie publique. L'éditeur est une personne physique qui agit à titre non professionnel et qui a communiqué son identité à l'hébergeur (article 1), conformément à l'article 6 de la loi du 21 juin 2004 (LCEN). Toute demande d'ordre légal (signalement d'un contenu, droit de réponse) peut être adressée à l'hébergeur indiqué à l'article 1.
             </p>
           </section>
 
           <p className="text-stone-400 text-xs pt-4 border-t border-stone-200">
-            Dernière mise à jour : octobre 2026
+            Dernière mise à jour : novembre 2026
           </p>
 
         </div>
