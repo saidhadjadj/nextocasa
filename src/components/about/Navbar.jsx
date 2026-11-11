@@ -9,7 +9,7 @@ const NAV_LINKS = [
 
   { to: "/observatoire", label: "L'Observatoire" },
   { to: "/about", label: "À propos" },
-  { to: "/contact", label: "Contact" },
+
 ];
 
 // Pages avec hero plein écran — navbar transparente au départ

@@ -38,7 +38,6 @@ export default defineConfig({
             "./src/pages/Location.jsx",
             "./src/pages/Estimation.jsx",
             "./src/pages/PropertyDetail.jsx",
-            "./src/pages/Contact.jsx",
           ],
         },
       },

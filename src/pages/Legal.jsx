@@ -87,15 +87,13 @@ export default function Legal() {
               4. Données personnelles
             </h2>
             <p>
-              Les données collectées via le formulaire de contact (nom, adresse e-mail,
-              message) sont utilisées exclusivement pour répondre aux demandes des
-              utilisateurs. Elles ne sont pas transmises à des tiers.
+              NextoCasa ne collecte pas de données personnelles via un formulaire. Si vous nous écrivez par e-mail, vos données ne sont utilisées que pour vous répondre et ne sont pas transmises à des tiers.
             </p>
             <p className="mt-3">
               Conformément au Règlement Général sur la Protection des Données (RGPD)
               et à la loi Informatique et Libertés, vous disposez d'un droit d'accès,
               de rectification et de suppression de vos données. Pour exercer ce droit,
-              contactez-nous via la page Contact.
+              écrivez-nous à observatoire@nextocasa.com.
             </p>
             <p className="mt-3">
               Les abonnés à la newsletter peuvent se désabonner à tout moment via
@@ -140,10 +138,8 @@ export default function Legal() {
             </h2>
             <p>
               Pour toute question relative aux présentes mentions légales,
-              utilisez le formulaire disponible sur la{" "}
-              <a href="/contact" className="text-[#0022d2] hover:underline">
-                page Contact
-              </a>.
+              écrivez-nous à{" "}
+              <a href="mailto:observatoire@nextocasa.com" className="text-[#0022d2] hover:underline">observatoire@nextocasa.com</a>.
             </p>
           </section>
 

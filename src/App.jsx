@@ -22,7 +22,6 @@ const Vente = lazy(() => import("./pages/Vente"));
 const Location = lazy(() => import("./pages/Location"));
 const Estimation = lazy(() => import("./pages/Estimation"));
 const About = lazy(() => import("./pages/About"));
-const Contact = lazy(() => import("./pages/Contact"));
 const Legal = lazy(() => import("./pages/Legal"));
 
 // ─── Fallback pendant le chargement ──────────────────────────────────────────
@@ -48,7 +47,7 @@ const NAV_LINKS = [
 
   { to: "/observatoire", label: "L'Observatoire" },
   { to: "/about", label: "À propos" },
-  { to: "/contact", label: "Contact" },
+
 ];
 
 // ─── Footer ───────────────────────────────────────────────────────────────────
@@ -84,10 +83,6 @@ function Footer() {
               className="hover:text-[#ffb800] transition"
             >
               Mentions légales
-            </Link>
-            <span aria-hidden="true">·</span>
-            <Link to="/contact" className="hover:text-[#ffb800] transition">
-              Contact
             </Link>
           </div>
         </div>
@@ -133,7 +128,6 @@ function App() {
                 <Route path="/observatoire" element={<Blog />} />
                 <Route path="/observatoire/:slug" element={<BlogArticle />} />
                 <Route path="/about" element={<About />} />
-                <Route path="/contact" element={<Contact />} />
                 <Route path="/biens/:id" element={<PropertyDetail />} />
                 <Route path="/mentions-legales" element={<Legal />} />
               </Routes>
